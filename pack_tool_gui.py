@@ -244,7 +244,7 @@ def is_scratch_project(www_dir: Path) -> Tuple[bool, str]:
 
 PATCH_STYLE = """
 /* ---- Scratch 控制栏自动隐藏 (注入 by pack_tool_gui) ---- */
-.control-button {
+.control-button,.fullscreen-button,.standalone-fullscreen-button {
     display: none !important;
 }
 """.strip()
@@ -1582,36 +1582,42 @@ class MainWindow(QMainWindow):
         v.setContentsMargins(12, 12, 12, 12)
         v.setSpacing(10)
 
+        # ---------- ① 资源路径 ----------
         g1 = QGroupBox("① 选择本地 Web 资源")
         hl = QHBoxLayout(g1)
         hl.addWidget(QLabel("资源路径:"))
         self.edit_source = QLineEdit()
         self.edit_source.setPlaceholderText("选择文件夹 / 压缩包(.zip/.7z/.rar/.tar) / 单HTML文件")
+        self.edit_source.setMinimumHeight(26)
+        self.edit_source.setMinimumWidth(200)
         b1 = QPushButton("浏览文件夹...")
         b1.clicked.connect(self._browse_src_folder)
         b2 = QPushButton("浏览文件...")
         b2.clicked.connect(self._browse_src_file)
         hl.addWidget(self.edit_source, 1)
-        hl.addWidget(b1)
-        hl.addWidget(b2)
+        hl.addWidget(b1, 0)
+        hl.addWidget(b2, 0)
         v.addWidget(g1)
 
+        # ---------- ② 打包配置 ----------
         g2 = QGroupBox("② 打包配置 · 通用")
         f = QFormLayout(g2)
 
-        # EXE和APK通用的只剩下名称（用于决定输出的7z文件名）和图标
         self.edit_app_name = QLineEdit(self.cfg.get('app_name', 'MyApp'))
-        self.edit_app_name.setMinimumWidth(260)
+        self.edit_app_name.setMinimumHeight(26)
+        self.edit_app_name.setMinimumWidth(160)
         self.edit_app_name.setPlaceholderText("仅用于决定输出的压缩包名称，例如: MyApp")
         f.addRow("输出压缩包名称:", self.edit_app_name)
 
         row_icon = QHBoxLayout()
         self.edit_icon = QLineEdit()
+        self.edit_icon.setMinimumHeight(26)
+        self.edit_icon.setMinimumWidth(160)
         self.edit_icon.setPlaceholderText("可选: .png / .jpg / .bmp / .ico (留空则使用默认图标)")
         bi = QPushButton("选择图标...")
         bi.clicked.connect(self._browse_icon)
         row_icon.addWidget(self.edit_icon, 1)
-        row_icon.addWidget(bi)
+        row_icon.addWidget(bi, 0)
         w = QWidget()
         w.setLayout(row_icon)
         f.addRow("自定义图标:", w)
@@ -1633,7 +1639,7 @@ class MainWindow(QMainWindow):
         f.addRow(row_fmt)
         v.addWidget(g2)
 
-        # ----------- EXE 专属参数 -----------
+        # ---------- EXE 专属 ----------
         self.box_exe_cfg = QGroupBox("🪟 EXE 专属参数")
         fe = QFormLayout(self.box_exe_cfg)
         self.chk_exe_no_console = QCheckBox("无控制台窗口 (Windows GUI 子系统)")
@@ -1642,28 +1648,35 @@ class MainWindow(QMainWindow):
         self.chk_exe_admin = QCheckBox("请求管理员权限 (requireAdministrator)")
         fe.addRow("", self.chk_exe_admin)
         v.addWidget(self.box_exe_cfg)
-        # ----------- APK 专属参数 -----------
+
+        # ---------- APK 专属 ----------
         self.box_apk_cfg = QGroupBox("🤖 APK 专属参数")
         fa = QFormLayout(self.box_apk_cfg)
-        # 将包名和版本挪到了这里，只有勾选APK时才显示
         self.edit_appid = QLineEdit(self.cfg.get('app_id', 'com.example.myapp'))
+        self.edit_appid.setMinimumHeight(26)
+        self.edit_appid.setMinimumWidth(160)
         self.edit_appid.setPlaceholderText("例如: com.example.myapp")
         fa.addRow("应用包名 (AppId):", self.edit_appid)
 
         self.edit_ver = QLineEdit(self.cfg.get('app_version', '1.0.0.0'))
+        self.edit_ver.setMinimumHeight(26)
+        self.edit_ver.setMinimumWidth(120)
         fa.addRow("应用版本号:", self.edit_ver)
         v.addWidget(self.box_apk_cfg)
 
+        # ---------- 输出设置 ----------
         g3 = QGroupBox("③ 输出设置")
         f2 = QFormLayout(g3)
         row_out = QHBoxLayout()
         self.edit_outdir = QLineEdit(self.cfg.get('output_dir', str(Path.home())))
+        self.edit_outdir.setMinimumHeight(26)
+        self.edit_outdir.setMinimumWidth(200)
         bo = QPushButton("浏览...")
         bo.clicked.connect(lambda: self.edit_outdir.setText(
             QFileDialog.getExistingDirectory(self, "选择输出目录", self.edit_outdir.text()) or self.edit_outdir.text()
         ))
         row_out.addWidget(self.edit_outdir, 1)
-        row_out.addWidget(bo)
+        row_out.addWidget(bo, 0)
         w2 = QWidget()
         w2.setLayout(row_out)
         f2.addRow("输出目录:", w2)
@@ -1671,36 +1684,67 @@ class MainWindow(QMainWindow):
         f2.addRow("", self.chk_keep_workdir)
         v.addWidget(g3)
 
-        # 按钮
+        # ---------- 按钮行 ----------
         btn_row = QHBoxLayout()
         btn_row.addStretch(1)
         self.btn_start = QPushButton("🚀 开始构建: EXE")
         self.btn_start.setMinimumHeight(42)
         self.btn_start.setStyleSheet("""
-            QPushButton { background:#2d8cf0; color:white; font-weight:bold;
-                border:none; border-radius:6px; padding:8px 28px; font-size:10pt; }
-            QPushButton:hover { background:#419ff9; }
-            QPushButton:disabled { background:#8c9ab4; }
+            QPushButton {
+                background: #2d8cf0;
+                color: white;
+                font-weight: bold;
+                border: none;
+                border-radius: 6px;
+                padding: 8px 28px;
+                font-size: 10pt;
+            }
+            QPushButton:hover {
+                background: #419ff9;
+            }
+            QPushButton:disabled {
+                background: #8c9ab4;
+            }
         """)
         self.btn_start.clicked.connect(self._on_start)
+
         self.btn_stop = QPushButton("⏹ 停止")
         self.btn_stop.setMinimumHeight(42)
         self.btn_stop.setEnabled(False)
         self.btn_stop.setStyleSheet("""
-            QPushButton { background:#ed4014; color:white; font-weight:bold;
-                border:none; border-radius:6px; padding:8px 20px; }
-            QPushButton:hover { background:#ff5533; }
-            QPushButton:disabled { background:#b8a5a0; }
+            QPushButton {
+                background: #ed4014;
+                color: white;
+                font-weight: bold;
+                border: none;
+                border-radius: 6px;
+                padding: 8px 20px;
+            }
+            QPushButton:hover {
+                background: #ff5533;
+            }
+            QPushButton:disabled {
+                background: #b8a5a0;
+            }
         """)
         self.btn_stop.clicked.connect(self._on_stop)
+
         btn_row.addWidget(self.btn_start, 3)
         btn_row.addSpacing(12)
         btn_row.addWidget(self.btn_stop, 2)
         btn_row.addStretch(1)
         v.addLayout(btn_row)
+
+        # ---------- 设置垂直拉伸权重 ----------
+        v.setStretchFactor(g1, 1)
+        v.setStretchFactor(g2, 2)          # 配置组权重最高
+        v.setStretchFactor(self.box_exe_cfg, 1)
+        v.setStretchFactor(self.box_apk_cfg, 1)
+        v.setStretchFactor(g3, 1)
+        v.setStretchFactor(btn_row, 0)     # 按钮行不拉伸，固定高度
         v.addStretch(1)
 
-        # 初始化显隐
+        # ---------- 初始化显隐 ----------
         self._on_format_changed()
 
     def _toggle_all_formats(self):
