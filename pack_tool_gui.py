@@ -1,4 +1,4 @@
-﻿﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 r"""
 Web资源打包工具 (EXE + APK 双格式)
@@ -252,7 +252,6 @@ PATCH_SCRIPT = r"""
 <!-- Scratch 快捷键补丁: F4 全屏切换 / F2 绿旗 (注入 by pack_tool_gui) -->
 <script>
 (function () {
-document.querySelector('[class*="green-flag"]')?.click();
   // F4: 全屏切换
   document.addEventListener('keydown', function (e) {
     if (e.key === 'F4') {
@@ -294,7 +293,11 @@ document.querySelector('[class*="green-flag"]')?.click();
 
 
 def _inject_html_patch(index_path: Path, style_block: str, script_block: str) -> Tuple[bool, str]:
-    """把 style_block 注入到 </head> 前；script_block 注入到 </body> 前(没有</head/body则追加)"""
+    """
+    1. 注入 style_block 到 </head> 前
+    2. 注入 script_block 到 </body> 前
+    3. 自动将 if (false) 改为 if (true) 以实现加载后自动启动
+    """
     try:
         html = index_path.read_text(encoding='utf-8', errors='ignore')
     except Exception as e:
@@ -302,7 +305,24 @@ def _inject_html_patch(index_path: Path, style_block: str, script_block: str) ->
 
     original = html
 
-    # ---- 注入 STYLE 到 </head> 之前 (避免重复注入
+    # ---- 1. 修改启动条件：if (false) -> if (true) ----
+    # 精确匹配包含 scaffolding.start() 的 if (false) 分支
+    # 模式：if (false) { ... scaffolding.start() ... }
+    # 替换为 if (true) { 保持不变 }
+    pattern = r'(if\s*\(\s*)false(\s*\)\s*\{[^}]*?scaffolding\.start\(\)[^}]*?\})'
+    # 使用 DOTALL 让 . 匹配换行（如果代码换行）
+    new_html, count = re.subn(pattern, r'\1true\2', html, flags=re.DOTALL)
+    if count > 0:
+        html = new_html
+        print(f"✅ 已修改自动启动条件 (if(false) → if(true))")
+    else:
+        # 如果没找到，可能是已经改过，或结构不同
+        if 'if (true)' in html and 'scaffolding.start()' in html:
+            print("ℹ️ 自动启动已启用，跳过修改")
+        else:
+            print("⚠️ 未找到目标 if(false) 分支，请检查HTML结构")
+
+    # ---- 2. 注入 STYLE（避免重复） ----
     if 'Scratch 控制栏自动隐藏' not in html:
         style_html = f'\n<style>\n{style_block}\n</style>\n'
         lower = html.lower()
@@ -310,10 +330,9 @@ def _inject_html_patch(index_path: Path, style_block: str, script_block: str) ->
         if idx >= 0:
             html = html[:idx] + style_html + html[idx:]
         else:
-            # 无 </head>，插到 <html 后
             html = style_html + html
 
-    # ---- 注入 SCRIPT 到 </body> 之前
+    # ---- 3. 注入 SCRIPT（避免重复） ----
     if 'Scratch 快捷键补丁' not in html:
         script_html = f'\n{script_block}\n'
         lower2 = html.lower()
@@ -324,13 +343,13 @@ def _inject_html_patch(index_path: Path, style_block: str, script_block: str) ->
             html += script_html
 
     if html == original:
-        return True, "补丁已存在，跳过注入"
+        return True, "补丁已存在，跳过注入（自动启动可能已修改）"
 
     try:
         index_path.write_text(html, encoding='utf-8')
     except Exception as e:
         return False, f"写回 index.html 失败: {e}"
-    return True, "已注入 Scratch 补丁 (控制栏隐藏 + F4全屏 / F2绿旗)"
+    return True, "已注入补丁并启用自动启动"
 
 
 def inject_scratch_patch_if_needed(www_dir: Path, log_fn) -> Tuple[bool, str]:
@@ -614,10 +633,7 @@ def patch_controls_script(www_dir: Path, log_fn) -> Tuple[bool, str]:
         html = index_path.read_text(encoding='utf-8', errors='ignore')
         if 'src="controls.js"' in html or "src='controls.js'" in html:
             return True, "controls.js 已存在并已引用，跳过 script patch"
-        script_tag = '''<script defer src="controls.js"></script>
-<script>
-  document.querySelector('[class*="green-flag"]')?.click();
-</script>'''
+        script_tag = '''<script defer src="controls.js"></script>'''
         lower = html.lower()
         idx = lower.find('</head>')
         if idx >= 0:
