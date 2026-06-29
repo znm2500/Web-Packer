@@ -10,6 +10,7 @@ Web资源打包工具 (EXE + APK 双格式)
   5. EXE分支: ctypes + Win32 API 修改 game.exe 内嵌图标 + 更新 package.json + 重命名 AppName.exe → 7z
   6. APK分支: template.APK 写入 assets/www + manifest 包名/版本/名称 patch + 签名 → APK
 """
+import re
 import sys
 import os
 import io
