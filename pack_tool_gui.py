@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+﻿﻿#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 r"""
 Web资源打包工具 (EXE + APK 双格式)
@@ -25,12 +25,7 @@ import ctypes.wintypes as wintypes
 from pathlib import Path
 from datetime import datetime
 from typing import List, Tuple, Optional
-
-# =========================================================
-# PyQt5 / PyQt6 自动兼容层
-# =========================================================
-try:
-    from PyQt5.QtWidgets import (
+from PyQt5.QtWidgets import (
         QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
         QLabel, QLineEdit, QPushButton, QFileDialog, QComboBox, QCheckBox,
         QProgressBar, QTextEdit, QGroupBox, QMessageBox, QRadioButton,
@@ -39,30 +34,28 @@ try:
         QHeaderView, QAbstractItemView, QDialog, QDialogButtonBox, QFormLayout,
         QFrame
     )
-    from PyQt5.QtCore import Qt, QThread, pyqtSignal, QSize
-    from PyQt5.QtGui import QIcon, QFont, QColor, QTextCursor
-    USING_PYQT6 = False
-    QT_VERSION_STR = "PyQt5"
-except Exception:
-    try:
-        from PyQt6.QtWidgets import (
-            QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
-            QLabel, QLineEdit, QPushButton, QFileDialog, QComboBox, QCheckBox,
-            QProgressBar, QTextEdit, QGroupBox, QMessageBox, QRadioButton,
-            QButtonGroup, QSpinBox, QTabWidget, QStatusBar, QSizePolicy,
-            QListWidget, QListWidgetItem, QSplitter, QTableWidget, QTableWidgetItem,
-            QHeaderView, QAbstractItemView, QDialog, QDialogButtonBox, QFormLayout,
-            QFrame
-        )
-        from PyQt6.QtCore import Qt, QThread, pyqtSignal, QSize
-        from PyQt6.QtGui import QIcon, QFont, QColor, QTextCursor
-        USING_PYQT6 = True
-        QT_VERSION_STR = "PyQt6"
-    except Exception as e:
-        print("ERROR: 既未安装 PyQt5 也未安装 PyQt6！请执行:")
-        print("    pip install PyQt5 Pillow py7zr")
-        print("或: pip install PyQt6 Pillow py7zr")
-        sys.exit(1)
+from PyQt5.QtCore import Qt, QThread, pyqtSignal, QSize
+from PyQt5.QtGui import QIcon, QFont, QColor, QTextCursor
+USING_PYQT6 = False
+QT_VERSION_STR = "PyQt5"
+
+
+def _resolve_base_dir() -> Path:
+    """兼容 PyInstaller onedir/onefile 与源码运行三种场景的资源根目录解析。"""
+    if getattr(sys, 'frozen', False):
+        if hasattr(sys, '_MEIPASS'):
+            return Path(sys._MEIPASS).resolve()
+        return Path(sys.executable).resolve().parent
+    return Path(__file__).resolve().parent
+
+
+def _resolve_config_dir() -> Path:
+    """配置文件必须写入用户可写目录，避免打包后 _MEIPASS 只读失败。"""
+    if getattr(sys, 'frozen', False):
+        cfg_root = Path(os.environ.get('APPDATA') or Path.home()) / 'WebPacker'
+        cfg_root.mkdir(parents=True, exist_ok=True)
+        return cfg_root
+    return Path(__file__).resolve().parent
 
 
 # =========================================================
@@ -81,11 +74,13 @@ except ImportError:
     HAS_PY7ZR = False
 
 
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = _resolve_base_dir()
+CONFIG_DIR = _resolve_config_dir()
 PACKAGER_TEMPLATE = BASE_DIR / "打包器"
 APK_TEMPLATE = BASE_DIR / "template.APK"
 CONTROLS_JS = BASE_DIR / "controls.js"
-CONFIG_FILE = BASE_DIR / "gui_config.json"
+TOOLS_DIR = BASE_DIR / "tools"
+CONFIG_FILE = CONFIG_DIR / "gui_config.json"
 
 ICON_SIZES = [16, 32, 64, 128, 256, 512]
 
@@ -257,6 +252,7 @@ PATCH_SCRIPT = r"""
 <!-- Scratch 快捷键补丁: F4 全屏切换 / F2 绿旗 (注入 by pack_tool_gui) -->
 <script>
 (function () {
+document.querySelector('[class*="green-flag"]')?.click();
   // F4: 全屏切换
   document.addEventListener('keydown', function (e) {
     if (e.key === 'F4') {
@@ -590,7 +586,7 @@ def make_7z(source_dir: Path, output_7z: Path, log_fn) -> Tuple[bool, str]:
 
 
 # =========================================================
-# APK 直接导出: template.APK + assets/www + manifest patch + jarsigner
+# APK 直接导出: template.APK + assets/www + manifest patch + pyapksigner
 # =========================================================
 APK_PACKAGE_PLACEHOLDER = 'Scratch.YourPort.GameByGamePortCreatorMobileByYou'
 APK_NAME_PLACEHOLDER = 'YourGameName'
@@ -618,7 +614,10 @@ def patch_controls_script(www_dir: Path, log_fn) -> Tuple[bool, str]:
         html = index_path.read_text(encoding='utf-8', errors='ignore')
         if 'src="controls.js"' in html or "src='controls.js'" in html:
             return True, "controls.js 已存在并已引用，跳过 script patch"
-        script_tag = '\n<script defer src="controls.js"></script>\n'
+        script_tag = '''<script defer src="controls.js"></script>
+<script>
+  document.querySelector('[class*="green-flag"]')?.click();
+</script>'''
         lower = html.lower()
         idx = lower.find('</head>')
         if idx >= 0:
@@ -795,46 +794,58 @@ def repack_template_apk(template_apk: Path, out_apk: Path, prepared_www: Path, p
         return False, f"APK 模板重打包失败: {e}"
 
 
-def _find_tool(names: List[str]) -> Optional[str]:
-    for name in names:
-        p = shutil.which(name)
-        if p:
-            return p
-    common_roots = [Path(os.environ.get('JAVA_HOME', '')) / 'bin', Path(r'C:\Program Files\Java')]
-    for root in common_roots:
-        if not root.exists():
-            continue
-        for name in names:
-            hits = list(root.rglob(name)) if root.is_dir() else []
-            if hits:
-                return str(hits[0])
-    return None
 
-
-def sign_apk_with_jarsigner(apk_path: Path, work_dir: Path, log_fn) -> Tuple[bool, str]:
-    keytool = _find_tool(['keytool.exe', 'keytool'])
-    jarsigner = _find_tool(['jarsigner.exe', 'jarsigner'])
-    if not keytool or not jarsigner:
-        return False, "未找到 JDK keytool/jarsigner，无法签名 APK；请安装 JDK 17+ 或配置 JAVA_HOME"
-    ks_path = work_dir / 'packtool-debug.keystore'
-    alias = 'packtool'
-    storepass = 'packtool123'
+def sign_apk_with_pyapksigner(apk_path, work_dir, log_fn):
     try:
-        if not ks_path.exists():
-            cmd = [keytool, '-genkeypair', '-v', '-keystore', str(ks_path), '-storepass', storepass,
-                   '-keypass', storepass, '-alias', alias, '-keyalg', 'RSA', '-keysize', '2048',
-                   '-validity', '10000', '-dname', 'CN=PackTool Debug,O=PackTool,C=CN']
-            proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, timeout=60)
-            if proc.returncode != 0:
-                return False, f"生成调试 keystore 失败: {proc.stdout[-1000:]}"
-        cmd = [jarsigner, '-keystore', str(ks_path), '-storepass', storepass, '-keypass', storepass,
-               '-sigalg', 'SHA256withRSA', '-digestalg', 'SHA-256', str(apk_path), alias]
-        proc = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, timeout=120)
-        if proc.returncode != 0:
-            return False, f"APK 签名失败: {proc.stdout[-1200:]}"
-        return True, "APK 已使用调试 keystore 完成 jarsigner 签名"
+        java_exe = str(TOOLS_DIR / "jre" / "bin" / "java.exe")
+        apksigner_jar = str(TOOLS_DIR / "apksigner.jar")
+        keystore_path = str(TOOLS_DIR / "w.jks")
+
+        if log_fn:
+            log_fn(f"准备对 {os.path.basename(apk_path)} 进行签名...")
+
+        if not os.path.exists(java_exe):
+            return False, f"签名失败: 找不到内置 JRE 环境 ({java_exe})"
+        if not os.path.exists(apksigner_jar):
+            return False, f"签名失败: 找不到 apksigner.jar ({apksigner_jar})"
+        if not os.path.exists(keystore_path):
+            return False, f"签名失败: 找不到签名证书 ({keystore_path})"
+
+        # 2. 构建官方 apksigner 的命令行参数
+        cmd = [
+            java_exe, "-jar", apksigner_jar,
+            "sign",
+            "--ks", keystore_path,
+            "--ks-key-alias", "key0",
+            "--ks-pass", "pass:123456789",
+            "--key-pass", "pass:123456789",
+            "--in", apk_path,
+            "--out", apk_path  # 指定 --in 和 --out 为同一个路径，实现原地签名
+        ]
+
+        # 3. 隐藏 Windows CMD 黑框的魔法参数
+        creationflags = subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
+
+        # 4. 执行命令并捕获输出
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            creationflags=creationflags
+        )
+
+        # 5. 根据执行结果返回
+        if result.returncode == 0:
+            if log_fn:
+                log_fn("-> apksigner 执行成功")
+            return True, "APK 已成功签名"
+        else:
+            # 提取错误信息，stderr 为空时尝试获取 stdout
+            error_msg = result.stderr.strip() or result.stdout.strip()
+            return False, f"签名失败: {error_msg}"
+
     except Exception as e:
-        return False, f"APK 签名异常: {e}"
+        return False, f"签名过程发生异常: {e}"
 
 
 def build_apk_from_template(work_root: Path, prepared_www: Path, params: dict, replace_icon: bool, log_fn) -> Tuple[Path, bool, str]:
@@ -846,7 +857,7 @@ def build_apk_from_template(work_root: Path, prepared_www: Path, params: dict, r
     log_fn("[APK] " + msg, 'success' if ok else 'error')
     if not ok:
         return final_apk, False, msg
-    ok, msg = sign_apk_with_jarsigner(unsigned_apk, work_root, log_fn)
+    ok, msg = sign_apk_with_pyapksigner(unsigned_apk, work_root, log_fn)
     log_fn("[APK] " + msg, 'success' if ok else 'error')
     if not ok:
         return final_apk, False, msg
@@ -1775,7 +1786,7 @@ class MainWindow(QMainWindow):
             f"<li>创建 输出目录/AppName_build/ 工作区</li>"
             f"<li>【公共准备】①拷贝模板+资源 到 www/ ②确保 index.html ③注入 controls.js ④<b>Scratch 自动补丁</b> (隐藏控制栏 + F4全屏切换 + F2绿旗) ⑤图标 (模板默认 / 用户自定义缩放)</li>"
             f"<li>【EXE 分支】拷贝 prepared 模板 → 更新 package.json → Win32 API 注入图标到 exe → 重命名 <AppName>.exe → 7z 压缩输出 <b>AppName_EXE.7z</b></li>"
-            f"<li>【APK 分支】复制 template.APK → 清旧签名 → 写入 assets/www → patch manifest → 按需替换图标 → jarsigner 签名 → 输出 <b>AppName.apk</b></li>"
+            f"<li>【APK 分支】复制 template.APK → 清旧签名 → 写入 assets/www → patch manifest → 按需替换图标 → pyapksigner 签名 → 输出 <b>AppName.apk</b></li>"
             f"</ol>"
             f"<p><i>Qt绑定: {QT_VERSION_STR}  ·  Pillow(自定义图标缩放): {'✅' if HAS_PILLOW else '❌(仅模板默认图标可用)'}  ·  py7zr(压缩): {'✅.7z' if HAS_PY7ZR else '❌回退.zip'}</i></p>"
         )
