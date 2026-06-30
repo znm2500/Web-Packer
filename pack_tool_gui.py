@@ -814,6 +814,9 @@ def repack_template_apk(template_apk: Path, out_apk: Path, prepared_www: Path, p
             for f in prepared_www.rglob('*'):
                 if not f.is_file():
                     continue
+                # 跳过 icons 目录下的所有文件，避免打包进 assets/www/
+                if 'icons' in f.relative_to(prepared_www).parts:
+                    continue
                 arc = 'assets/www/' + f.relative_to(prepared_www).as_posix()
                 zout.write(f, arc, compress_type=zipfile.ZIP_DEFLATED)
                 added += 1
@@ -878,7 +881,7 @@ def sign_apk_with_pyapksigner(apk_path, work_dir, log_fn):
 
 def build_apk_from_template(work_root: Path, prepared_www: Path, params: dict,
                             replace_icon: bool, log_fn,
-                            inject_controls: bool = False) -> Tuple[Path, bool, str]:
+                            inject_controls: bool = True) -> Tuple[Path, bool, str]:
     app_name = (params.get('app_name') or 'MyApp').strip()
     safe = ''.join(c if c not in r'\/:*?"<>| ' else '_' for c in app_name) or 'App'
     unsigned_apk = work_root / f"{safe}_unsigned.apk"
@@ -1004,7 +1007,7 @@ def build_apk_cordova_project(work_root: Path, prepared_www: Path, params: dict,
   <preference name="AndroidInsecureFileModeEnabled" value="true" />
   <preference name="AndroidLaunchMode" value="singleTask" />
   <preference name="Orientation" value="default" />
-  <preference name="Fullscreen" value="false" />
+  <preference name="Fullscreen" value="true" />
   <preference name="android-minSdkVersion" value="{params.get('android_min_sdk', 23)}" />
   <preference name="android-targetSdkVersion" value="{params.get('android_target_sdk', 34)}" />
   <preference name="android-architectures" value="{params.get('android_arch', 'arm64-v8a,armeabi-v7a')}" />
@@ -1065,6 +1068,7 @@ def build_apk_cordova_project(work_root: Path, prepared_www: Path, params: dict,
         <activity android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
             android:launchMode="singleTask"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
