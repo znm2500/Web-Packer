@@ -293,11 +293,20 @@ PATCH_SCRIPT = r"""
 """.strip()
 
 
+def _find_tag_safe(html: str, tag: str) -> int:
+    """
+    在剥离了 <script> 和 <style> 内容的 HTML 副本中查找 tag（如 '</head>'）
+    返回该标签在原始 html 中的索引（因为用等长空格替换，索引不变）
+    """
+    # 匹配 <script ...> ... </script> 或 <style ...> ... </style>（不区分大小写，允许跨行）
+    pattern = r'(<script[^>]*>.*?</script>|<style[^>]*>.*?</style>)'
+    # 替换为等长的空格，保留位置偏移
+    stripped = re.sub(pattern, lambda m: ' ' * len(m.group(0)), html, flags=re.DOTALL | re.IGNORECASE)
+    return stripped.lower().find(tag)
+
 def _inject_html_patch(index_path: Path, style_block: str, script_block: str) -> Tuple[bool, str]:
     """
-    1. 注入 style_block 到 </head> 前
-    2. 注入 script_block 到 </body> 前
-    3. 自动将 if (false) 改为 if (true) 以实现加载后自动启动
+    安全注入样式和脚本补丁，避免被 JS 字符串内的 '</head>'/'</body>' 干扰。
     """
     try:
         html = index_path.read_text(encoding='utf-8', errors='ignore')
@@ -307,40 +316,42 @@ def _inject_html_patch(index_path: Path, style_block: str, script_block: str) ->
     original = html
 
     # ---- 1. 修改启动条件：if (false) -> if (true) ----
-    # 精确匹配包含 scaffolding.start() 的 if (false) 分支
-    # 模式：if (false) { ... scaffolding.start() ... }
-    # 替换为 if (true) { 保持不变 }
     pattern = r'(if\s*\(\s*)false(\s*\)\s*\{[^}]*?scaffolding\.start\(\)[^}]*?\})'
-    # 使用 DOTALL 让 . 匹配换行（如果代码换行）
     new_html, count = re.subn(pattern, r'\1true\2', html, flags=re.DOTALL)
     if count > 0:
         html = new_html
         print(f"✅ 已修改自动启动条件 (if(false) → if(true))")
     else:
-        # 如果没找到，可能是已经改过，或结构不同
         if 'if (true)' in html and 'scaffolding.start()' in html:
             print("ℹ️ 自动启动已启用，跳过修改")
         else:
             print("⚠️ 未找到目标 if(false) 分支，请检查HTML结构")
 
-    # ---- 2. 注入 STYLE（避免重复） ----
+    # ---- 2. 安全查找 </head> 并注入 STYLE ----
     if 'Scratch 控制栏自动隐藏' not in html:
         style_html = f'\n<style>\n{style_block}\n</style>\n'
-        lower = html.lower()
-        idx = lower.find('</head>')
+        idx = _find_tag_safe(html, '</head>')
         if idx >= 0:
             html = html[:idx] + style_html + html[idx:]
         else:
-            html = style_html + html
+            # 兜底：如果没找到 </head>，尝试 <head> 之后插入（但这种情况极少）
+            idx2 = _find_tag_safe(html, '<head>')
+            if idx2 >= 0:
+                # 在 <head> 标签之后插入（需要找到 > 的位置）
+                head_end = html.find('>', idx2) + 1
+                html = html[:head_end] + style_html + html[head_end:]
+            else:
+                # 实在不行，插在开头（不推荐，但保底）
+                html = style_html + html
 
-    # ---- 3. 注入 SCRIPT（避免重复） ----
+    # ---- 3. 安全查找 </body> 并注入 SCRIPT ----
     if 'Scratch 快捷键补丁' not in html:
         script_html = f'\n{script_block}\n'
-        lower2 = html.lower()
-        idx2 = lower2.find('</body>')
+        idx2 = _find_tag_safe(html, '</body>')
         if idx2 >= 0:
             html = html[:idx2] + script_html + html[idx2:]
         else:
+            # 兜底：插在文档末尾
             html += script_html
 
     if html == original:
@@ -865,35 +876,59 @@ def sign_apk_with_pyapksigner(apk_path, work_dir, log_fn):
         return False, f"签名过程发生异常: {e}"
 
 
-def build_apk_from_template(work_root: Path, prepared_www: Path, params: dict, replace_icon: bool, log_fn) -> Tuple[Path, bool, str]:
+def build_apk_from_template(work_root: Path, prepared_www: Path, params: dict,
+                            replace_icon: bool, log_fn,
+                            inject_controls: bool = False) -> Tuple[Path, bool, str]:
     app_name = (params.get('app_name') or 'MyApp').strip()
     safe = ''.join(c if c not in r'\/:*?"<>| ' else '_' for c in app_name) or 'App'
     unsigned_apk = work_root / f"{safe}_unsigned.apk"
     final_apk = work_root.parent / f"{safe}.apk"
-    ok, msg = repack_template_apk(APK_TEMPLATE, unsigned_apk, prepared_www, params, replace_icon, log_fn)
+
+    # ---- 若需要注入 controls.js，则先拷贝一份 www 到临时目录 ----
+    src_www = prepared_www
+    temp_www = None
+    if inject_controls:
+        import tempfile
+        temp_www = Path(tempfile.mkdtemp(prefix='apk_www_'))
+        log_fn("[APK] 为 APK 单独拷贝 www 并注入 controls.js", 'info')
+        shutil.copytree(prepared_www, temp_www, dirs_exist_ok=True)
+        ok, msg = patch_controls_script(temp_www, log_fn)
+        log_fn("[APK] controls.js 注入: " + msg, 'success' if ok else 'error')
+        if not ok:
+            shutil.rmtree(temp_www, ignore_errors=True)
+            return final_apk, False, msg
+        src_www = temp_www
+
+    # 原有的打包逻辑（使用 src_www）
+    ok, msg = repack_template_apk(APK_TEMPLATE, unsigned_apk, src_www, params, replace_icon, log_fn)
     log_fn("[APK] " + msg, 'success' if ok else 'error')
     if not ok:
+        if temp_www:
+            shutil.rmtree(temp_www, ignore_errors=True)
         return final_apk, False, msg
+
+    # 签名（不变）
     ok, msg = sign_apk_with_pyapksigner(unsigned_apk, work_root, log_fn)
     log_fn("[APK] " + msg, 'success' if ok else 'error')
     if not ok:
+        if temp_www:
+            shutil.rmtree(temp_www, ignore_errors=True)
         return final_apk, False, msg
+
+    # 移动最终 APK
     try:
         if final_apk.exists():
             final_apk.unlink()
         shutil.move(str(unsigned_apk), str(final_apk))
         size_mb = final_apk.stat().st_size / (1024 * 1024)
+        if temp_www:
+            shutil.rmtree(temp_www, ignore_errors=True)
         return final_apk, True, f"APK 导出完成: {final_apk.name} ({size_mb:.2f} MB)"
     except Exception as e:
+        if temp_www:
+            shutil.rmtree(temp_www, ignore_errors=True)
         return final_apk, False, f"移动签名 APK 到输出目录失败: {e}"
 
-# =========================================================
-# 各平台「工程包」生成 (EXE外的平台，目前输出 Cordova/.app/AppDir 结构占位 7z)
-#   真实后端接入点:
-#     APK:      build_apk_cordova_project    → 接入 cordova build android / gradlew assembleRelease
-#     macOS:    build_macapp_project         → 接入 electron-osx-sign / pkgbuild / productbuild
-#     AppImage: build_appimage_appdir        → 接入 appimagetool (linuxdeploy + AppImageKit)
-# =========================================================
 def _write_readme(path: Path, body: str):
     try:
         path.write_text(body, encoding='utf-8')
@@ -1231,21 +1266,13 @@ class PackWorker(QThread):
                 return
             if self._stop: return self._abort()
 
-            # ---- 3) Scratch 自动补丁 ----
-            self._set_progress(26, "[公共准备] 注入 controls.js 控制脚本 ...")
-            ok, msg = patch_controls_script(prepared_www, self._log)
-            self._log(msg, 'success' if ok else 'error')
-            if not ok:
-                self.finished_ok.emit(False, msg, {})
-                return
-            if self._stop: return self._abort()
 
             self._set_progress(28, "[公共准备] Scratch 检测与注入控制栏隐藏/F2/F4快捷键 ...")
             ok, msg = inject_scratch_patch_if_needed(prepared_www, self._log)
             self._log(msg, 'success' if ok else 'warning')
             if self._stop: return self._abort()
 
-            # ---- 4) 图标处理 (默认图标/用户自定义缩放) ----
+            # ---- 3) 图标处理 (默认图标/用户自定义缩放) ----
             self._set_progress(34, "[公共准备] 正在处理图标 (默认图标 / 用户自定义缩放) ...")
             icons_dir = prepared_www / 'icons'
             user_icon = None
