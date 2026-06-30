@@ -647,7 +647,9 @@ function load_sprite(name, subimg) {
     const key = `${name}_${subimg}`;
     if (spriteCache[key]) return spriteCache[key];
     total++;
-    const img = new Image(); img.onload = img_loaded;
+    const img = new Image();
+    img.onload = img_loaded;
+    img.onerror = img_loaded;
     img.src = mc_res_url(`MobileGraphics/${name}/${name}_${subimg}.png`);
     return spriteCache[key] = img;
 }
@@ -944,9 +946,16 @@ function draw_sprite_ext(sprite, subimg, x, y, xscale, yscale, rot, colour, alph
     ctx.restore();
 }
 function draw_colored(sprite, x, y, w, h, col, alpha) {
-    const t=document.createElement('canvas'); t.width=Math.ceil(w); t.height=Math.ceil(h); const tc=t.getContext('2d'); tc.imageSmoothingEnabled=false;
-    tc.drawImage(sprite,0,0,w,h); tc.globalCompositeOperation='source-atop'; tc.fillStyle=gms_col(col); tc.fillRect(0,0,w,h);
-    ctx.save(); ctx.globalAlpha=alpha; ctx.drawImage(t,x,y); ctx.restore();
+    if (!sprite?.complete) return;
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(sprite, x, y, w, h);
+    if (col !== undefined && col !== c_white) {
+        ctx.globalCompositeOperation = 'source-in';
+        ctx.fillStyle = gms_col(col);
+        ctx.fillRect(x, y, w, h);
+    }
+    ctx.restore();
 }
 function draw_roundrect_color(x1,y1,x2,y2,col1,col2,outline) {
     const lx=Math.min(x1,x2), rx=Math.max(x1,x2), ty=Math.min(y1,y2), by=Math.max(y1,y2);
@@ -1338,7 +1347,8 @@ function drawPanel(self, isStick) {
 }
 function drawAKB(op) {
     if (!Android_System_Keyboard) return;
-    const drawX = (ui_state === 2) ? -50 : akb_x;
+    // 简易键盘（ui_state===2）时系统键盘按钮绘制在 -95, 5
+    const drawX = (ui_state === 2) ? -95 : akb_x;
     const drawY = (ui_state === 2) ? 5 : akb_y;
     const spr = keyboard_check(105) ? spr_akb_p : spr_akb_n;
     if(spr?.complete) draw_sprite_ext(spr, 0, drawX, drawY, 2, 2, 0, c_white, op);
@@ -2116,10 +2126,18 @@ function obj_mobilekey_Create_0() {
         mk_two_up: 38, mk_two_down: 40, mk_two_left: 37, mk_two_right: 39,
         mk_two_w: 87, mk_two_a: 65, mk_two_s: 83, mk_two_d: 68,
         zCol:c_aqua, xCol:c_orange, cCol:c_green, healCol:c_blue, f2Col:c_red,
-        extra1Col:c_yellow, extra2Col:c_purple, extra3Col:c_white, extra4Col:c_gray, alpha:0.5
+        extra1Col:c_yellow, extra2Col:c_purple, extra3Col:c_white, extra4Col:c_gray, alpha:0.5,
+        settings_down: false
     };
 }
 function obj_mobilekey_Step_0(self) {
+    if (deep_settings_open) {
+        for (const kc in keyIsDown) {
+            if (keyIsDown[kc]) keyboard_key_release(Number(kc));
+        }
+        return;
+    }
+
     if (mobile_2pad) {
         const leftKeys = mobile_2pad_swap
             ? { up: 87, down: 83, left: 65, right: 68 }
@@ -2131,7 +2149,8 @@ function obj_mobilekey_Step_0(self) {
         let cu=1, cd=1, cl=1, cr=1, cz=1, cx=1, cg=1;
         let cw=1, ca=1, cs=1, cd_d=1;
         let ch=1, cf2=1, cextra1=1, cextra2=1, cextra3=1, cextra4=1, cakb=1;
-        const useAkbX = -50, useAkbY = 5;
+        const useAkbX = -95, useAkbY = 5;
+        let settingsTouched = false;
         for (const pid in _pointerDown) {
             if (!_pointerDown[pid]) continue;
             const p = _pointers[pid];
@@ -2139,6 +2158,16 @@ function obj_mobilekey_Step_0(self) {
             const gx = p.wx, gy = p.wy;
             let ak = 0, ak2 = 0;
             let entered_left = 0, entered_right = 0;
+
+            // 设置按钮区域
+            if (gx >= -50 && gx <= -12 && gy >= 5 && gy <= 55) {
+                settingsTouched = true;
+                if (p.justPressed) {
+                    audio_play_sound('snd_menu_confirm_mobile');
+                    deep_settings_open = true;
+                }
+                continue;
+            }
 
             if (gy < 50 && gx >= 320 && gx < 640) {
                 if (gx >= 560) { cz = 0.5; ak = self.mk_z; }
@@ -2183,11 +2212,14 @@ function obj_mobilekey_Step_0(self) {
                 cakb = 0.5;
                 if (!ak) ak = 105; else ak2 = 105;
             }
+
             if (p.justPressed) {
                 if (ak) { if (keyboard_check(ak)) { keyboard_key_release(ak); keyboard_key_press(ak); } }
                 if (ak2) { if (keyboard_check(ak2)) { keyboard_key_release(ak2); keyboard_key_press(ak2); } }
             }
         }
+
+        self.settings_down = settingsTouched;
 
         const keys = [
             [cz, self.mk_z], [cx, self.mk_x], [cg, self.mk_c],
@@ -2215,12 +2247,23 @@ function obj_mobilekey_Step_0(self) {
 
     } else {
         let cu=1, cd=1, cl=1, cr=1, cz=1, cx=1, cg=1, ch=1, cf2=1, cextra1=1, cextra2=1, cextra3=1, cextra4=1, cakb=1;
-        const useAkbX = -50, useAkbY = 5;
+        const useAkbX = -95, useAkbY = 5;
+        let settingsTouched = false;
         for (const pid in _pointerDown) {
             if (!_pointerDown[pid]) continue;
             const p = _pointers[pid];
             if (!p) continue;
             const gx = p.wx, gy = p.wy;
+
+            // 设置按钮区域
+            if (gx >= -50 && gx <= -12 && gy >= 5 && gy <= 55) {
+                settingsTouched = true;
+                if (p.justPressed) {
+                    audio_play_sound('snd_menu_confirm_mobile');
+                    deep_settings_open = true;
+                }
+                continue;
+            }
 
             if (Android_System_Keyboard && gx>=useAkbX && gx<=useAkbX+AKB_W && gy>=useAkbY && gy<=useAkbY+AKB_H) { cakb = 0.5; keyboard_key_press(105); }
             else if (mobile_f2 && gx>=0 && gx<=80 && gy>=0 && gy<=30) { cf2=0.5; keyboard_key_press(self.mk_f2); }
@@ -2241,6 +2284,8 @@ function obj_mobilekey_Step_0(self) {
             }
         }
 
+        self.settings_down = settingsTouched;
+
         if (keyboard_check_pressed(105)) { if (system_kb_active) _closeSystemKeyboard(); else _openSystemKeyboard(); }
 
         const sKeys = [
@@ -2260,7 +2305,12 @@ function obj_mobilekey_Step_0(self) {
     }
 }
 function obj_mobilekey_Draw_75(self) {
-    if (deep_settings_open) return;
+    // 深层设置打开时：绘制深层设置面板，不绘制键盘
+    if (deep_settings_open) {
+        drawDeepSettingsPanel(self);
+        return;
+    }
+
     draw_set_alpha(self.alpha);
     if (mobile_2pad) {
         draw_roundrect_color(400, 20, 480, 0, gms_col(self.cCol), gms_col(self.cCol), 0);
@@ -2282,7 +2332,11 @@ function obj_mobilekey_Draw_75(self) {
             draw_sprite_ext(spr_mobilekey, 0, 640 - 76 - imgW, 296, 2, 2, 0, c_white, self.alpha);
         }
         drawAKB(0.5);
+        // 绘制设置按钮
+        const si = get_settings_img(self.settings_down);
+        if(si?.complete) draw_sprite_ext(si, 0, -50, 5, SETT_SCALE, SETT_SCALE, 0, c_white, 0.5);
     } else {
+        // 单键盘模式
         draw_roundrect_color(400, 460, 480, 480, gms_col(self.cCol), gms_col(self.cCol), 0);
         draw_roundrect_color(480, 420, 560, 460, gms_col(self.xCol), gms_col(self.xCol), 0);
         draw_roundrect_color(560, 420, 640, 460, gms_col(self.zCol), gms_col(self.zCol), 0);
@@ -2295,6 +2349,9 @@ function obj_mobilekey_Draw_75(self) {
         draw_set_alpha(1);
         drawAKB(0.5);
         if(spr_mobilekey?.complete) draw_sprite_ext(spr_mobilekey,0,76,296,2,2,0,c_white,0.41);
+        // 绘制设置按钮
+        const si = get_settings_img(self.settings_down);
+        if(si?.complete) draw_sprite_ext(si, 0, -50, 5, SETT_SCALE, SETT_SCALE, 0, c_white, 0.5);
     }
 }
 
@@ -2318,14 +2375,25 @@ function obj_mobilecontrols_Create_0() {
     };
 }
 function obj_mobilecontrols_Step_0(self) {
-    if (deep_settings_open) return;
+    if (deep_settings_open) {
+        reset_stick();
+        wasd_stick_drag = false;
+        wasd_stick_off_x = 0; wasd_stick_off_y = 0;
+        wasd_stick_dir_x = 0; wasd_stick_dir_y = 0;
+        keyboard_key_release(87); keyboard_key_release(83);
+        keyboard_key_release(65); keyboard_key_release(68);
+        for (const kc in keyIsDown) {
+            if (keyIsDown[kc]) keyboard_key_release(Number(kc));
+        }
+        return;
+    }
+
     const { sett_touched, sett_just_pressed, sett_touch_id } = getSettingsTouchState();
     settings_down = keyboard_check(92) || sett_touched;
     if (!self.edit) {
         applyTransition(self);
         if (sett_just_pressed) toggle_edit(self);
 
-        // 左侧摇杆(仅距离判定,不限区域,兼容单/双键盘及交换)
         analog_cx = analog_posx + 59 * analog_scale / 2;
         analog_cy = analog_posy + 59 * analog_scale / 2;
         if (!stick_drag) {
@@ -2339,6 +2407,7 @@ function obj_mobilecontrols_Step_0(self) {
         } else if (_pointerDown[stick_touch] && _pointers[stick_touch]) {
             drag_stick(_pointers[stick_touch].wx, _pointers[stick_touch].wy);
         } else reset_stick();
+
         if (mobile_2pad) {
             wasd_analog_cx = wasd_analog_posx + 29.5 * analog_scale;
             wasd_analog_cy = wasd_analog_posy + 29.5 * analog_scale;
@@ -2376,6 +2445,7 @@ function obj_mobilecontrols_Step_0(self) {
         if (keyboard_check_pressed(105)) { if (system_kb_active) _closeSystemKeyboard(); else _openSystemKeyboard(); }
         return;
     }
+
     applyTransition(self);
     handleKeyboardToggle(self, toggle_edit);
     processResetButton(true);
@@ -2484,7 +2554,13 @@ function obj_mobilecontrols_button_Create_0() {
     };
 }
 function obj_mobilecontrols_button_Step_0(self) {
-    if (deep_settings_open) return;
+    if (deep_settings_open) {
+        for (const kc in keyIsDown) {
+            if (keyIsDown[kc]) keyboard_key_release(Number(kc));
+        }
+        return;
+    }
+
     const { sett_touched, sett_just_pressed, sett_touch_id } = getSettingsTouchState();
     settings_down = keyboard_check(92) || sett_touched;
     if (!self.edit) {
@@ -2495,6 +2571,7 @@ function obj_mobilecontrols_button_Step_0(self) {
         if (keyboard_check_pressed(105)) { if (system_kb_active) _closeSystemKeyboard(); else _openSystemKeyboard(); }
         return;
     }
+
     _createAllVirtualKeys(self);
     applyTransition(self);
     handleKeyboardToggle(self, toggle_edit);
