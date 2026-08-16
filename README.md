@@ -2,7 +2,7 @@
 
 一个用于将本地 Web 资源快速打包为 Windows 可执行程序和 Android 安装包的工具。它适用于前端页面、Scratch 导出项目、小游戏和单页应用的轻量化分发。
 
-本项目基于 PyQt5 构建 GUI，提供一键打包流程，自动处理资源整理、入口识别、图标生成、Scratch 补丁和 APK 签名等步骤。
+本项目基于 PyQt5 构建 GUI，提供一键打包流程，自动处理资源整理、入口识别、图标生成、Scratch 补丁、Construct 2/3 兼容处理和 APK 签名等步骤。
 
 ---
 
@@ -18,8 +18,9 @@ Web Packer 的核心目标，是让 Web 项目可以直接输出两种可交付�
 - 本地目录
 - 压缩包（.zip / .7z / .tar / .gz / .bz2 / .xz / .tgz）
 - 单个 HTML 文件
+- Construct 2 / Construct 3 Web 导出目录
 
-对 Scratch 项目、移动端页面和默认入口自动修正等场景，程序也做了针对性的处理。
+对 Scratch 项目、Construct 2/3 导出、移动端页面和默认入口自动修正等场景，程序也做了针对性的处理。
 
 ---
 
@@ -50,14 +51,24 @@ Web Packer 的核心目标，是让 Web 项目可以直接输出两种可交付�
 - 根据配置替换 APK 图标资源
 - 使用内置 JRE 与 apksigner.jar 完成签名
 
-### 3. Scratch 自动适配
+### 3. Scratch / Construct 自动适配
 
-对于 Scratch 导出的项目，程序会自动检测并执行补丁：
+对于 Scratch 和 Construct 系列导出的项目，程序会自动检测并执行兼容补丁：
+
+#### Scratch
 
 - 隐藏默认控制栏
 - 绑定 F2 触发绿旗逻辑
 - 绑定 F4 进入 / 退出全屏
 - 注入移动端触屏脚本
+
+#### Construct 2 / 3
+
+- 自动识别 Construct 3 的导出目录（如 data.json / workermain.js / scripts/c3runtime.js）
+- 移除离线缓存与 Service Worker 相关文件，避免 Android 打包后异常
+- 注入 Cordova 桥接脚本，修正 exportType 为 cordova
+- 补齐图标引用，修复 Construct 3 资源路径问题
+- 提供 F2 重载页面功能，便于调试和重启游戏
 
 ### 4. 图标自动生成
 
@@ -146,6 +157,7 @@ python pack_tool_gui.py
 
 - 点击“浏览文件夹”选择 Web 项目目录
 - 或点击“浏览文件”选择 ZIP / 7Z / TAR / HTML 文件
+- 也可直接选择 Construct 2 / Construct 3 导出的 HTML5 项目目录
 
 ### 3. 配置打包参数
 
@@ -165,7 +177,7 @@ python pack_tool_gui.py
 2. 处理输入资源
 3. 检查入口 HTML
 4. 注入必要脚本和图标
-5. 检测 Scratch 项目并补丁
+5. 检测 Scratch / Construct 2 / Construct 3 项目并执行兼容补丁
 6. 分支生成 EXE 和 / 或 APK
 
 构建结束后，程序会自动打开输出目录，并展示产物清单。
@@ -184,7 +196,8 @@ python pack_tool_gui.py
   ├─ 解压或复制资源
   ├─ 确认入口 index.html
   ├─ 注入 controls.js
-  ├─ 检测 Scratch 特征并补丁
+  ├─ 检测 Scratch / Construct 2 / Construct 3 特征并补丁
+  ├─ 移除离线缓存与 Cordova 兼容修正
   └─ 生成图标
   ↓
 分支构建
