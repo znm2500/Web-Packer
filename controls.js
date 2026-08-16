@@ -54,7 +54,7 @@ window.__MC_RES_MAP = {
 "MobileGraphics/spr_joystick/spr_joystick_0.png": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAApCAYAAACoYAD2AAABRElEQVRYw+2ZQRLDIAhFidNDehVP4FVyy3ZFxhpBiBBjp39Xo/jm04iaDQaVUnr3+uSct5E5Lg2WgFkCqwZI4PZ9hxijKezLCk4rjCmB7XaQukfJwlX2IQdYgnEg0n4cKPmAAsRJJQ5px1KgzUYO8AqcJk4L9NTQAhxxjwOlYtagXz8oQEs4afwSNLjNbqiDdoaLvXnQzaAd6KEYI7vWBgCfimIh5Go6eaeLKM7NJV6c8NRUo1JK75OTM1KNolK+RrpnA0h0bHq5depu1XX9gMSGJ8DW78QS6V4TsldHPUUtf2H04O6tnPO2ZroB5qScq3QBYPyuxkvdTe+dbvb2C/+DmJXWO3dzoBj4ETcYElDKgRH3KEAWkgMtJ+wBu96qSUBbILXc7yc1oCWw5q8gKSSi62gMZHmy1FS53/v6cBV4dG/wAamN40idLgN6AAAAAElFTkSuQmCC",
 "MobileGraphics/spr_joystick/spr_joystick_1.png": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAApCAYAAACoYAD2AAAAg0lEQVRYw+3VWwrEIBBE0cqQBbkNV1zb6B1lvgIhDCTQrThwz5coNoVPCQAAAIvaqgq11o57X0SU1N+rAvbeJUm2dbYlHRVB0wWuAX+xnV7R1OSngFVBP5mQs6RD2k6NTwn5tN1vjsPwkDP8xe1Or2REbNdzd28v8U6eRv44AAAAWNYX/1E3PzQXGwkAAAAASUVORK5CYII=",
 "MobileGraphics/spr_joystick/spr_joystick_2.png": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAApCAYAAACoYAD2AAACG0lEQVRYCc2YC27CMBBEAfWQXIUTcBVu2WqgmyabmfHaCSkrleD9Po/dCno+bbTb7fbdanG/38+tHBcfKq6AqaEjwF2QFbjH43G6Xq+KcfL3wH5NVeZNBc6U01D0rMA2lYxmdNKvE+op20NVC+kA52AOpJrnFJWQCjCGKjDEXQyKq7gCpZAOUA3A8ACMJ3zMXJyBriAZIJrCKoAB5UCQ43pm0AWkAnRwMZDltEBd7Rz0gsStxgDRU/l7501KjqrYO5DlK8VDTamkKmRDtvqgeNxR1usJyVRkyUf7gosqeaSKsXGnJoWMwk95XkLSTwHKHOBbKcmO2l3q3LRnnfuqI19B5iEMOueMrhVU7mch3wkYIBXQCRJAc/mPAFSgmWWCxI7wE1bZYeRufWZBMssEyQYdAZoBGYeFRME7QSuAYDizv5PVYjTY09TcS3zS2HPYnr3A1zzuPQeO9qKQ77yHClQdNfKfkJ965MFFlQT9kWo6FcEyfX3A4j9+0xVgqAguqSSCVcMgZsrPcp1voSQSlZqI4Qooy4rkda6LDbCecxVRt4KEk4HCXxkcd5kNRw+Y65MBkU8hEXCgiCsIB+DUQ08GCL+ERFCBIhYD8V4B9+QpQPSwkEhwoIjD5sAvz9+r20BkOUDkNCGRVAFFHswd9ytj+doCRHbp39HRqAd2ibJeRc91ZO0pKZnLtsD2wMXcIcgoxrMCPAI2n/ED82I6rE9MnXEAAAAASUVORK5CYII=",
-"MobileGraphics/spr_joystick/spr_joystick_3.png": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAApCAYAAACoYAD2AAACOElEQVRYCc2XAXICIQxF1ekhvYon8Cresp2v/TQb80NgUcuMLoTk5yUwdns87ByXy+W7J3G9Xo89n2x/KrgCppLOAA9BVuBut9vhfD4rxmYfgf1qUcmkApeEh1vUrMB2O0mxMNOvEd1TY0VXU8gM0IJlIFW/rKMSUgEyaQamutqLVaAhZAYYwSH5CjuKi0BPvuoIEBAKxMezW95u1yiImtaOeZR/Axk5EC7qlE8wsoYeYX2c59hAeuf/sm530tMDkF2swPKYbXeq3Vd5eD8lpAqsAM/4RPkIeT/uqIsziVbHkCu8k1FVqwG8nr0mfi+E9E6fXp/Y0k+DqPzge+qkP2qs+VFCq+zqyNNXtQi4+rPSA4e2HZluCmlFVs598T3tBukrY6Cyc3/m6Y/Vd5E5aW+QNNCByWnH2u/RZ+bpde3azqHdIGcSzcb4Yj2U100hfbBfe7HqelTn6ScIAr7SavK9fsgbFXDiH/G9CV4VD76nTr4q2R7dEHLmyHFU/MwAqaOG1h1y1ZGjuJkCVVHkCjuJoD3JRmOzLoKlQZIaRo7RZIwbeSpAy9MgR4Tf7buBtPQEYTdR8coBvUoXkbP9I2YB1IuwEkWsLwLFqZHpRI0KISGegWI/g8B+NFiIio0AoSMhsalAsceEmKukI34KEBopJBwyUOxjWOCH5e87K4BeGSB8upBwqoDCDyO7bw+P7XcPEN7pqxrlKDQCy1j1pKbat/ZSJ20A5ntgR+CYdwqSwVXgGTCb4wcNdzRCLSbT0wAAAABJRU5ErkJggg==",
+"MobileGraphics/spr_joystick/spr_joystick_3.png": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAApCAYAAACoYAD2AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAAGOSURBVFhH1ZUBqoMwEER7FY/p6VtSWEmfM5tEjcWBBzXZnRksv//1Oql1Xd8tuHOLWGIEel0uBiqWZdmdKeh9WgzI6C0ZMOuQaKooxRycVTBzSDRzxXh3ZI7ZXaIJQ3neQ2uXHVJxuQ7h2ZXnBXaR4lKYZsb1nftMMk92+hGHW0Fqxn12uBl228TBzMTNuM8ON8NuX3EoM1DUX1/2VSrcLDvuSrrFWai8tKBbmonLsyXdwmxU7nNK8tANX0n8YTGHz8GuJAed4RlqL/ryuZCW5AKfj0KfLLPwrJLlMlBnvDsDfVxmnD3rTaohLvD5KPXboiefC2nJf6DydyXd4B24XPmD7oZno3Kf829RlXQLM3F5W0lV1C3NQuX9FFQl3WJG/KQEvHe4WXb8ikOZAemdI26P3TZxMDNRTH+LIQ6HkTNztOYzT3aS4lJtzLP6rvdNZvfskorLdUAWktHaZYcu0UQFZqEjc8weEs0U/Kp7iwXMPCSaZvQWC5h1WgxQ9Jak9+Vi4Aj0ukUsoeDOqD5UxbxIbhADWwAAAABJRU5ErkJggg==",
 "MobileGraphics/spr_mobile_pad/spr_mobile_pad_0.png": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAYCAYAAAAYl8YPAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAGYktHRAD/AP8A/6C9p5MAAACMSURBVDjL7ZRBDoAgDAS3hj/xtr5gf9U7r9ITRhEUterFvZCwZbpJAQEAVR1xUyRFPEBZgxfoGxjJ95OF3gQtT1W3MJIro1fLc0PNPLMuNd+zR5JdTdWE5U5Ha6lQbuTYe5PNfgkNtcK97mVdFXaUpgcaWsYV+T50M3MBmRkkxvh/jh/CBAA8hpBSkglnWlDjSmZ1EwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNS0wNy0zMFQwOTowODoxNCswMDowMPIWL2wAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjUtMDctMzBUMDk6MDg6MTQrMDA6MDCDS5fQAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI1LTA3LTMwVDA5OjA4OjE0KzAwOjAw1F62DwAAAABJRU5ErkJggg==",
 "MobileGraphics/spr_mobile_pad/spr_mobile_pad_1.png": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAYCAYAAAAYl8YPAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAGYktHRAD/AP8A/6C9p5MAAACaSURBVDjLY2AYBaQCRgYGBobKysr/lBrU3t7OyEgNg2CAiZrepL9hdW0P6O8yFmJdgEuuqUoB07C6tgcoEsQCZH1M2CRJoZEBPJ3RxGXkugqnYTCbCNHogAVdAOZsfDELk0c3lAWbQny2o6vDahgh1xBjKAsuCXIAdTP602dPqWLQ02dPId6kloGMDAwMDHHxcRSXtosWLmIEADtTU8Ok5yTdAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI1LTA3LTMwVDA5OjA4OjE0KzAwOjAw8hYvbAAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNS0wNy0zMFQwOTowODoxNCswMDowMINLl9AAAAAodEVYdGRhdGU6dGltZXN0YW1wADIwMjUtMDctMzBUMDk6MDg6MTQrMDA6MDDUXrYPAAAAAElFTkSuQmCC",
 "MobileGraphics/spr_mobilekey/spr_mobilekey_0.png": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADVklEQVR42u1b63HDIAxWctnDS/i8CHOyiC9LeJL2R6McpQL0JG5T/WquttD36QEIfIFJsm3bh+T5fd8vM+wKG6QGvO/7hUsC9WwUIe5K0XAKxLIsLB3HcTQJ8SbCTRnlXS5gKSGeRJiVaL3sRYaVCPXLs4FHEXHVgscBl2WZDr4eV1JgaxGzVg70CuCUlNEgjQT2w97A6xD21sklgpUCdch7SUoJUkpu+jQpMWQJwW/b9uE5rdXAc86u0ybaPIqEG0chgj+O4zR53wP/sNEeARhGJWgrCZT3UaxRUNuGNaEXBc0aQIHH39TK7NVCOQZ/9+oBScAod7Qk9LwP8FUUtXp7kdMris0aMCp6Z6kJIxtG9eCHl1uhrzWgfI475XFrgcQBrXrAmgV6IomEnLN1OBX4nnxjQ+p9i0FlREirvxY8FQWqzRAls2YH77rzJMDi/VkkWMFT06JbBESTEDXjXJERz16bNwne4Mt1wXMW8NzslCRYdXqDr9cF7ilAkXAW8JSEEmAhYdYq8+qd/x4kzACPdeAGYMt/BDZ6n1sTJEtrzrgtW+BRB9QpcByHaH1fkmAFj4K7R0udEe8FcDBtL69Fgjbsy+U06g8hYARc6oVST0oJcs4mT2qJGBLA9bgmIu73OwAArOsqfr+1s5QSwaoBnq3rWcK1mZUCOeehQuleP6UE67qq3+fY7EIAhhAqbBEh3c+XpGoKWKteuNcAKREcw6mZwLp3CJ8FPIjgNDClJGiBo1wBvpaF0ikIj6e5ucYFJlk2YytNCh6PzgAAbpazdTTYC3xNAqPdrRbcA4XvBrV5PavHGEqARw8vmoQnAZo6EAk+ioQy/58EWOtAFPgoEsoeiHsKRDUzotLhWwoggLOB9yIh9GRoVg/POxLMp8Nc8JqFlnVManz302GJIZLjcQ5BHlFHdoO5UWA5Ee6Bj4o+qvvdrAGjdcEZbocA8BqtvbZ/8x+9KLCAj7ol1rJpdFOsGwGlAg/wkUJFAueaHOumaDmA153eqJuidcNldOrFWgdgPTij52tB8NzjPtZD0feFX3VPmE0AkoB//6Xr8m//wYR4L4ADePcPLOBLm6Tvv/1HU/+fzXkZ9rYfTraIeLtPZ1tEUCBG8qs/nuYSwiFhhl2fusb/5pAMofgAAAAASUVORK5CYII=",
@@ -107,7 +107,7 @@ let button_extra_3   = 0;    // 拓展按钮 3
 let button_extra_4   = 0;    // 拓展按钮 4
 let scr_button       = 0;    // 关闭 scr 原生按键(可能有 bug)
 let GreenFlag_Start  = 0;    // 自动点击 scr 的绿旗
-let Android_System_Keyboard = 1;  // 打开安卓系统键盘按钮
+let Android_System_Keyboard = 0;  // 打开安卓系统键盘按钮
 
 let mobile_f2_key    = 113;  // 重启键键码
 let mobile_heal_key  = 72;   // 回血键键码
@@ -125,6 +125,45 @@ let button_extra_3_spr = 'spr_3_button';       // 拓展按钮 3 贴图
 let button_extra_4_spr = 'spr_4_button';       // 拓展按钮 4 贴图
 let button_c_spr = 'spr_c_button';             // 按键 C 贴图
 
+// ── 宏配置 ──
+const MACRO_KEYS = ['mobile_f2', 'mobile_heal', 'button_c', 'button_extra_1', 'button_extra_2', 'button_extra_3', 'button_extra_4'];
+const MACRO_KEY_LABELS_CN = {
+    mobile_f2: '重开键', mobile_heal: '回血键', button_c: '按键C',
+    button_extra_1: '拓展1', button_extra_2: '拓展2', button_extra_3: '拓展3', button_extra_4: '拓展4'
+};
+const MACRO_KEY_LABELS_EN = {
+    mobile_f2: 'Restart', mobile_heal: 'Heal', button_c: 'C Button',
+    button_extra_1: 'Extra1', button_extra_2: 'Extra2', button_extra_3: 'Extra3', button_extra_4: 'Extra4'
+};
+let macro_configs = {};
+function init_macro_configs() {
+    for (const key of MACRO_KEYS) {
+        if (!macro_configs[key] || typeof macro_configs[key] !== 'object') {
+            macro_configs[key] = { enabled: 0, combo: [] };
+        } else {
+            if (typeof macro_configs[key].enabled !== 'number') macro_configs[key].enabled = 0;
+            if (!Array.isArray(macro_configs[key].combo)) macro_configs[key].combo = [];
+        }
+    }
+}
+init_macro_configs();
+function save_macro_configs() { localStorage.setItem('ctrl_macro_configs', JSON.stringify(macro_configs)); }
+function load_macro_configs() {
+    try {
+        const saved = JSON.parse(localStorage.getItem('ctrl_macro_configs'));
+        if (saved && typeof saved === 'object') { macro_configs = saved; init_macro_configs(); }
+    } catch(e) { init_macro_configs(); }
+}
+function reset_macro_configs() {
+    macro_configs = {};
+    init_macro_configs();
+    save_macro_configs();
+}
+function get_macro_enabled(key) { return macro_configs[key] ? macro_configs[key].enabled : 0; }
+function get_macro_combo(key) { return macro_configs[key] ? macro_configs[key].combo : []; }
+function set_macro_enabled(key, val) { if (!macro_configs[key]) macro_configs[key] = { enabled: 0, combo: [] }; macro_configs[key].enabled = val ? 1 : 0; save_macro_configs(); }
+function set_macro_combo(key, combo) { if (!macro_configs[key]) macro_configs[key] = { enabled: 0, combo: [] }; macro_configs[key].combo = Array.isArray(combo) ? combo : []; save_macro_configs(); }
+
 // 双键盘右侧控件独立坐标
 let wasd_analog_posx, wasd_analog_posy, wasd_analog_cx, wasd_analog_cy;
 let wasd_stick_off_x = 0, wasd_stick_off_y = 0;
@@ -133,6 +172,7 @@ let wasd_stick_drag = false, wasd_stick_touch = null;
 
 // ── 每键按键模式设置 ──
 // 模式:0=长按(按下即按下,松开才释放) 1=单次点按 2=持续点按(按频率连发) 3=长按持续点按(前阈值时间内单次点按,之后转持续点按)
+
 const KEY_BUTTONS = ['z','x','c','h','f2','extra1','extra2','extra3','extra4','up','down','left','right','w','a','s','d'];
 const KEY_MODE_HOLD = 0;
 const KEY_MODE_TAP = 1;
@@ -233,7 +273,8 @@ function save_global_settings() {
         button_extra_1_key, button_extra_2_key, button_extra_3_key, button_extra_4_key,
         mobile_f2_spr, mobile_heal_spr,
         button_extra_1_spr, button_extra_2_spr, button_extra_3_spr, button_extra_4_spr,
-        button_c_key, button_c_spr
+        button_c_key, button_c_spr,
+        macro_configs
     };
     localStorage.setItem('ctrl_global_settings', JSON.stringify(settings));
 }
@@ -267,6 +308,7 @@ function load_global_settings() {
             if (saved.button_extra_4_spr !== undefined) button_extra_4_spr = saved.button_extra_4_spr;
             if (saved.button_c_key !== undefined) button_c_key = saved.button_c_key;
             if (saved.button_c_spr !== undefined) button_c_spr = saved.button_c_spr;
+            if (saved.macro_configs) { macro_configs = saved.macro_configs; init_macro_configs(); }
         }
     } catch(e) {}
 }
@@ -297,6 +339,8 @@ function reset_global_defaults() {
     button_extra_4_spr = initial_presets.button_extra_4_spr;
     button_c_key = initial_presets.button_c_key;
     button_c_spr = initial_presets.button_c_spr;
+
+    reset_macro_configs();
 
     cfg_all = JSON.parse(JSON.stringify(default_cfg));
     reset_key_modes();
@@ -462,6 +506,7 @@ let extra1_x,extra1_y,extra2_x,extra2_y,extra3_x,extra3_y,extra4_x,extra4_y;
 let akb_x=-50,akb_y=5;
 let stick_off_x=0,stick_off_y=0,stick_dir_x=0,stick_dir_y=0,stick_drag=false,stick_touch=null;
 let last_arrow={up:false,down:false,left:false,right:false};
+let wasd_last_arrow = { w: false, a: false, s: false, d: false };
 let arrow_pressed_ctrl=null,arrow_pressed_side=null,arrow_longpress_timer=null,arrow_repeat_interval=null;
 let toggle_cooldown=false,settings_down=false,reset_pending=false,reset_touch_id=null;
 
@@ -473,11 +518,167 @@ let _accumTimeout = null;
 // 深度设置面板状态
 let deep_settings_open=false;
 let deep_editing_field=null,deep_editing_temp=null;
+let deep_key_picker_field = null;      // 正在通过键码选择器修改的变量名
+let deep_key_picker_selected = null;   // 当前选中的键码
+let deep_return_scroll = 0;            // 用于保存设置列表的滚动位置
+let deep_macro_editing_field = null;   // 正在编辑宏的字段名
+let deep_macro_editing_combo = [];     // 当前编辑中的宏组合
+let deep_macro_return_scroll = 0;      // 保存宏编辑前的滚动位置
 let deep_scroll_offset=0,deep_scroll_vel=0;
 let deep_touch_start_y=null,deep_touch_start_offset=0,deep_is_dragging=false;
 const DEEP_DRAG_THRESHOLD=5;
 const DEEP_ITEM_HEIGHT=22;
+let deep_button_setting_key = null;
+let deep_return_sub_menu = 'main';
 let deep_sub_menu='main';
+// 键码 -> 键名映射（特殊键 + 符号键）
+const KEY_CODE_TO_NAME = {
+    3: 'Cancel', 8: 'Backspace', 9: 'Tab', 12: 'Clear', 13: 'Enter',
+    16: 'Shift', 17: 'Control', 18: 'Alt', 19: 'Pause', 20: 'CapsLock',
+    27: 'Escape',
+    33: 'PageUp', 34: 'PageDown', 35: 'End', 36: 'Home',
+    37: 'ArrowLeft', 38: 'ArrowUp', 39: 'ArrowRight', 40: 'ArrowDown',
+    44: 'PrintScreen', 45: 'Insert', 46: 'Delete',
+    91: 'Meta', 92: 'Settings', 93: 'ContextMenu',
+    96: 'Numpad0', 97: 'Numpad1', 98: 'Numpad2', 99: 'Numpad3',
+    100: 'Numpad4', 101: 'Numpad5', 102: 'Numpad6', 103: 'Numpad7',
+    104: 'Numpad8', 105: 'Numpad9',
+    106: 'NumpadMultiply', 107: 'NumpadAdd', 108: 'NumpadEnter',
+    109: 'NumpadSubtract', 110: 'NumpadDecimal', 111: 'NumpadDivide',
+    112: 'F1', 113: 'F2', 114: 'F3', 115: 'F4', 116: 'F5',
+    117: 'F6', 118: 'F7', 119: 'F8', 120: 'F9', 121: 'F10',
+    122: 'F11', 123: 'F12',
+    144: 'NumLock', 145: 'ScrollLock',
+    173: 'AudioVolumeMute', 174: 'AudioVolumeDown', 175: 'AudioVolumeUp',
+    176: 'MediaTrackNext', 177: 'MediaTrackPrevious', 178: 'MediaStop',
+    179: 'MediaPlayPause',
+    180: 'LaunchMail', 181: 'LaunchMediaPlayer',
+    182: 'LaunchApplication1', 183: 'LaunchApplication2',
+    186: ';', 187: '=', 188: ',', 189: '-', 190: '.', 191: '/',
+    192: '`', 219: '[', 220: '\\', 221: ']', 222: "'"
+};
+
+// 键名 -> 键码映射（由 KEY_CODE_TO_NAME 自动生成）
+const KEY_NAME_TO_CODE = {};
+for (const code in KEY_CODE_TO_NAME) {
+    KEY_NAME_TO_CODE[KEY_CODE_TO_NAME[code]] = Number(code);
+}
+const KEY_CODE_LIST = [
+    { code: 3,   cn: '取消键', en: 'Cancel' },
+    { code: 8,   cn: '退格键', en: 'Backspace' },
+    { code: 9,   cn: 'Tab键', en: 'Tab' },
+    { code: 12,  cn: '清除键', en: 'Clear' },
+    { code: 13,  cn: '回车键', en: 'Enter' },
+    { code: 16,  cn: 'Shift键', en: 'Shift' },
+    { code: 17,  cn: 'Ctrl键', en: 'Control' },
+    { code: 18,  cn: 'Alt键', en: 'Alt' },
+    { code: 19,  cn: '暂停/中断键', en: 'Pause/Break' },
+    { code: 20,  cn: '大写锁定键', en: 'Caps Lock' },
+    { code: 27,  cn: 'Esc键', en: 'Escape' },
+    { code: 32,  cn: '空格键', en: 'Space' },
+    { code: 33,  cn: '向上翻页', en: 'Page Up' },
+    { code: 34,  cn: '向下翻页', en: 'Page Down' },
+    { code: 35,  cn: 'End键', en: 'End' },
+    { code: 36,  cn: 'Home键', en: 'Home' },
+    { code: 37,  cn: '方向左', en: 'ArrowLeft' },
+    { code: 38,  cn: '方向上', en: 'ArrowUp' },
+    { code: 39,  cn: '方向右', en: 'ArrowRight' },
+    { code: 40,  cn: '方向下', en: 'ArrowDown' },
+    { code: 44,  cn: '打印屏幕键', en: 'Print Screen' },
+    { code: 45,  cn: '插入键', en: 'Insert' },
+    { code: 46,  cn: '删除键', en: 'Delete' },
+    { code: 48,  cn: '数字0', en: '0' },
+    { code: 49,  cn: '数字1', en: '1' },
+    { code: 50,  cn: '数字2', en: '2' },
+    { code: 51,  cn: '数字3', en: '3' },
+    { code: 52,  cn: '数字4', en: '4' },
+    { code: 53,  cn: '数字5', en: '5' },
+    { code: 54,  cn: '数字6', en: '6' },
+    { code: 55,  cn: '数字7', en: '7' },
+    { code: 56,  cn: '数字8', en: '8' },
+    { code: 57,  cn: '数字9', en: '9' },
+    { code: 65,  cn: '字母A', en: 'A' },
+    { code: 66,  cn: '字母B', en: 'B' },
+    { code: 67,  cn: '字母C', en: 'C' },
+    { code: 68,  cn: '字母D', en: 'D' },
+    { code: 69,  cn: '字母E', en: 'E' },
+    { code: 70,  cn: '字母F', en: 'F' },
+    { code: 71,  cn: '字母G', en: 'G' },
+    { code: 72,  cn: '字母H', en: 'H' },
+    { code: 73,  cn: '字母I', en: 'I' },
+    { code: 74,  cn: '字母J', en: 'J' },
+    { code: 75,  cn: '字母K', en: 'K' },
+    { code: 76,  cn: '字母L', en: 'L' },
+    { code: 77,  cn: '字母M', en: 'M' },
+    { code: 78,  cn: '字母N', en: 'N' },
+    { code: 79,  cn: '字母O', en: 'O' },
+    { code: 80,  cn: '字母P', en: 'P' },
+    { code: 81,  cn: '字母Q', en: 'Q' },
+    { code: 82,  cn: '字母R', en: 'R' },
+    { code: 83,  cn: '字母S', en: 'S' },
+    { code: 84,  cn: '字母T', en: 'T' },
+    { code: 85,  cn: '字母U', en: 'U' },
+    { code: 86,  cn: '字母V', en: 'V' },
+    { code: 87,  cn: '字母W', en: 'W' },
+    { code: 88,  cn: '字母X', en: 'X' },
+    { code: 89,  cn: '字母Y', en: 'Y' },
+    { code: 90,  cn: '字母Z', en: 'Z' },
+    { code: 91,  cn: '左Win键', en: 'Left Windows' },
+    { code: 92,  cn: '右Win键', en: 'Right Windows' },
+    { code: 93,  cn: '菜单键', en: 'Select' },
+    { code: 96,  cn: '小键盘0', en: 'Numpad0' },
+    { code: 97,  cn: '小键盘1', en: 'Numpad1' },
+    { code: 98,  cn: '小键盘2', en: 'Numpad2' },
+    { code: 99,  cn: '小键盘3', en: 'Numpad3' },
+    { code: 100, cn: '小键盘4', en: 'Numpad4' },
+    { code: 101, cn: '小键盘5', en: 'Numpad5' },
+    { code: 102, cn: '小键盘6', en: 'Numpad6' },
+    { code: 103, cn: '小键盘7', en: 'Numpad7' },
+    { code: 104, cn: '小键盘8', en: 'Numpad8' },
+    { code: 105, cn: '小键盘9', en: 'Numpad9' },
+    { code: 106, cn: '小键盘 *', en: 'Multiply' },
+    { code: 107, cn: '小键盘 +', en: 'Add' },
+    { code: 108, cn: '小键盘回车', en: 'NumpadEnter' },
+    { code: 109, cn: '小键盘 -', en: 'Subtract' },
+    { code: 110, cn: '小键盘 .', en: 'Decimal' },
+    { code: 111, cn: '小键盘 /', en: 'Divide' },
+    { code: 112, cn: 'F1键', en: 'F1' },
+    { code: 113, cn: 'F2键', en: 'F2' },
+    { code: 114, cn: 'F3键', en: 'F3' },
+    { code: 115, cn: 'F4键', en: 'F4' },
+    { code: 116, cn: 'F5键', en: 'F5' },
+    { code: 117, cn: 'F6键', en: 'F6' },
+    { code: 118, cn: 'F7键', en: 'F7' },
+    { code: 119, cn: 'F8键', en: 'F8' },
+    { code: 120, cn: 'F9键', en: 'F9' },
+    { code: 121, cn: 'F10键', en: 'F10' },
+    { code: 122, cn: 'F11键', en: 'F11' },
+    { code: 123, cn: 'F12键', en: 'F12' },
+    { code: 144, cn: '数字锁定键', en: 'Num Lock' },
+    { code: 145, cn: '滚动锁定键', en: 'Scroll Lock' },
+    { code: 173, cn: '静音', en: 'VolumeMute' },
+    { code: 174, cn: '音量减', en: 'VolumeDown' },
+    { code: 175, cn: '音量加', en: 'VolumeUp' },
+    { code: 176, cn: '下一曲', en: 'MediaNextTrack' },
+    { code: 177, cn: '上一曲', en: 'MediaPrevTrack' },
+    { code: 178, cn: '停止', en: 'MediaStop' },
+    { code: 179, cn: '播放/暂停', en: 'MediaPlayPause' },
+    { code: 180, cn: '启动邮件', en: 'LaunchMail' },
+    { code: 181, cn: '启动媒体播放器', en: 'LaunchMedia' },
+    { code: 182, cn: '启动应用程序1', en: 'LaunchApp1' },
+    { code: 183, cn: '启动应用程序2', en: 'LaunchApp2' },
+    { code: 186, cn: '分号 (;)', en: 'Semicolon' },
+    { code: 187, cn: '等号 (=)', en: 'Equals' },
+    { code: 188, cn: '逗号 (,)', en: 'Comma' },
+    { code: 189, cn: '减号 (-)', en: 'Dash' },
+    { code: 190, cn: '句点 (.)', en: 'Period' },
+    { code: 191, cn: '斜杠 (/)', en: 'Slash' },
+    { code: 192, cn: '反引号 (`)', en: 'Backquote' },
+    { code: 219, cn: '左方括号 ([)', en: 'BracketLeft' },
+    { code: 220, cn: '反斜杠 (\\)', en: 'Backslash' },
+    { code: 221, cn: '右方括号 (])', en: 'BracketRight' },
+    { code: 222, cn: '引号 (\')', en: 'Quote' }
+];
 
 // 每键模式运行时状态:keycode -> { touched, touchStart, lastTap, longPressTriggered }
 const _keyModeState = {};
@@ -551,54 +752,7 @@ function unfreeze_runtime() {
     }
 }
 function handle_visibility() { document.hidden ? freeze_runtime() : unfreeze_runtime(); }
-function restart_project() {
-    const vm = getVM();
-    if (vm) {
-        try {
-            if (typeof vm.greenFlag === 'function') {
-                if (typeof vm.start === 'function') vm.start();
-                vm.greenFlag();
-                if (runtime_frozen) unfreeze_runtime();
-                return;
-            }
-            if (vm.runtime && typeof vm.runtime.greenFlag === 'function') {
-                if (typeof vm.runtime.start === 'function') vm.runtime.start();
-                vm.runtime.greenFlag();
-                if (runtime_frozen) unfreeze_runtime();
-                return;
-            }
-            if (typeof vm.stopAll === 'function') vm.stopAll();
-            if (typeof vm.start === 'function') vm.start();
-            if (typeof vm.greenFlag === 'function') {
-                vm.greenFlag();
-                if (runtime_frozen) unfreeze_runtime();
-                return;
-            }
-            if (vm.runtime) {
-                if (typeof vm.runtime.stopAll === 'function') vm.runtime.stopAll();
-                if (typeof vm.runtime.start === 'function') vm.runtime.start();
-                if (typeof vm.runtime.greenFlag === 'function') {
-                    vm.runtime.greenFlag();
-                    if (runtime_frozen) unfreeze_runtime();
-                    return;
-                }
-            }
-        } catch(e) {}
-    }
-    const scaffolding = window.scaffolding;
-    if (scaffolding && typeof scaffolding.greenFlag === 'function') {
-        try { scaffolding.stopAll(); } catch(e) {}
-        try { scaffolding.greenFlag(); } catch(e) {}
-        if (runtime_frozen) unfreeze_runtime();
-        return;
-    }
-    const greenFlagBtn = document.querySelector('.green-flag, [class*="green-flag"]');
-    if (greenFlagBtn) { try { greenFlagBtn.click(); } catch(e) {} return; }
-    const stage = document.querySelector('.stage-wrapper, .stage_stage-wrapper');
-    if (stage) {
-        try { stage.dispatchEvent(new MouseEvent('click', { bubbles: true })); } catch(e) {}
-    }
-}
+
 function find_scratch_canvas() {
     let sc = document.querySelector('canvas.sc-canvas, canvas.sc-stage, canvas#scratch-stage, canvas#stage, canvas.stage, canvas[class*="stage"]');
     if (!sc) {
@@ -692,6 +846,7 @@ function get_settings_img(p) { return p?settings_p_img:settings_n_img; }
 
 // ── 画布与舞台区域 ──
 let canvas, ctx, game_area={scale:1};
+let keyboard_area = { x: 0, y: 0, w: WORLD_W, h: WORLD_H, scale: 1 };
 let stage_ready = false;
 let _canvasCheckTimer = null;
 function ensure_canvas_alive() {
@@ -726,41 +881,137 @@ function scheduleCanvasCheck() {
 }
 function update_area() {
     const w = innerWidth, h = innerHeight;
-    let sc = find_scratch_canvas();
-    if (!sc) { stage_ready = false; if (!game_area || game_area.scale <= 0) game_area = { x:0, y:0, w:WORLD_W, h:WORLD_H, scale:1 }; ensure_canvas_alive(); return true; }
-    const rect = sc.getBoundingClientRect();
-    if (rect.width <= 0 || rect.height <= 0) { stage_ready = false; ensure_canvas_alive(); return true; }
-    const aw = sc.width || WORLD_W, ah = sc.height || WORLD_H;
-    const fit = Math.min(rect.width / aw, rect.height / ah);
-    const dw = aw * fit, dh = ah * fit;
-    const left = rect.left + (rect.width - dw) / 2;
-    const top = rect.top + (rect.height - dh) / 2;
-    const gs = Math.min(dw / WORLD_W, dh / WORLD_H);
-    game_area = { x: left + (dw - WORLD_W * gs) / 2, y: top + (dh - WORLD_H * gs) / 2, w: WORLD_W * gs, h: WORLD_H * gs, scale: gs };
+    const fit = Math.min(w / WORLD_W, h / WORLD_H);
+    const dw = WORLD_W * fit, dh = WORLD_H * fit;
+    const left = (w - dw) / 2;
+    const top = (h - dh) / 2;
+    keyboard_area = { x: left, y: top, w: dw, h: dh, scale: fit };
     stage_ready = true;
     ensure_canvas_alive();
-    canvas.width = w * dpr; canvas.height = h * dpr; canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
     return true;
 }
-function world_xy(cx, cy) { const g = game_area; if (!g || !g.scale || g.scale <= 0) return { x: -1000, y: -1000 }; return { x: (cx - g.x) / g.scale, y: (cy - g.y) / g.scale }; }
-
+function world_xy(cx, cy) {
+    const g = keyboard_area;
+    if (!g || !g.scale || g.scale <= 0) return { x: -1000, y: -1000 };
+    return { x: (cx - g.x) / g.scale, y: (cy - g.y) / g.scale };
+}
 // ── 键盘 & 指针模拟 ──
 const keyIsDown={}, _keysPressed={};
 function _keyboardBeginStep() { for(const k in _keysPressed) delete _keysPressed[k]; }
-function _keyCodeToKeyName(kc) { const special = { 38:'ArrowUp',40:'ArrowDown',37:'ArrowLeft',39:'ArrowRight',92:'Settings',16:'Shift',113:'F2',105:'Numpad9' }; if (special[kc]) return special[kc]; if (kc >= 32 && kc <= 126) return String.fromCharCode(kc); return null; }
-function keyboard_key_press(kc) { if (!keyIsDown[kc]) { keyIsDown[kc] = true; _keysPressed[kc] = true; const keyName = _keyCodeToKeyName(kc); if (keyName) send_key(keyName, true); } }
-function keyboard_key_release(kc) { if (keyIsDown[kc]) { keyIsDown[kc] = false; const keyName = _keyCodeToKeyName(kc); if (keyName) send_key(keyName, false); } }
+function _keyCodeToKeyName(kc) {
+    // 优先查找特殊键映射
+    if (KEY_CODE_TO_NAME[kc] !== undefined) {
+        return KEY_CODE_TO_NAME[kc];
+    }
+    // 可打印字符（字母、数字、空格等）
+    if (kc >= 32 && kc <= 126) {
+        return String.fromCharCode(kc);
+    }
+    return null;
+}
+function _keycode_to_macro_var(kc) {
+    if (kc === mobile_f2_key) return 'mobile_f2';
+    if (kc === mobile_heal_key) return 'mobile_heal';
+    if (kc === button_c_key) return 'button_c';
+    if (kc === button_extra_1_key) return 'button_extra_1';
+    if (kc === button_extra_2_key) return 'button_extra_2';
+    if (kc === button_extra_3_key) return 'button_extra_3';
+    if (kc === button_extra_4_key) return 'button_extra_4';
+    return null;
+}
+function keyboard_key_press(kc) {
+    if (!keyIsDown[kc]) {
+        const macroVar = _keycode_to_macro_var(kc);
+        if (macroVar && get_macro_enabled(macroVar)) {
+            const combo = get_macro_combo(macroVar);
+            if (combo.length > 0) {
+                for (const mkc of combo) {
+                    const keyName = _keyCodeToKeyName(mkc);
+                    if (keyName) send_key(keyName, true);
+                }
+                keyIsDown[kc] = true;
+                _keysPressed[kc] = true;
+                return;
+            }
+        }
+        keyIsDown[kc] = true;
+        _keysPressed[kc] = true;
+        const keyName = _keyCodeToKeyName(kc);
+        if (keyName) send_key(keyName, true);
+    }
+}
+function keyboard_key_release(kc) {
+    if (keyIsDown[kc]) {
+        const macroVar = _keycode_to_macro_var(kc);
+        if (macroVar && get_macro_enabled(macroVar)) {
+            const combo = get_macro_combo(macroVar);
+            for (const mkc of combo) {
+                const keyName = _keyCodeToKeyName(mkc);
+                if (keyName) send_key(keyName, false);
+            }
+            keyIsDown[kc] = false;
+            return;
+        }
+        keyIsDown[kc] = false;
+        const keyName = _keyCodeToKeyName(kc);
+        if (keyName) send_key(keyName, false);
+    }
+}
 function keyboard_check(kc) { return !!keyIsDown[kc]; }
 function keyboard_check_pressed(kc) { return !!_keysPressed[kc]; }
 function send_key(key, down) {
-    const kc = { ArrowUp:38,ArrowDown:40,ArrowLeft:37,ArrowRight:39,Z:90,X:88,C:67,Settings:92,Shift:16,H:72,F2:113,'1':49,'2':50,'3':51,'4':52,Numpad9:105,Backspace:8,Enter:13,' ':32 }[key];
-    let finalKc = kc, finalKey = key, finalCode = key;
-    if (!kc) { if (key.length === 1) { finalKc = key.charCodeAt(0); if (finalKc >= 65 && finalKc <= 90) finalCode = 'Key' + key; else if (finalKc >= 48 && finalKc <= 57) finalCode = 'Digit' + key; else finalCode = key; } else { finalKc = 0; finalCode = key; } }
-    else { if (key === ' ') { finalCode = 'Space'; finalKey = ' '; } else if (key === 'Enter') finalCode = 'Enter'; else if (key === 'Backspace') finalCode = 'Backspace'; else if (key.length === 1 && key >= 'A' && key <= 'Z') finalCode = 'Key' + key; else if (key.length === 1 && key >= '0' && key <= '9') finalCode = 'Digit' + key; }
-    const ev = new KeyboardEvent(down ? 'keydown' : 'keyup', { key:finalKey, code:finalCode, keyCode:finalKc, which:finalKc, bubbles:true, cancelable:true });
-    document.dispatchEvent(ev); const sc = find_scratch_canvas(); if (sc) sc.dispatchEvent(ev);
-    const vm = getVM(); if (vm?.runtime?.ioDevices?.keyboard) vm.runtime.ioDevices.keyboard.postData({ key:finalKey, isDown:down });
-    if (vm && typeof vm.postIOData === 'function') vm.postIOData('keyboard', { keyCode:finalKc, key:finalKey, isDown:down });
+    // 优先使用键名映射表获取 keyCode
+    let finalKc = KEY_NAME_TO_CODE[key];
+
+    // 若未命中，回退到字符编码（适用于字母、数字、部分符号）
+    if (finalKc === undefined && key.length === 1) {
+        finalKc = key.charCodeAt(0);
+    }
+
+    // 若仍未命中，置为 0
+    if (finalKc === undefined) {
+        finalKc = 0;
+    }
+
+    let finalKey = key;
+    let finalCode = key;
+
+    // 设置更准确的 code 字符串
+    if (key === ' ') {
+        finalCode = 'Space';
+        finalKey = ' ';
+    } else if (key === 'Enter') {
+        finalCode = 'Enter';
+    } else if (key === 'Backspace') {
+        finalCode = 'Backspace';
+    } else if (key.length === 1 && key >= 'A' && key <= 'Z') {
+        finalCode = 'Key' + key;
+    } else if (key.length === 1 && key >= '0' && key <= '9') {
+        finalCode = 'Digit' + key;
+    }
+
+    const ev = new KeyboardEvent(down ? 'keydown' : 'keyup', {
+        key: finalKey,
+        code: finalCode,
+        keyCode: finalKc,
+        which: finalKc,
+        bubbles: true,
+        cancelable: true
+    });
+
+    document.dispatchEvent(ev);
+    const sc = find_scratch_canvas();
+    if (sc) sc.dispatchEvent(ev);
+    const vm = getVM();
+    if (vm?.runtime?.ioDevices?.keyboard) {
+        vm.runtime.ioDevices.keyboard.postData({ key: finalKey, isDown: down });
+    }
+    if (vm && typeof vm.postIOData === 'function') {
+        vm.postIOData('keyboard', { keyCode: finalKc, key: finalKey, isDown: down });
+    }
 }
 
 const _pointers={}, _pointerDown={};
@@ -867,6 +1118,22 @@ function _processInputChar(ch){
 function _applyDeepSetting(val){
     if(!deep_editing_field) return;
     let target = deep_editing_field;
+
+    // 新增：宏编辑器输入框，格式例如 65+90+13
+    if (target.startsWith('macro:')) {
+        const key = target.substring(6);
+        const nums = val.split('+')
+            .map(s => parseInt(s.trim()))
+            .filter(n => !isNaN(n));
+        set_macro_combo(key, nums);
+        deep_editing_field = null;
+        deep_editing_temp = null;
+        _closeSystemKeyboard();
+        deep_sub_menu = deep_return_sub_menu || 'main';
+        audio_play_sound('snd_coin_mobile');
+        return;
+    }
+
     if(target === 'mobile_f2' || target === 'mobile_heal' || target === 'mobile_2pad' || target === 'button_extra_1' || target === 'button_extra_2' || target === 'button_extra_3' || target === 'button_extra_4' || target === 'scr_button' || target === 'GreenFlag_Start' || target === 'Android_System_Keyboard' || target === 'mobile_cn'){
         let v = (val === '1' || val === 'true' || val === 'on') ? 1 : 0;
         eval(`${target}=${v}`);
@@ -946,16 +1213,9 @@ function draw_sprite_ext(sprite, subimg, x, y, xscale, yscale, rot, colour, alph
     ctx.restore();
 }
 function draw_colored(sprite, x, y, w, h, col, alpha) {
-    if (!sprite?.complete) return;
-    ctx.save();
-    ctx.globalAlpha = alpha;
-    ctx.drawImage(sprite, x, y, w, h);
-    if (col !== undefined && col !== c_white) {
-        ctx.globalCompositeOperation = 'source-in';
-        ctx.fillStyle = gms_col(col);
-        ctx.fillRect(x, y, w, h);
-    }
-    ctx.restore();
+    const t=document.createElement('canvas'); t.width=Math.ceil(w); t.height=Math.ceil(h); const tc=t.getContext('2d'); tc.imageSmoothingEnabled=false;
+    tc.drawImage(sprite,0,0,w,h); tc.globalCompositeOperation='source-atop'; tc.fillStyle=gms_col(col); tc.fillRect(0,0,w,h);
+    ctx.save(); ctx.globalAlpha=alpha; ctx.drawImage(t,x,y); ctx.restore();
 }
 function draw_roundrect_color(x1,y1,x2,y2,col1,col2,outline) {
     const lx=Math.min(x1,x2), rx=Math.max(x1,x2), ty=Math.min(y1,y2), by=Math.max(y1,y2);
@@ -968,19 +1228,40 @@ function draw_roundrect_color(x1,y1,x2,y2,col1,col2,outline) {
 
 // ── 摇杆 / 方向键状态 + 虚拟按键表 ──
 function update_arrows() {
-    const dz=0.18;
-    const u=stick_dir_y<-dz, d=stick_dir_y>dz, l=stick_dir_x<-dz, r=stick_dir_x>dz;
-    if(u!==last_arrow.up) { send_key('ArrowUp',u); last_arrow.up=u; }
-    if(d!==last_arrow.down) { send_key('ArrowDown',d); last_arrow.down=d; }
-    if(l!==last_arrow.left) { send_key('ArrowLeft',l); last_arrow.left=l; }
-    if(r!==last_arrow.right) { send_key('ArrowRight',r); last_arrow.right=r; }
+    const dz = 0.18;
+    const u = stick_dir_y < -dz, d = stick_dir_y > dz,
+          l = stick_dir_x < -dz, r = stick_dir_x > dz;
+    // 左摇杆永远输出方向键
+    const keyMap = { up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight' };
+    if (u !== last_arrow.up) { send_key(keyMap.up, u); last_arrow.up = u; }
+    if (d !== last_arrow.down) { send_key(keyMap.down, d); last_arrow.down = d; }
+    if (l !== last_arrow.left) { send_key(keyMap.left, l); last_arrow.left = l; }
+    if (r !== last_arrow.right) { send_key(keyMap.right, r); last_arrow.right = r; }
+}
+function update_wasd_arrows() {
+    const dz = 0.18;
+    const w = wasd_stick_dir_y < -dz, s = wasd_stick_dir_y > dz,
+          a = wasd_stick_dir_x < -dz, d = wasd_stick_dir_x > dz;
+    // 右摇杆永远输出 WASD
+    const keyMap = { w: 'w', a: 'a', s: 's', d: 'd' };
+    if (w !== wasd_last_arrow.w) { send_key(keyMap.w, w); wasd_last_arrow.w = w; }
+    if (a !== wasd_last_arrow.a) { send_key(keyMap.a, a); wasd_last_arrow.a = a; }
+    if (s !== wasd_last_arrow.s) { send_key(keyMap.s, s); wasd_last_arrow.s = s; }
+    if (d !== wasd_last_arrow.d) { send_key(keyMap.d, d); wasd_last_arrow.d = d; }
 }
 function drag_stick(wx, wy) {
-    const maxR=59*analog_scale/2;
-    let dx=wx-analog_cx, dy=wy-analog_cy;
-    const dist=Math.hypot(dx,dy);
-    if(dist>maxR) { dx=dx/dist*maxR; dy=dy/dist*maxR; }
-    stick_off_x=dx; stick_off_y=dy; stick_dir_x=dx/maxR; stick_dir_y=dy/maxR;
+    const maxR = 59 * analog_scale / 2;
+    let dx = wx - analog_cx,
+        dy = wy - analog_cy;
+    const dist = Math.hypot(dx, dy);
+    if (dist > maxR) {
+        dx = dx / dist * maxR;
+        dy = dy / dist * maxR;
+    }
+    stick_off_x = dx;
+    stick_off_y = dy;
+    stick_dir_x = dx / maxR;
+    stick_dir_y = dy / maxR;
     update_arrows();
 }
 function reset_stick() { stick_drag=false; stick_touch=null; stick_off_x=0; stick_off_y=0; stick_dir_x=0; stick_dir_y=0; update_arrows(); }
@@ -991,8 +1272,8 @@ function virtual_key_add(x,y,w,h,keycode) { _vkList.push({id:_vkNextId++, x,y,w,
 function sett_x() { return settx; }
 function sett_y() { return setty; }
 function _createAllVirtualKeys(self) {
-    _vkList.length=0;
-    if(!self) return;
+    _vkList.length = 0;
+    if (!self) return;
     const km = self.key_map || { z:90, x:88, c:67, up:38, down:40, left:37, right:39, h:mobile_heal_key, f2:mobile_f2_key, extra1:button_extra_1_key, extra2:button_extra_2_key, extra3:button_extra_3_key, extra4:button_extra_4_key };
     if (self.edit) {
         virtual_key_add(sett_x(), sett_y(), 38, 50, 92);
@@ -1039,7 +1320,8 @@ function _createAllVirtualKeys(self) {
         return;
     }
     // 非编辑模式
-    if(ui_state===3) {
+    if (ui_state===3) {
+        // 只保留动作按钮、系统键盘、设置按钮，方向键完全由摇杆拖动产生
         virtual_key_add(zx, zy, 27*button_scale, 29*button_scale, km.z);
         virtual_key_add(xx, xy, 27*button_scale, 29*button_scale, km.x);
         virtual_key_add(cx, cy, 27*button_scale, 29*button_scale, km.c);
@@ -1050,23 +1332,25 @@ function _createAllVirtualKeys(self) {
         if (button_extra_3) virtual_key_add(extra3_x, extra3_y, 27*button_scale, 29*button_scale, km.extra3);
         if (button_extra_4) virtual_key_add(extra4_x, extra4_y, 27*button_scale, 29*button_scale, km.extra4);
         if (Android_System_Keyboard) virtual_key_add(akb_x, akb_y, AKB_W, AKB_H, 105);
+
+        // 方向键/WASD 虚拟按键全部设为 0，禁用触摸响应，完全由拖动控制
         const back = 10 * analog_scale;
         const area=19.675*analog_scale, full=59*analog_scale;
-        virtual_key_add(analog_posx-back, analog_posy-back, full+2*back, area+back, km.up);
-        virtual_key_add(analog_posx-back, analog_posy+full-area, full+2*back, area+back, km.down);
-        virtual_key_add(analog_posx-back, analog_posy-back, area+back, full+2*back, km.left);
-        virtual_key_add(analog_posx+full-area, analog_posy-back, area+back, full+2*back, km.right);
-        virtual_key_add(analog_posx-back, analog_posy-back, full+2*back, full+2*back, 16);
+        virtual_key_add(analog_posx-back, analog_posy-back, full+2*back, area+back, 0);
+        virtual_key_add(analog_posx-back, analog_posy+full-area, full+2*back, area+back, 0);
+        virtual_key_add(analog_posx-back, analog_posy-back, area+back, full+2*back, 0);
+        virtual_key_add(analog_posx+full-area, analog_posy-back, area+back, full+2*back, 0);
+        virtual_key_add(analog_posx-back, analog_posy-back, full+2*back, full+2*back, 0);
         if (mobile_2pad) {
             const backR = 10 * analog_scale;
             const areaR = 19.675 * analog_scale, fullR = 59 * analog_scale;
             const wx = wasd_analog_posx, wy = wasd_analog_posy;
-            virtual_key_add(wx - backR, wy - backR, fullR + 2*backR, areaR + backR, 87);
-            virtual_key_add(wx - backR, wy + fullR - areaR, fullR + 2*backR, areaR + backR, 83);
-            virtual_key_add(wx - backR, wy - backR, areaR + backR, fullR + 2*backR, 65);
-            virtual_key_add(wx + fullR - areaR, wy - backR, areaR + backR, fullR + 2*backR, 68);
+            virtual_key_add(wx - backR, wy - backR, fullR + 2*backR, areaR + backR, 0);
+            virtual_key_add(wx - backR, wy + fullR - areaR, fullR + 2*backR, areaR + backR, 0);
+            virtual_key_add(wx - backR, wy - backR, areaR + backR, fullR + 2*backR, 0);
+            virtual_key_add(wx + fullR - areaR, wy - backR, areaR + backR, fullR + 2*backR, 0);
         }
-    } else if(ui_state===4) {
+    } else if (ui_state===4) {
         virtual_key_add(zx, zy, 27*button_scale, 29*button_scale, km.z);
         virtual_key_add(xx, xy, 27*button_scale, 29*button_scale, km.x);
         virtual_key_add(cx, cy, 27*button_scale, 29*button_scale, km.c);
@@ -1149,7 +1433,6 @@ function _virtualKeysProcessTouches(self) {
             if (mode === KEY_MODE_HOLD) {
                 if (!keyboard_check(kc)) keyboard_key_press(kc);
             } else {
-                // 非长按模式:确保键未被按住(防止切换模式时残留)
                 if (keyboard_check(kc)) keyboard_key_release(kc);
                 if (mode === KEY_MODE_CONTINUOUS) {
                     const interval = 1000 / Math.max(0.1, config.freq);
@@ -1331,18 +1614,40 @@ function processDragMove(self) {
 }
 function drawPanel(self, isStick) {
     if (deep_settings_open) { drawDeepSettingsPanel(self); return; }
-    ctx.fillStyle=`rgba(0,0,0,${self.black_fade})`; ctx.fillRect(0,0,WORLD_W,WORLD_H);
-    if(self.edit||self.black_fade>0) {
-        const panel=get_panel(); draw_set_alpha(1);
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillStyle = `rgba(0,0,0,${self.black_fade})`;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.restore();
+    
+    if(self.edit || self.black_fade > 0) {
+        const panel = get_panel();
+        draw_set_alpha(1);
         for(const c of panel) {
-            if(c.left) { const lx=c.arrowLeftX??c.x, rx=c.arrowRightX??(c.x+20*c.sx); if(arrow_l_img?.complete) draw_colored(arrow_l_img, lx, c.y, arrow_l_img.naturalWidth*c.sx, arrow_l_img.naturalHeight*c.sy, (arrow_pressed_ctrl===c.id&&arrow_pressed_side==='left')?c_yellow:c_white, self.text_black_fade); if(arrow_r_img?.complete) draw_colored(arrow_r_img, rx, c.y, arrow_r_img.naturalWidth*c.sx, arrow_r_img.naturalHeight*c.sy, (arrow_pressed_ctrl===c.id&&arrow_pressed_side==='right')?c_yellow:c_white, self.text_black_fade); }
-            else if(c.id==='reset') { const img=get_panel_img_obj(c.img); if(img?.complete) draw_colored(img, c.x, c.y, img.naturalWidth*c.sx, img.naturalHeight*c.sy, reset_pending?c_yellow:c_white, self.text_black_fade); }
-            else if(c.id==='analogTypeDisp') { const subimg=(!settings_layout&&((isStick&&ui_state===3)||(!isStick&&ui_state===4)))?mobile_cn+3:mobile_cn; const img=load_sprite(c.img, subimg); if(img?.complete) draw_sprite_ext(img,0,c.x,c.y,c.sx,c.sy,0,c_white,self.text_black_fade); }
-            else if(c.img) { const img=get_panel_img_obj(c.img); if(img?.complete) draw_sprite_ext(img,0,c.x,c.y,c.sx,c.sy,0,c_white,self.text_black_fade); }
+            if(c.left) {
+                const lx = c.arrowLeftX ?? c.x, rx = c.arrowRightX ?? (c.x + 20 * c.sx);
+                if(arrow_l_img?.complete) draw_colored(arrow_l_img, lx, c.y, arrow_l_img.naturalWidth * c.sx, arrow_l_img.naturalHeight * c.sy, (arrow_pressed_ctrl === c.id && arrow_pressed_side === 'left') ? c_yellow : c_white, self.text_black_fade);
+                if(arrow_r_img?.complete) draw_colored(arrow_r_img, rx, c.y, arrow_r_img.naturalWidth * c.sx, arrow_r_img.naturalHeight * c.sy, (arrow_pressed_ctrl === c.id && arrow_pressed_side === 'right') ? c_yellow : c_white, self.text_black_fade);
+            } else if(c.id === 'reset') {
+                const img = get_panel_img_obj(c.img);
+                if(img?.complete) draw_colored(img, c.x, c.y, img.naturalWidth * c.sx, img.naturalHeight * c.sy, reset_pending ? c_yellow : c_white, self.text_black_fade);
+            } else if(c.id === 'analogTypeDisp') {
+                const subimg = (!settings_layout && ((isStick && ui_state === 3) || (!isStick && ui_state === 4))) ? mobile_cn + 3 : mobile_cn;
+                const img = load_sprite(c.img, subimg);
+                if(img?.complete) draw_sprite_ext(img, 0, c.x, c.y, c.sx, c.sy, 0, c_white, self.text_black_fade);
+            } else if(c.img) {
+                const img = get_panel_img_obj(c.img);
+                if(img?.complete) draw_sprite_ext(img, 0, c.x, c.y, c.sx, c.sy, 0, c_white, self.text_black_fade);
+            }
         }
         drawDeepSettingsButton(self);
-        ctx.font=`bold 20px ${joystick_font?'MobileFont':'monospace'}`; ctx.fillStyle=`rgba(255,255,255,${self.text_black_fade})`; ctx.textAlign='center'; ctx.textBaseline='middle';
-        for(const c of panel) if(c.val) ctx.fillText(fmt_num(c.val()), c.numX, c.numY);
+        ctx.font = `bold 20px ${joystick_font ? 'MobileFont' : 'monospace'}`;
+        ctx.fillStyle = `rgba(255,255,255,${self.text_black_fade})`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        for(const c of panel) {
+            if(c.val) ctx.fillText(fmt_num(c.val()), c.numX, c.numY);
+        }
     }
 }
 function drawAKB(op) {
@@ -1354,22 +1659,29 @@ function drawAKB(op) {
     if(spr?.complete) draw_sprite_ext(spr, 0, drawX, drawY, 2, 2, 0, c_white, op);
 }
 
-// ── 深度设置面板(脚本设置 / 脚本介绍) ──
 function drawDeepSettingsPanel(self) {
-    ctx.save();
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.globalAlpha = 1;
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.restore();
+    // 最高优先级：键码选择器（普通或宏模式）
+    if (deep_key_picker_field || deep_macro_editing_field) {
+        drawKeyPickerPanel(self);
+        return;
+    }
 
+    // 第二优先级：文本输入框（确保点击“更改键码”后立即显示）
     if (deep_editing_field) {
+        // 绘制全屏半透明黑色背景（添加了这一步）
+        ctx.save();
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.globalAlpha = 1;
-        ctx.fillStyle = 'rgba(0,0,0,0.5)';
-        ctx.fillRect(0, 0, WORLD_W, WORLD_H);
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.restore();
+
+        // 编辑输入框的界面
         const fontFamily = 'SystemFont';
         let label = deep_editing_field;
-        if (label.startsWith('keymode_freq:')) {
+        if (label.startsWith('macro:')) {
+            label = mobile_cn ? '宏组合(键码+键码)' : 'Macro Combo (codes+codes)';
+        } else if (label.startsWith('keymode_freq:')) {
             const name = label.split(':')[1];
             const lbl = mobile_cn ? (KEY_BUTTON_LABELS_CN[name] || name) : (KEY_BUTTON_LABELS_EN[name] || name);
             label = mobile_cn ? `${lbl} 频率(Hz)` : `${lbl} Freq(Hz)`;
@@ -1377,8 +1689,11 @@ function drawDeepSettingsPanel(self) {
             const name = label.split(':')[1];
             const lbl = mobile_cn ? (KEY_BUTTON_LABELS_CN[name] || name) : (KEY_BUTTON_LABELS_EN[name] || name);
             label = mobile_cn ? `${lbl} 阈值(ms)` : `${lbl} Thresh(ms)`;
-        } else if (mobile_cn) label = label.replace(/_key$/, ' 键码').replace(/_spr$/, ' 贴图').replace(/_/g, ' ');
-        else label = label.replace(/_key$/, ' Key').replace(/_spr$/, ' Sprite').replace(/_/g, ' ');
+        } else if (mobile_cn) {
+            label = label.replace(/_key$/, ' 键码').replace(/_spr$/, ' 贴图').replace(/_/g, ' ');
+        } else {
+            label = label.replace(/_key$/, ' Key').replace(/_spr$/, ' Sprite').replace(/_/g, ' ');
+        }
         ctx.font = `bold 18px ${fontFamily}`;
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
@@ -1412,6 +1727,7 @@ function drawDeepSettingsPanel(self) {
                     deep_editing_field = null;
                     deep_editing_temp = null;
                     _closeSystemKeyboard();
+                    if (deep_return_sub_menu) deep_sub_menu = deep_return_sub_menu;
                     audio_play_sound('snd_menu_confirm_mobile');
                 }
             }
@@ -1424,15 +1740,26 @@ function drawDeepSettingsPanel(self) {
         return;
     }
 
-    ctx.globalAlpha = 1;
-    ctx.fillStyle = 'rgba(0,0,0,0.5)';
-    ctx.fillRect(0, 0, WORLD_W, WORLD_H);
+    // 第三优先级：按键设置独立页面
+    if (deep_sub_menu === 'button_settings') {
+        drawButtonSettingsPanel(self);
+        return;
+    }
 
+    // 全屏半透明背景（屏幕坐标系）
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.restore();
+
+    // ─── 以下为菜单与设置内容（键盘坐标系下绘制）───
     const fontFamily = 'SystemFont';
     const separatorX = 170;
     const centerX = separatorX / 2;
     const menuTitle = mobile_cn ? '安卓移植设置' : 'Mobile Setting';
-    const versionText = 'V1.0.0';
+    const versionText = 'V1.0.2';
     const menuItems = [
         { label: mobile_cn ? '脚本设置' : 'Setting', key: 'script_settings' },
         { label: mobile_cn ? '按键模式' : 'Key Modes', key: 'key_modes' },
@@ -1463,7 +1790,10 @@ function drawDeepSettingsPanel(self) {
                 touched = true;
                 if (p.justPressed) {
                     deep_sub_menu = item.key;
-                    if (item.key === 'script_settings') deep_scroll_offset = 0;
+                    deep_scroll_offset = 0;
+                    deep_touch_start_y = null;
+                    deep_touch_start_offset = 0;
+                    deep_is_dragging = false;
                     audio_play_sound('snd_menu_confirm_mobile');
                 }
             }
@@ -1513,35 +1843,21 @@ function drawDeepSettingsPanel(self) {
 
     if (deep_sub_menu === 'script_settings') {
         const items = [
-            { label: mobile_cn ? '语言' : 'Language', var: 'mobile_cn' },
-            { label: mobile_cn ? '双键盘' : 'Dual Pad', var: 'mobile_2pad' },
-            { label: mobile_cn ? '重开键' : 'Restart Button', var: 'mobile_f2' },
-            { label: mobile_cn ? '回血键' : 'Heal Button', var: 'mobile_heal' },
-            { label: mobile_cn ? '拓展按键1' : 'Extra Button 1', var: 'button_extra_1' },
-            { label: mobile_cn ? '拓展按键2' : 'Extra Button 2', var: 'button_extra_2' },
-            { label: mobile_cn ? '拓展按键3' : 'Extra Button 3', var: 'button_extra_3' },
-            { label: mobile_cn ? '拓展按键4' : 'Extra Button 4', var: 'button_extra_4' },
-            { label: mobile_cn ? '关闭Scratch按钮' : 'Close Scratch Button', var: 'scr_button' },
-            { label: mobile_cn ? '绿旗自动开始' : 'Green Flag Start', var: 'GreenFlag_Start' },
-            { label: mobile_cn ? '安卓系统键盘' : 'Android Keyboard', var: 'Android_System_Keyboard' },
-            { label: mobile_cn ? '重开键键码' : 'Restart Button Key', var: 'mobile_f2_key' },
-            { label: mobile_cn ? '回血键键码' : 'Heal Button Key', var: 'mobile_heal_key' },
-            { label: mobile_cn ? '按键C键码' : 'C Button Key', var: 'button_c_key' },
-            { label: mobile_cn ? '拓展按键1键码' : 'Extra Button 1 Key', var: 'button_extra_1_key' },
-            { label: mobile_cn ? '拓展按键2键码' : 'Extra Button 2 Key', var: 'button_extra_2_key' },
-            { label: mobile_cn ? '拓展按键3键码' : 'Extra Button 3 Key', var: 'button_extra_3_key' },
-            { label: mobile_cn ? '拓展按键4键码' : 'Extra Button 4 Key', var: 'button_extra_4_key' },
-            { label: mobile_cn ? '重开键贴图' : 'Restart Button Sprite', var: 'mobile_f2_spr' },
-            { label: mobile_cn ? '回血键贴图' : 'Heal Button Sprite', var: 'mobile_heal_spr' },
-            { label: mobile_cn ? '按键C贴图' : 'C Button Sprite', var: 'button_c_spr' },
-            { label: mobile_cn ? '拓展按键1贴图' : 'Extra Button 1 Sprite', var: 'button_extra_1_spr' },
-            { label: mobile_cn ? '拓展按键2贴图' : 'Extra Button 2 Sprite', var: 'button_extra_2_spr' },
-            { label: mobile_cn ? '拓展按键3贴图' : 'Extra Button 3 Sprite', var: 'button_extra_3_spr' },
-            { label: mobile_cn ? '拓展按键4贴图' : 'Extra Button 4 Sprite', var: 'button_extra_4_spr' },
-            { label: mobile_cn ? '恢复预设' : 'Reset to Default', var: 'reset_global_defaults' }
+            { label: mobile_cn ? '语言' : 'Language', var: 'mobile_cn', type: 'toggle' },
+            { label: mobile_cn ? '双键盘' : 'Dual Pad', var: 'mobile_2pad', type: 'toggle' },
+            { label: mobile_cn ? '重开键' : 'Restart Button', var: 'mobile_f2', type: 'toggle', btnSettings: 'mobile_f2' },
+            { label: mobile_cn ? '回血键' : 'Heal Button', var: 'mobile_heal', type: 'toggle', btnSettings: 'mobile_heal' },
+            { label: mobile_cn ? '拓展按键1' : 'Extra Button 1', var: 'button_extra_1', type: 'toggle', btnSettings: 'button_extra_1' },
+            { label: mobile_cn ? '拓展按键2' : 'Extra Button 2', var: 'button_extra_2', type: 'toggle', btnSettings: 'button_extra_2' },
+            { label: mobile_cn ? '拓展按键3' : 'Extra Button 3', var: 'button_extra_3', type: 'toggle', btnSettings: 'button_extra_3' },
+            { label: mobile_cn ? '拓展按键4' : 'Extra Button 4', var: 'button_extra_4', type: 'toggle', btnSettings: 'button_extra_4' },
+            { label: mobile_cn ? '按键C设置' : 'C Button Settings', type: 'button_settings', btnSettings: 'button_c' },
+            { label: mobile_cn ? '关闭Scratch按钮' : 'Close Scratch Button', var: 'scr_button', type: 'toggle' },
+            { label: mobile_cn ? '绿旗自动开始' : 'Green Flag Start', var: 'GreenFlag_Start', type: 'toggle' },
+            { label: mobile_cn ? '安卓系统键盘' : 'Android Keyboard', var: 'Android_System_Keyboard', type: 'toggle' },
+            { label: mobile_cn ? '恢复预设' : 'Reset to Default', var: 'reset_global_defaults', type: 'action' }
         ];
 
-        // 非 Scratch 环境移除 scr_button 和 GreenFlag_Start
         if (!getVM()) {
             for (let i = items.length - 1; i >= 0; i--) {
                 if (items[i].var === 'scr_button' || items[i].var === 'GreenFlag_Start') {
@@ -1584,7 +1900,10 @@ function drawDeepSettingsPanel(self) {
             if (y < -20 || y > WORLD_H + 20) continue;
 
             let display = '';
-            if (item.var) {
+            if (item.type === 'button_settings') {
+                // 无开关状态，仅显示标签
+                display = '';
+            } else if (item.var) {
                 if (item.var === 'reset_global_defaults') {
                     display = '';
                 } else {
@@ -1603,82 +1922,133 @@ function drawDeepSettingsPanel(self) {
                     } else display = val;
                 }
             }
-            const fullText = item.label + (item.var !== 'reset_global_defaults' ? ': ' + display : '');
+
+            let mainText = item.label;
+            if (display !== '') {
+                mainText += ': ' + display;
+            }
+
             ctx.font = `bold 16px ${fontFamily}`;
-            const textWidth = ctx.measureText(fullText).width;
+            const mainWidth = ctx.measureText(mainText).width;
 
             let touched = false;
             if (!deep_is_dragging) {
                 for (const pid in _pointerDown) {
                     if (!_pointerDown[pid]) continue;
                     const p = _pointers[pid];
-                    if (p.wx >= separatorX + 20 && p.wx <= separatorX + 20 + textWidth && p.wy >= y - 10 && p.wy <= y + 14) {
+                    if (p.wx >= separatorX + 20 && p.wx <= separatorX + 20 + mainWidth && p.wy >= y - 10 && p.wy <= y + 14) {
                         touched = true;
                         if (p.justPressed) {
-                            if (item.var === 'reset_global_defaults') {
+                            if (item.type === 'button_settings') {
+                                // 进入按键设置
+                                deep_button_setting_key = item.btnSettings;
+                                deep_return_sub_menu = 'script_settings';
+                                deep_return_scroll = deep_scroll_offset;
+                                deep_sub_menu = 'button_settings';
+                                deep_scroll_offset = 0;
+                                deep_touch_start_y = null;
+                                deep_touch_start_offset = 0;
+                                deep_is_dragging = false;
+                                audio_play_sound('snd_menu_confirm_mobile');
+                            } else if (item.var === 'reset_global_defaults') {
                                 reset_global_defaults();
-                            } else if (item.var.endsWith('_key') || item.var.endsWith('_spr')) {
-                                deep_editing_field = item.var;
-                                let currentVal = eval(item.var);
-                                deep_editing_temp = (currentVal != null ? currentVal.toString() : '');
-                                _openSystemKeyboard();
+                            } else if (item.var === 'mobile_2pad') {
+                                save_vars_to_cfg();
+                                if (instances.obj_mobilekey) instance_destroy('obj_mobilekey');
+                                if (instances.obj_mobilecontrols) instance_destroy('obj_mobilecontrols');
+                                if (instances.obj_mobilecontrols_button) instance_destroy('obj_mobilecontrols_button');
+                                _vkList.length = 0;
+                                eval(`${item.var} = ${eval(item.var) ? 0 : 1}`);
+                                save_global_settings();
+                                if (mobile_2pad) init_dual_config();
+                                if (ui_state === 2) instance_create_depth(0,0,0,'obj_mobilekey');
+                                else if (ui_state === 3) instance_create_depth(0,0,0,'obj_mobilecontrols');
+                                else if (ui_state === 4) instance_create_depth(0,0,0,'obj_mobilecontrols_button');
+                                load_vars_from_cfg();
+                                audio_play_sound('snd_coin_mobile');
                             } else {
-                                let v = eval(item.var);
-                                if (item.var === 'mobile_2pad') {
-                                    save_vars_to_cfg();
-                                    if (instances.obj_mobilekey) instance_destroy('obj_mobilekey');
-                                    if (instances.obj_mobilecontrols) instance_destroy('obj_mobilecontrols');
-                                    if (instances.obj_mobilecontrols_button) instance_destroy('obj_mobilecontrols_button');
-                                    _vkList.length = 0;
-                                    eval(`${item.var} = ${v ? 0 : 1}`);
-                                    save_global_settings();
-                                    if (mobile_2pad) init_dual_config();
-                                    if (ui_state === 2) instance_create_depth(0,0,0,'obj_mobilekey');
-                                    else if (ui_state === 3) instance_create_depth(0,0,0,'obj_mobilecontrols');
-                                    else if (ui_state === 4) instance_create_depth(0,0,0,'obj_mobilecontrols_button');
-                                    load_vars_from_cfg();
-                                    audio_play_sound('snd_coin_mobile');
-                                } else {
-                                    eval(`${item.var} = ${v ? 0 : 1}`);
-                                    save_global_settings();
-                                    if (item.var.endsWith('_key')) update_keyboard_keymap();
-                                    audio_play_sound('snd_coin_mobile');
-                                }
+                                eval(`${item.var} = ${eval(item.var) ? 0 : 1}`);
+                                save_global_settings();
+                                audio_play_sound('snd_coin_mobile');
                             }
                         }
                     }
                 }
             }
             ctx.fillStyle = touched ? gms_col(c_yellow) : gms_col(c_white);
-            ctx.fillText(fullText, separatorX + 20, y);
+            ctx.fillText(mainText, separatorX + 20, y);
 
+            // 双键盘操作交换按钮
             if (item.var === 'mobile_2pad' && mobile_2pad) {
-                const swapX = separatorX + 20 + textWidth + 20;
+                const swapX = separatorX + 20 + mainWidth + 20;
                 const swapLabel = mobile_cn ? '操作交换: ' : 'Operation Swap: ';
                 let swapDisplay = mobile_2pad_swap ? (mobile_cn ? '是' : 'Yes') : (mobile_cn ? '否' : 'No');
                 const fullSwapText = swapLabel + swapDisplay;
                 ctx.font = `bold 16px ${fontFamily}`;
                 const swapWidth = ctx.measureText(fullSwapText).width;
                 let swapTouched = false;
-                for (const pid in _pointerDown) {
-                    if (!_pointerDown[pid]) continue;
-                    const p = _pointers[pid];
-                    if (p.wx >= swapX && p.wx <= swapX + swapWidth && p.wy >= y - 10 && p.wy <= y + 14) {
-                        swapTouched = true;
-                        if (p.justPressed) {
-                            mobile_2pad_swap = mobile_2pad_swap ? 0 : 1;
-                            save_cfg_all();
-                            load_vars_from_cfg();
-                            audio_play_sound('snd_coin_mobile');
+                if (!deep_is_dragging) {
+                    for (const pid in _pointerDown) {
+                        if (!_pointerDown[pid]) continue;
+                        const p = _pointers[pid];
+                        if (p.wx >= swapX && p.wx <= swapX + swapWidth && p.wy >= y - 10 && p.wy <= y + 14) {
+                            swapTouched = true;
+                            if (p.justPressed) {
+                                mobile_2pad_swap = mobile_2pad_swap ? 0 : 1;
+                                save_cfg_all();
+                                load_vars_from_cfg();
+                                audio_play_sound('snd_coin_mobile');
+                            }
                         }
                     }
                 }
                 ctx.fillStyle = swapTouched ? gms_col(c_yellow) : gms_col(c_white);
                 ctx.fillText(fullSwapText, swapX, y);
             }
+
+            // 对于普通 toggle 且带 btnSettings 的按键，在开启时显示“按键设置”按钮
+            if (item.btnSettings && item.type !== 'button_settings') {
+                let shouldShow = false;
+                if (item.btnSettings !== 'button_c') {
+                    shouldShow = (eval(item.btnSettings) === 1);
+                }
+                if (shouldShow) {
+                    const btnLabel = mobile_cn ? '按键设置' : 'Key Set';
+                    ctx.font = `bold 16px ${fontFamily}`;
+                    const btnWidth = ctx.measureText(btnLabel).width;
+                    let btnX = separatorX + 20 + mainWidth + 20;
+                    if (item.var === 'mobile_2pad' && mobile_2pad) {
+                        btnX += ctx.measureText(mobile_cn ? '操作交换: 是' : 'Operation Swap: Yes').width + 20;
+                    }
+                    let btnTouched = false;
+                    if (!deep_is_dragging) {
+                        for (const pid in _pointerDown) {
+                            if (!_pointerDown[pid]) continue;
+                            const p = _pointers[pid];
+                            if (p.wx >= btnX && p.wx <= btnX + btnWidth && p.wy >= y - 10 && p.wy <= y + 14) {
+                                btnTouched = true;
+                                if (p.justPressed) {
+                                    deep_button_setting_key = item.btnSettings;
+                                    deep_return_sub_menu = 'script_settings';
+                                    deep_return_scroll = deep_scroll_offset;
+                                    deep_sub_menu = 'button_settings';
+                                    deep_scroll_offset = 0;
+                                    deep_touch_start_y = null;
+                                    deep_touch_start_offset = 0;
+                                    deep_is_dragging = false;
+                                    audio_play_sound('snd_menu_confirm_mobile');
+                                }
+                            }
+                        }
+                    }
+                    ctx.fillStyle = btnTouched ? gms_col(c_yellow) : gms_col(c_white);
+                    ctx.fillText(btnLabel, btnX, y);
+                }
+            }
         }
         ctx.restore();
     } else if (deep_sub_menu === 'key_modes') {
+        // 按键模式面板（保持不变）
         const items = [];
         for (const name of KEY_BUTTONS) {
             const labelCn = KEY_BUTTON_LABELS_CN[name] || name;
@@ -1772,27 +2142,15 @@ function drawDeepSettingsPanel(self) {
         }
         ctx.restore();
     } else if (deep_sub_menu === 'script_info') {
+        // 脚本介绍（保持不变）
         ctx.fillStyle = gms_col(c_white);
         const fontFamily = 'SystemFont';
         const startX = separatorX + 20;
 
-        // 中英文介绍,以中文基准行长度为准
         const lines = mobile_cn ? [
-            // 中文介绍
-            { texts: [
-                { text: '制作人:', url: null },
-                { text: '沐白_official', url: 'https://m.bilibili.com/space/34627290?from=search' }
-            ], y: 60 },
-            { texts: [
-                { text: '绘图师:', url: null },
-                { text: '雨果-Official', url: 'https://m.bilibili.com/space/1002601255?from=search' }
-            ], y: 90 },
-            { texts: [
-                { text: '协助者:', url: null },
-                { text: '一个蔡稽', url: 'https://m.bilibili.com/space/302264195?from=search' },
-                { text: '、', url: null },
-                { text: '秋冥散雨_GenOuka', url: 'https://m.bilibili.com/space/3493116076100126?from=search' }
-            ], y: 120 },
+            { texts: [ { text: '制作人:', url: null }, { text: '沐白_official', url: 'https://m.bilibili.com/space/34627290?from=search' } ], y: 60 },
+            { texts: [ { text: '绘图师:', url: null }, { text: '雨果-Official', url: 'https://m.bilibili.com/space/1002601255?from=search' } ], y: 90 },
+            { texts: [ { text: '协助者:', url: null }, { text: '一个蔡稽', url: 'https://m.bilibili.com/space/302264195?from=search' }, { text: '、', url: null }, { text: '秋冥散雨_GenOuka', url: 'https://m.bilibili.com/space/3493116076100126?from=search' } ], y: 120 },
             { texts: [{ text: '键盘功能:虚拟摇杆/方向键,动作按键', url: null }], y: 150 },
             { texts: [{ text: '自定义键位,隐藏原生UI,自动绿旗等', url: null }], y: 180 },
             { texts: [{ text: '适用环境:安卓触屏,支持C2与Scratch', url: null }], y: 210 },
@@ -1803,21 +2161,9 @@ function drawDeepSettingsPanel(self) {
             { texts: [{ text: 'Android_System_Keyboard(系统键盘)', url: null }], y: 360 },
             { texts: [{ text: '更多设置请进入"脚本设置"调整。', url: null }], y: 390 }
         ] : [
-            // 英文介绍
-            { texts: [
-                { text: 'Creator: ', url: null },
-                { text: '沐白_official', url: 'https://m.bilibili.com/space/34627290?from=search' }
-            ], y: 60 },
-            { texts: [
-                { text: 'Artist: ', url: null },
-                { text: '雨果-Official', url: 'https://m.bilibili.com/space/1002601255?from=search' }
-            ], y: 90 },
-            { texts: [
-                { text: 'Assistants: ', url: null },
-                { text: '一个蔡稽', url: 'https://m.bilibili.com/space/302264195?from=search' },
-                { text: ', ', url: null },
-                { text: '秋冥散雨_GenOuka', url: 'https://m.bilibili.com/space/3493116076100126?from=search' }
-            ], y: 120 },
+            { texts: [ { text: 'Creator: ', url: null }, { text: '沐白_official', url: 'https://m.bilibili.com/space/34627290?from=search' } ], y: 60 },
+            { texts: [ { text: 'Artist: ', url: null }, { text: '雨果-Official', url: 'https://m.bilibili.com/space/1002601255?from=search' } ], y: 90 },
+            { texts: [ { text: 'Assistants: ', url: null }, { text: '一个蔡稽', url: 'https://m.bilibili.com/space/302264195?from=search' }, { text: ', ', url: null }, { text: '秋冥散雨_GenOuka', url: 'https://m.bilibili.com/space/3493116076100126?from=search' } ], y: 120 },
             { texts: [{ text: 'Features: virtual joystick / dpad, action buttons', url: null }], y: 150 },
             { texts: [{ text: 'custom key binding, hide native UI, auto green flag.', url: null }], y: 180 },
             { texts: [{ text: 'Environment: Android touch, supports C2 & Scratch', url: null }], y: 210 },
@@ -1868,6 +2214,375 @@ function drawDeepSettingsPanel(self) {
     ctx.restore();
 }
 
+function drawKeyPickerPanel(self) {
+    const fontFamily = 'SystemFont';
+    const startY = 60;
+    const itemHeight = 22;
+    const visibleHeight = WORLD_H - 120;
+    const totalItems = KEY_CODE_LIST.length;
+    const maxScroll = Math.max(0, totalItems * itemHeight - visibleHeight);
+    const isMacroMode = !!deep_macro_editing_field;
+
+    deep_scroll_offset = Math.max(-maxScroll, Math.min(0, deep_scroll_offset));
+
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.restore();
+
+    ctx.save();
+    ctx.font = `bold 20px ${fontFamily}`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = 'white';
+    if (isMacroMode) {
+        ctx.fillText(mobile_cn ? '选择宏键码' : 'Select Macro Keys', WORLD_W/2, 20);
+    } else {
+        const field = deep_key_picker_field || '';
+        let label = field;
+        if (label.startsWith('mobile_f2')) label = mobile_cn ? '重开键键码' : 'Restart Key';
+        else if (label.startsWith('mobile_heal')) label = mobile_cn ? '回血键键码' : 'Heal Key';
+        else if (label.startsWith('button_c')) label = mobile_cn ? '按键C键码' : 'C Key';
+        else if (label.startsWith('button_extra_1')) label = mobile_cn ? '拓展按键1键码' : 'Extra1 Key';
+        else if (label.startsWith('button_extra_2')) label = mobile_cn ? '拓展按键2键码' : 'Extra2 Key';
+        else if (label.startsWith('button_extra_3')) label = mobile_cn ? '拓展按键3键码' : 'Extra3 Key';
+        else if (label.startsWith('button_extra_4')) label = mobile_cn ? '拓展按键4键码' : 'Extra4 Key';
+        ctx.fillText(label, WORLD_W/2, 20);
+    }
+
+    if (isMacroMode) {
+        const comboStr = deep_macro_editing_combo.length > 0 ? deep_macro_editing_combo.join('+') : (mobile_cn ? '空' : 'Empty');
+        ctx.font = `bold 14px ${fontFamily}`;
+        ctx.fillText(comboStr, WORLD_W/2, 42);
+
+        // 退格按钮
+        const backspaceLabel = mobile_cn ? '退格' : 'Backspace';
+        const bsX = 80, bsY = 42;
+        const bsW = ctx.measureText(backspaceLabel).width + 20;
+        let bsTouched = false;
+        for (const pid in _pointerDown) {
+            if (!_pointerDown[pid]) continue;
+            const p = _pointers[pid];
+            if (p.wx >= bsX - bsW/2 && p.wx <= bsX + bsW/2 && p.wy >= bsY - 12 && p.wy <= bsY + 12) {
+                bsTouched = true;
+                if (p.justPressed && deep_macro_editing_combo.length > 0) {
+                    deep_macro_editing_combo.pop();
+                    audio_play_sound('snd_menu_confirm_mobile');
+                }
+            }
+        }
+        ctx.fillStyle = bsTouched ? gms_col(c_yellow) : gms_col(c_white);
+        ctx.fillText(backspaceLabel, bsX, bsY);
+
+        // 确定按钮
+        const confirmLabel = mobile_cn ? '确定' : 'Confirm';
+        const cfX = WORLD_W - 80, cfY = 42;
+        const cfW = ctx.measureText(confirmLabel).width + 20;
+        let cfTouched = false;
+        for (const pid in _pointerDown) {
+            if (!_pointerDown[pid]) continue;
+            const p = _pointers[pid];
+            if (p.wx >= cfX - cfW/2 && p.wx <= cfX + cfW/2 && p.wy >= cfY - 12 && p.wy <= cfY + 12) {
+                cfTouched = true;
+                if (p.justPressed) {
+                    set_macro_combo(deep_macro_editing_field, deep_macro_editing_combo);
+                    deep_scroll_offset = deep_macro_return_scroll || 0;
+                    deep_touch_start_y = null;
+                    deep_touch_start_offset = 0;
+                    deep_is_dragging = false;
+                    deep_macro_editing_field = null;
+                    deep_macro_editing_combo = [];
+                    if (deep_return_sub_menu) deep_sub_menu = deep_return_sub_menu;
+                    audio_play_sound('snd_coin_mobile');
+                    return;
+                }
+            }
+        }
+        ctx.fillStyle = cfTouched ? gms_col(c_yellow) : gms_col(c_white);
+        ctx.fillText(confirmLabel, cfX, cfY);
+    }
+
+    // 返回按钮
+    const backLabel = mobile_cn ? '返回' : 'Back';
+    const backY = WORLD_H - 20;
+    const backBtnW = 100, backBtnH = 24;
+    const backBtnX = WORLD_W/2 - backBtnW/2;
+    let backTouched = false;
+    for (const pid in _pointerDown) {
+        if (!_pointerDown[pid]) continue;
+        const p = _pointers[pid];
+        if (p.wx >= backBtnX && p.wx <= backBtnX + backBtnW && p.wy >= backY - backBtnH/2 && p.wy <= backY + backBtnH/2) {
+            backTouched = true;
+            if (p.justPressed) {
+                if (isMacroMode) {
+                    deep_scroll_offset = deep_macro_return_scroll || 0;
+                } else {
+                    deep_scroll_offset = deep_return_scroll || 0;
+                }
+                deep_touch_start_y = null;
+                deep_touch_start_offset = 0;
+                deep_is_dragging = false;
+                deep_key_picker_field = null;
+                deep_key_picker_selected = null;
+                deep_macro_editing_field = null;
+                deep_macro_editing_combo = [];
+                if (deep_return_sub_menu) deep_sub_menu = deep_return_sub_menu;
+                audio_play_sound('snd_menu_confirm_mobile');
+                return;
+            }
+        }
+    }
+    ctx.fillStyle = backTouched ? gms_col(c_yellow) : gms_col(c_white);
+    ctx.fillText(backLabel, WORLD_W/2, backY);
+    ctx.restore();
+
+    let activeTouch = null;
+    for (const pid in _pointerDown) {
+        if (_pointerDown[pid]) { activeTouch = _pointers[pid]; break; }
+    }
+    if (activeTouch) {
+        if (deep_touch_start_y === null) {
+            deep_touch_start_y = activeTouch.wy;
+            deep_touch_start_offset = deep_scroll_offset;
+            deep_is_dragging = false;
+        } else {
+            const dy = activeTouch.wy - deep_touch_start_y;
+            if (!deep_is_dragging && Math.abs(dy) > DEEP_DRAG_THRESHOLD) deep_is_dragging = true;
+            if (deep_is_dragging) deep_scroll_offset = deep_touch_start_offset + dy;
+        }
+    } else {
+        deep_touch_start_y = null;
+        deep_is_dragging = false;
+    }
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, startY - itemHeight/2, WORLD_W, visibleHeight + itemHeight);
+    ctx.clip();
+
+    ctx.font = `bold 16px ${fontFamily}`;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+
+    for (let i = 0; i < totalItems; i++) {
+        const item = KEY_CODE_LIST[i];
+        const y = startY + i * itemHeight + deep_scroll_offset;
+        if (y < startY - itemHeight || y > startY + visibleHeight + itemHeight) continue;
+
+        const label = mobile_cn ? item.cn : item.en;
+        const codeStr = item.code.toString();
+
+        const nameX = 20;
+        const codeX = WORLD_W - 80;
+        const nameWidth = ctx.measureText(label).width;
+        const codeWidth = ctx.measureText(codeStr).width;
+
+        // 检测是否有手指在当前条目区域内（触摸高亮）
+        let hovered = false;
+        for (const pid in _pointerDown) {
+            if (!_pointerDown[pid]) continue;
+            const p = _pointers[pid];
+            const touchOnName = (p.wx >= nameX && p.wx <= nameX + nameWidth &&
+                                 p.wy >= y - itemHeight/2 && p.wy <= y + itemHeight/2);
+            const touchOnCode = (p.wx >= codeX - codeWidth && p.wx <= codeX &&
+                                 p.wy >= y - itemHeight/2 && p.wy <= y + itemHeight/2);
+            if (touchOnName || touchOnCode) {
+                hovered = true;
+                break;
+            }
+        }
+
+        // 设置颜色：触摸时黄色，否则白色（不再根据是否选中显示高亮）
+        ctx.fillStyle = hovered ? gms_col(c_yellow) : gms_col(c_white);
+
+        ctx.textAlign = 'left';
+        ctx.fillText(label, nameX, y);
+        ctx.textAlign = 'right';
+        ctx.fillText(codeStr, codeX, y);
+        ctx.textAlign = 'left';
+
+        // 处理点击
+        if (!deep_is_dragging) {
+            for (const pid in _pointerDown) {
+                if (!_pointerDown[pid]) continue;
+                const p = _pointers[pid];
+                const touchOnName = (p.wx >= nameX && p.wx <= nameX + nameWidth &&
+                                     p.wy >= y - itemHeight/2 && p.wy <= y + itemHeight/2);
+                const touchOnCode = (p.wx >= codeX - codeWidth && p.wx <= codeX &&
+                                     p.wy >= y - itemHeight/2 && p.wy <= y + itemHeight/2);
+                if ((touchOnName || touchOnCode) && p.justPressed) {
+                    if (isMacroMode) {
+                        // 宏模式：直接追加，允许重复
+                        deep_macro_editing_combo.push(item.code);
+                        audio_play_sound('snd_coin_mobile');
+                    } else {
+                        if (deep_key_picker_field) {
+                            const target = deep_key_picker_field;
+                            eval(`${target} = ${item.code}`);
+                            save_global_settings();
+                            update_keyboard_keymap();
+                            audio_play_sound('snd_coin_mobile');
+                        }
+                        deep_scroll_offset = deep_return_scroll || 0;
+                        deep_touch_start_y = null;
+                        deep_touch_start_offset = 0;
+                        deep_is_dragging = false;
+                        deep_key_picker_field = null;
+                        deep_key_picker_selected = null;
+                        if (deep_return_sub_menu) deep_sub_menu = deep_return_sub_menu;
+                        return;
+                    }
+                }
+            }
+        }
+    }
+    ctx.restore();
+}
+function drawButtonSettingsPanel(self) {
+    const key = deep_button_setting_key;
+    if (!key) { deep_sub_menu = 'script_settings'; return; }
+
+    // 全屏半透明背景
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.restore();
+
+    const fontFamily = 'SystemFont';
+    const centerX = WORLD_W / 2;
+    const macroEnabled = get_macro_enabled(key);
+
+    const keyLabels = {
+        mobile_f2: mobile_cn ? '重开键' : 'Restart Button',
+        mobile_heal: mobile_cn ? '回血键' : 'Heal Button',
+        button_c: mobile_cn ? '按键C' : 'C Button',
+        button_extra_1: mobile_cn ? '拓展按键1' : 'Extra Button 1',
+        button_extra_2: mobile_cn ? '拓展按键2' : 'Extra Button 2',
+        button_extra_3: mobile_cn ? '拓展按键3' : 'Extra Button 3',
+        button_extra_4: mobile_cn ? '拓展按键4' : 'Extra Button 4'
+    };
+    const title = keyLabels[key] || key;
+
+    // 标题居中
+    ctx.save();
+    ctx.font = `bold 24px ${fontFamily}`;
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(mobile_cn ? `${title} 设置` : `${title} Settings`, centerX, 60);
+    ctx.restore();
+
+    const optionItems = [
+        { label: mobile_cn ? '更改键码' : 'Change Key', action: 'change_key' },
+        { label: mobile_cn ? '快捷修改键码' : 'Quick Set Key', action: 'quick_key' },
+        { label: mobile_cn ? '修改贴图' : 'Change Sprite', action: 'change_sprite' },
+        { label: mobile_cn ? '宏' : 'Macro', action: 'macro_toggle', value: macroEnabled ? (mobile_cn ? '开' : 'ON') : (mobile_cn ? '关' : 'OFF') }
+    ];
+
+    const startY = 120;
+    const itemHeight = 40;
+
+    for (let i = 0; i < optionItems.length; i++) {
+        const opt = optionItems[i];
+        const y = startY + i * itemHeight;
+        let displayText = opt.label;
+        if (opt.action === 'macro_toggle') {
+            displayText += ': ' + opt.value;
+        }
+
+        ctx.save();
+        ctx.font = `bold 20px ${fontFamily}`;
+        const textWidth = ctx.measureText(displayText).width;
+        const touchX = (WORLD_W - textWidth) / 2; // 居中
+        let touched = false;
+        for (const pid in _pointerDown) {
+            if (!_pointerDown[pid]) continue;
+            const p = _pointers[pid];
+            if (p.wx >= touchX && p.wx <= touchX + textWidth && p.wy >= y - 15 && p.wy <= y + 15) {
+                touched = true;
+                if (p.justPressed) {
+                    switch (opt.action) {
+                        case 'change_key':
+                            deep_return_sub_menu = 'button_settings';
+                            deep_return_scroll = 0;
+                            if (macroEnabled) {
+                                const combo = get_macro_combo(key);
+                                deep_editing_field = 'macro:' + key;
+                                deep_editing_temp = combo.length > 0 ? combo.join('+') : '';
+                            } else {
+                                const keyVar = key + '_key';
+                                deep_editing_field = keyVar;
+                                deep_editing_temp = eval(keyVar).toString();
+                            }
+                            _openSystemKeyboard();
+                            break;
+                        case 'quick_key':
+                            deep_return_sub_menu = 'button_settings';
+                            deep_return_scroll = 0;
+                            if (macroEnabled) {
+                                deep_macro_editing_field = key;
+                                deep_macro_editing_combo = get_macro_combo(key).slice();
+                            } else {
+                                const keyVar = key + '_key';
+                                deep_key_picker_field = keyVar;
+                                deep_key_picker_selected = eval(keyVar);
+                            }
+                            deep_scroll_offset = 0;
+                            deep_touch_start_y = null;
+                            deep_touch_start_offset = 0;
+                            deep_is_dragging = false;
+                            audio_play_sound('snd_menu_confirm_mobile');
+                            break;
+                        case 'change_sprite':
+                            deep_return_sub_menu = 'button_settings';
+                            deep_return_scroll = 0;
+                            const sprVar = key + '_spr';
+                            deep_editing_field = sprVar;
+                            deep_editing_temp = eval(sprVar).toString();
+                            _openSystemKeyboard();
+                            break;
+                        case 'macro_toggle':
+                            set_macro_enabled(key, !macroEnabled);
+                            audio_play_sound('snd_coin_mobile');
+                            break;
+                    }
+                }
+            }
+        }
+        ctx.fillStyle = touched ? gms_col(c_yellow) : gms_col(c_white);
+        ctx.fillText(displayText, touchX, y);
+        ctx.restore();
+    }
+
+    // 返回按钮，扩大判定
+    const backLabel = mobile_cn ? '返回' : 'Back';
+    const backY = WORLD_H - 50;
+    ctx.save();
+    ctx.font = `bold 20px ${fontFamily}`;
+    const backWidth = ctx.measureText(backLabel).width;
+    const backX = (WORLD_W - backWidth) / 2;
+    let backTouched = false;
+    for (const pid in _pointerDown) {
+        if (!_pointerDown[pid]) continue;
+        const p = _pointers[pid];
+        // 上下各 20px 判定
+        if (p.wx >= backX && p.wx <= backX + backWidth && p.wy >= backY - 20 && p.wy <= backY + 20) {
+            backTouched = true;
+            if (p.justPressed) {
+                deep_sub_menu = 'script_settings';
+                deep_scroll_offset = deep_return_scroll || 0;
+                deep_button_setting_key = null;
+                audio_play_sound('snd_menu_confirm_mobile');
+            }
+        }
+    }
+    ctx.fillStyle = backTouched ? gms_col(c_yellow) : gms_col(c_white);
+    ctx.fillText(backLabel, backX, backY);
+    ctx.restore();
+}
 function drawDeepSettingsButton(self) {
     const x = 241, y = 380, w = 158, h = 24;
     const fontFamily = 'SystemFont';
@@ -1990,6 +2705,7 @@ function load_vars_from_cfg() {
         akb_y = c.akb_y != null ? c.akb_y : 5;
         analog_cx = analog_posx + 59 * analog_scale / 2;
         analog_cy = analog_posy + 59 * analog_scale / 2;
+
         if (mobile_2pad) {
             const dc = cfg_all.dual.stick;
             if (dc.analog_posx_r !== undefined) {
@@ -2001,6 +2717,8 @@ function load_vars_from_cfg() {
             }
             wasd_analog_cx = wasd_analog_posx + 29.5 * analog_scale;
             wasd_analog_cy = wasd_analog_posy + 29.5 * analog_scale;
+
+            // 如果开启了交换，只交换坐标，不改变任何按键映射
             if (cfg_all.dual.swap) {
                 [analog_posx, wasd_analog_posx] = [wasd_analog_posx, analog_posx];
                 [analog_posy, wasd_analog_posy] = [wasd_analog_posy, analog_posy];
@@ -2011,6 +2729,7 @@ function load_vars_from_cfg() {
             }
         }
     } else if (ui_state === 4) {
+        // 方向键模式也做同样处理
         const c = mobile_2pad ? cfg_all.dual.dpad : cfg_all.dpad[`style${cfg_all.dpad.current_style}`] || cfg_all.dpad.style0;
         controls_opacity = c.controls_opacity; button_scale = c.button_scale; analog_scale = c.analog_scale; joystick_type = c.joystick_type;
         zx = c.zx; zy = c.zy; xx = c.xx; xy = c.xy; cx = c.cx; cy = c.cy; settx = c.settx; setty = c.setty;
@@ -2380,8 +3099,7 @@ function obj_mobilecontrols_Step_0(self) {
         wasd_stick_drag = false;
         wasd_stick_off_x = 0; wasd_stick_off_y = 0;
         wasd_stick_dir_x = 0; wasd_stick_dir_y = 0;
-        keyboard_key_release(87); keyboard_key_release(83);
-        keyboard_key_release(65); keyboard_key_release(68);
+        update_wasd_arrows();
         for (const kc in keyIsDown) {
             if (keyIsDown[kc]) keyboard_key_release(Number(kc));
         }
@@ -2399,6 +3117,8 @@ function obj_mobilecontrols_Step_0(self) {
         if (!stick_drag) {
             for (const pid in _pointerDown) {
                 if (!_pointerDown[pid]) continue;
+                // 排除已被 WASD 摇杆占用的触摸点
+                if (wasd_stick_drag && pid == wasd_stick_touch) continue;
                 const p = _pointers[pid];
                 if (Math.hypot(p.wx - analog_cx, p.wy - analog_cy) <= (59 * analog_scale / 2 + EXTRA_RADIUS_FACTOR * analog_scale) * 1.5) {
                     stick_drag = true; stick_touch = pid; drag_stick(p.wx, p.wy); break;
@@ -2414,11 +3134,14 @@ function obj_mobilecontrols_Step_0(self) {
             if (!wasd_stick_drag) {
                 for (const pid in _pointerDown) {
                     if (!_pointerDown[pid]) continue;
+                    // 排除已被左摇杆占用的触摸点
+                    if (stick_drag && pid == stick_touch) continue;
                     const p = _pointers[pid];
                     if (Math.hypot(p.wx - wasd_analog_cx, p.wy - wasd_analog_cy) <= (59 * analog_scale / 2 + EXTRA_RADIUS_FACTOR * analog_scale) * 1.5) {
                         wasd_stick_drag = true; wasd_stick_touch = pid;
                         const maxR = 59 * analog_scale / 2;
-                        let dx = p.wx - wasd_analog_cx, dy = p.wy - wasd_analog_cy;
+                        let dx = p.wx - wasd_analog_cx,
+                            dy = p.wy - wasd_analog_cy;
                         const dist = Math.hypot(dx, dy);
                         if (dist > maxR) { dx = dx / dist * maxR; dy = dy / dist * maxR; }
                         wasd_stick_off_x = dx; wasd_stick_off_y = dy;
@@ -2429,15 +3152,18 @@ function obj_mobilecontrols_Step_0(self) {
             } else if (_pointerDown[wasd_stick_touch] && _pointers[wasd_stick_touch]) {
                 const p = _pointers[wasd_stick_touch];
                 const maxR = 59 * analog_scale / 2;
-                let dx = p.wx - wasd_analog_cx, dy = p.wy - wasd_analog_cy;
+                let dx = p.wx - wasd_analog_cx,
+                    dy = p.wy - wasd_analog_cy;
                 const dist = Math.hypot(dx, dy);
                 if (dist > maxR) { dx = dx / dist * maxR; dy = dy / dist * maxR; }
                 wasd_stick_off_x = dx; wasd_stick_off_y = dy;
                 wasd_stick_dir_x = dx / maxR; wasd_stick_dir_y = dy / maxR;
             } else {
                 wasd_stick_drag = false;
-                wasd_stick_off_x = 0; wasd_stick_off_y = 0; wasd_stick_dir_x = 0; wasd_stick_dir_y = 0;
+                wasd_stick_off_x = 0; wasd_stick_off_y = 0;
+                wasd_stick_dir_x = 0; wasd_stick_dir_y = 0;
             }
+            update_wasd_arrows();
         }
 
         _createAllVirtualKeys(self);
@@ -2446,12 +3172,13 @@ function obj_mobilecontrols_Step_0(self) {
         return;
     }
 
+    // 编辑模式
     applyTransition(self);
     handleKeyboardToggle(self, toggle_edit);
     processResetButton(true);
-    const mx=device_mouse_x_to_gui(0), my=device_mouse_y_to_gui(0), mb=mouse_check_button_pressed(mb_left);
+    const mx = device_mouse_x_to_gui(0), my = device_mouse_y_to_gui(0), mb = mouse_check_button_pressed(mb_left);
     handleSettingsDelay(self, sett_just_pressed, sett_touch_id, toggle_edit);
-    if(self.active_key===-1&&!self.settings_pending) { processArrows(mx,my,mb); processDragStart(self,mx,my,mb,true); }
+    if (self.active_key === -1 && !self.settings_pending) { processArrows(mx, my, mb); processDragStart(self, mx, my, mb, true); }
     processDragMove(self);
 }
 function obj_mobilecontrols_Draw_75(self) {
@@ -2510,10 +3237,14 @@ function obj_mobilecontrols_Draw_75(self) {
 function toggle_edit(self) {
     self.edit = !self.edit;
     if (self.edit) {
-        stick_off_x = 0;
-        stick_off_y = 0;
-        wasd_stick_off_x = 0;
-        wasd_stick_off_y = 0;
+        stick_off_x = 0; stick_off_y = 0;
+        wasd_stick_off_x = 0; wasd_stick_off_y = 0;
+    }
+    reset_stick();
+    if (mobile_2pad) {
+        wasd_stick_drag = false;
+        wasd_stick_dir_x = 0; wasd_stick_dir_y = 0;
+        update_wasd_arrows();
     }
     audio_play_sound(self.edit ? 'snd_spearappear_mobile' : 'snd_egg_mobile');
     if (!self.edit) save_vars_to_cfg();
@@ -2532,7 +3263,16 @@ function reset_all() {
     save_vars_to_cfg();
     audio_play_sound('snd_noise_mobile');
 }
-function obj_mobilecontrols_CleanUp_0(self) { if(self.edit) save_vars_to_cfg(); _vkList.length=0; }
+function obj_mobilecontrols_CleanUp_0(self) {
+    if (self.edit) save_vars_to_cfg();
+    reset_stick();
+    if (mobile_2pad) {
+        wasd_stick_drag = false;
+        wasd_stick_dir_x = 0; wasd_stick_dir_y = 0;
+        update_wasd_arrows();
+    }
+    _vkList.length = 0;
+}
 
 // ── obj_mobilecontrols_button:方向键控件(可编辑模式) ──
 function obj_mobilecontrols_button_Create_0() {
@@ -2665,12 +3405,19 @@ document.addEventListener('keydown', e => {
             e.preventDefault();
             toggle_keyboard();
         }
-        else if (mobile_f2 && (e.key === 'F2' || e.keyCode === mobile_f2_key)) {
-            e.preventDefault();
-            restart_project();
-        }
+       
     }
 });
+
+// Cordova 将 Android 返回键派发为 backbutton，而不是浏览器 keydown。
+document.addEventListener('backbutton', e => {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    if (system_kb_active) {
+        _closeSystemKeyboard();
+        return;
+    }
+    toggle_keyboard();
+}, false);
 
 function on_touch_start(e) {
     if (ui_state === 1) return;
@@ -2705,8 +3452,9 @@ function on_touch_end(e) {
         if (_pointers[t.identifier]) {
             if (wasd_stick_drag && t.identifier == wasd_stick_touch) {
                 wasd_stick_drag = false;
-                wasd_stick_off_x = 0; wasd_stick_off_y = 0; wasd_stick_dir_x = 0; wasd_stick_dir_y = 0;
-                keyboard_key_release(87); keyboard_key_release(83); keyboard_key_release(65); keyboard_key_release(68);
+                wasd_stick_off_x = 0; wasd_stick_off_y = 0;
+                wasd_stick_dir_x = 0; wasd_stick_dir_y = 0;
+                update_wasd_arrows();
             }
             delete _pointerDown[t.identifier];
             delete _pointers[t.identifier];
@@ -2722,8 +3470,10 @@ function on_touch_end(e) {
         }
         if (!wasdActive && wasd_stick_drag) {
             wasd_stick_drag = false;
-            wasd_stick_off_x = 0; wasd_stick_off_y = 0; wasd_stick_dir_x = 0; wasd_stick_dir_y = 0;
-            keyboard_key_release(87); keyboard_key_release(83); keyboard_key_release(65); keyboard_key_release(68);
+            wasd_stick_off_x = 0; wasd_stick_off_y = 0;
+            wasd_stick_dir_x = 0; wasd_stick_dir_y = 0;
+            // 删除了 wasd_last_arrow 的手动重置
+            update_wasd_arrows();
         }
         stopArrowLongpress(); arrow_pressed_ctrl = null; arrow_pressed_side = null;
     }
@@ -2744,8 +3494,9 @@ function on_mouse_move(e) {
 function on_mouse_up(e) {
     if (ui_state === 1 || e.button !== 0 || !_pointers[MOUSE_ID]) return;
     if (wasd_stick_drag && MOUSE_ID == wasd_stick_touch) {
-        wasd_stick_drag = false; wasd_stick_off_x = 0; wasd_stick_off_y = 0; wasd_stick_dir_x = 0; wasd_stick_dir_y = 0;
-        keyboard_key_release(87); keyboard_key_release(83); keyboard_key_release(65); keyboard_key_release(68);
+        wasd_stick_drag = false; wasd_stick_off_x = 0; wasd_stick_off_y = 0;
+        wasd_stick_dir_x = 0; wasd_stick_dir_y = 0;
+        update_wasd_arrows();
     }
     delete _pointerDown[MOUSE_ID]; delete _pointers[MOUSE_ID]; _updatePointerSlots();
     try { if (ui_state === 3 && stick_drag && stick_touch === MOUSE_ID) reset_stick(); } catch(err) {}
@@ -2754,8 +3505,9 @@ function on_mouse_up(e) {
 function on_mouse_leave(e) {
     if (!_pointerDown[MOUSE_ID]) return;
     if (wasd_stick_drag && MOUSE_ID == wasd_stick_touch) {
-        wasd_stick_drag = false; wasd_stick_off_x = 0; wasd_stick_off_y = 0; wasd_stick_dir_x = 0; wasd_stick_dir_y = 0;
-        keyboard_key_release(87); keyboard_key_release(83); keyboard_key_release(65); keyboard_key_release(68);
+        wasd_stick_drag = false; wasd_stick_off_x = 0; wasd_stick_off_y = 0;
+        wasd_stick_dir_x = 0; wasd_stick_dir_y = 0;
+        update_wasd_arrows();
     }
     delete _pointerDown[MOUSE_ID]; delete _pointers[MOUSE_ID]; _updatePointerSlots();
     try { if (ui_state === 3 && stick_drag && stick_touch === MOUSE_ID) reset_stick(); } catch(err) {}
@@ -2787,12 +3539,12 @@ function game_loop() {
 
 function draw() {
     ensure_canvas_alive();
-    if (!ctx || !game_area.scale || !keyboard_ready) return;
+    if (!ctx || !keyboard_area.scale || !keyboard_ready) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (ui_state === 1) return;
     ctx.save();
-    ctx.translate(game_area.x * dpr, game_area.y * dpr);
-    ctx.scale(game_area.scale * dpr, game_area.scale * dpr);
+    ctx.translate(keyboard_area.x * dpr, keyboard_area.y * dpr);
+    ctx.scale(keyboard_area.scale * dpr, keyboard_area.scale * dpr);
     ctx.imageSmoothingEnabled = false;
     if (ui_state === 2 && instances.obj_mobilekey) obj_mobilekey_Draw_75(instances.obj_mobilekey);
     else if (ui_state === 3 && instances.obj_mobilecontrols) obj_mobilecontrols_Draw_75(instances.obj_mobilecontrols);
@@ -2803,6 +3555,7 @@ function draw() {
 function init() {
     load_global_settings();
     load_key_modes();
+    load_macro_configs();
     load_cfg_all();
     if (mobile_2pad) init_dual_config();
     ensure_canvas_alive();

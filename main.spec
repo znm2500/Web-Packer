@@ -6,7 +6,7 @@ PyInstaller 打包配置 —— pack_tool_gui.py (Web资源打包工具)
     pyinstaller main.spec --clean
 产物:
     dist/Web资源打包工具/Web资源打包工具.exe  (onedir 模式)
-    onedir 根下并列: 打包器/  template.APK  controls.js  tools/
+    onedir 根下并列: 打包器/  template.APK  controls.js  touch-emulator.js  tools/
 """
 
 import os
@@ -36,7 +36,7 @@ datas = []
 datas += collect_dir(PROJECT_ROOT / '打包器', '打包器')
 datas += collect_dir(PROJECT_ROOT / 'tools', 'tools')
 
-for single_file in ('template.APK', 'controls.js'):
+for single_file in ('template.APK', 'template.c2.APK', 'controls.js', 'touch-emulator.js'):
     p = PROJECT_ROOT / single_file
     if p.exists():
         datas.append((str(p), '.'))

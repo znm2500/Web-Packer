@@ -79,7 +79,9 @@ BASE_DIR = _resolve_base_dir()
 CONFIG_DIR = _resolve_config_dir()
 PACKAGER_TEMPLATE = BASE_DIR / "打包器"
 APK_TEMPLATE = BASE_DIR / "template.APK"
+APK_TEMPLATE_C2 = BASE_DIR / "template.c2.APK"
 CONTROLS_JS = BASE_DIR / "controls.js"
+TOUCH_EMULATOR_JS = BASE_DIR / "touch-emulator.js"
 TOOLS_DIR = BASE_DIR / "tools"
 CONFIG_FILE = CONFIG_DIR / "gui_config.json"
 
@@ -152,6 +154,52 @@ def extract_archive(src: Path, dest: Path) -> Tuple[bool, str]:
         return False, f"解压失败: {e}"
 
 
+def seed_apk_template_www(www_dir: Path, template_apk: Path) -> Tuple[bool, str]:
+    """把 APK 模板中的 assets/www 复制到公共准备目录。"""
+    if not template_apk.exists():
+        return False, f"找不到 APK 模板: {template_apk}"
+    try:
+        with zipfile.ZipFile(template_apk, 'r') as z:
+            prefix = 'assets/www/'
+            copied = 0
+            root = www_dir.resolve()
+            for info in z.infolist():
+                name = info.filename
+                if not name.startswith(prefix) or name == prefix:
+                    continue
+                rel = name[len(prefix):].replace('/', os.sep)
+                target = (www_dir / rel).resolve()
+                if target != root and root not in target.parents:
+                    return False, f"APK 模板资源路径非法: {name}"
+                if name.endswith('/'):
+                    target.mkdir(parents=True, exist_ok=True)
+                    continue
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(z.read(info))
+                copied += 1
+        return True, f"已载入 APK 模板 {template_apk.name} 的 assets/www ({copied} 个文件)"
+    except Exception as e:
+        return False, f"读取 APK 模板 assets/www 失败: {e}"
+
+
+def _copy_web_item_for_prepare(src: Path, dest: Path) -> None:
+    """复制用户资源，并合并目录，避免删掉 Cordova 模板文件。"""
+    if src.is_dir():
+        if dest.exists() and dest.is_file():
+            dest.unlink()
+        dest.mkdir(parents=True, exist_ok=True)
+        for child in src.iterdir():
+            _copy_web_item_for_prepare(child, dest / child.name)
+        return
+
+    if dest.exists():
+        if dest.is_dir():
+            shutil.rmtree(dest, ignore_errors=True)
+        else:
+            dest.unlink(missing_ok=True)
+    shutil.copy2(src, dest)
+
+
 def find_index_html(root: Path) -> Optional[Path]:
     """在目录下找最合适的 index.html (或主HTML入口)"""
     candidates_index = []
@@ -200,7 +248,7 @@ def ensure_index_html(www_dir: Path, log_fn) -> Tuple[bool, str]:
 # Scratch 项目检测与注入补丁
 #   1. 检测: index.html 特征(含 scratch-gui / vm / scratch-render / scratch-svg-renderer / ScratchVM
 #            或 www 下存在 project.json / assets / 大量 md5ext 资源)
-#   2. 补丁: 注入 CSS 隐藏控制栏 + 绑定 F4(全屏切换) / F2(绿旗 vm.greenFlag())
+#   2. 补丁: 注入 CSS 隐藏控制栏，按需绑定 F2(绿旗 vm.greenFlag())
 # =========================================================
 SCRATCH_TEXT_SIGNALS = [
     'scratch-gui', 'scratch-render', 'scratch-svg-renderer',
@@ -250,43 +298,57 @@ PATCH_STYLE = """
 """.strip()
 
 PATCH_SCRIPT = r"""
-<!-- Scratch 快捷键补丁: F4 全屏切换 / F2 绿旗 (注入 by pack_tool_gui) -->
+<!-- Scratch 快捷键补丁: F2 绿旗 (注入 by pack_tool_gui) -->
 <script>
 (function () {
-  // F4: 全屏切换
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'F4') {
-      e.preventDefault();
-      if (!document.fullscreenElement) {
-        var el = document.documentElement;
-        var req = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen || el.mozRequestFullScreen;
-        if (req) req.call(el).catch(function (err) { console.error('无法进入全屏:', err && err.message ? err.message : err); });
-      } else {
-        var exit = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen || document.mozCancelFullScreen;
-        if (exit) exit.call(document);
+    if (e.key !== 'F2') return;
+    e.preventDefault();
+    var vm = null;
+    try {
+      if (typeof window !== 'undefined') {
+        vm = window.vm;
+        if (!vm && window.Scratch && window.Scratch.vm) vm = window.Scratch.vm;
+        if (!vm && window.__scratchGui && window.__scratchGui.getVm) vm = window.__scratchGui.getVm();
       }
+    } catch (_) { vm = null; }
+    if (vm && typeof vm.greenFlag === 'function') {
+      try { vm.greenFlag(); }
+      catch (err) { console.error('[Scratch 补丁] 调用 vm.greenFlag() 失败:', err); }
     }
   });
+})();
+</script>
+""".strip()
 
-  // F2: 触发绿旗 (vm.greenFlag())
+PATCH_F4_SCRIPT = r"""
+<!-- Scratch F4 全屏补丁 (仅注入 EXE) -->
+<script>
+(function () {
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'F2') {
-      e.preventDefault();
-      var vm = null;
-      try {
-        if (typeof window !== 'undefined') {
-          vm = window.vm;
-          if (!vm && window.Scratch && window.Scratch.vm) vm = window.Scratch.vm;
-          if (!vm && window.__scratchGui && window.__scratchGui.getVm) vm = window.__scratchGui.getVm();
-        }
-      } catch (_) { vm = null; }
-      if (vm && typeof vm.greenFlag === 'function') {
-        try { vm.greenFlag(); console.log('[Scratch 补丁] F2 触发 vm.greenFlag() 成功'); }
-        catch (err) { console.error('[Scratch 补丁] 调用 vm.greenFlag() 失败:', err); }
-      } else {
-        console.warn('[Scratch 补丁] 未找到全局 vm 对象，F2 无效；请确认页面已初始化 Scratch VM');
-      }
+    if (e.key !== 'F4') return;
+    e.preventDefault();
+    if (!document.fullscreenElement) {
+      var el = document.documentElement;
+      var req = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen || el.mozRequestFullScreen;
+      if (req) req.call(el).catch(function (err) { console.error('无法进入全屏:', err && err.message ? err.message : err); });
+    } else {
+      var exit = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen || document.mozCancelFullScreen;
+      if (exit) exit.call(document);
     }
+  });
+})();
+</script>
+""".strip()
+
+PATCH_F2_SCRIPT = r"""
+<!-- F2 重启游戏补丁 -->
+<script>
+(function () {
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'F2') return;
+    e.preventDefault();
+    window.location.reload();
   });
 })();
 </script>
@@ -304,7 +366,9 @@ def _find_tag_safe(html: str, tag: str) -> int:
     stripped = re.sub(pattern, lambda m: ' ' * len(m.group(0)), html, flags=re.DOTALL | re.IGNORECASE)
     return stripped.lower().find(tag)
 
-def _inject_html_patch(index_path: Path, style_block: str, script_block: str) -> Tuple[bool, str]:
+def _inject_html_patch(
+        index_path: Path, style_block: str, script_block: Optional[str]
+) -> Tuple[bool, str]:
     """
     安全注入样式和脚本补丁，避免被 JS 字符串内的 '</head>'/'</body>' 干扰。
     """
@@ -345,7 +409,7 @@ def _inject_html_patch(index_path: Path, style_block: str, script_block: str) ->
                 html = style_html + html
 
     # ---- 3. 安全查找 </body> 并注入 SCRIPT ----
-    if 'Scratch 快捷键补丁' not in html:
+    if script_block and 'Scratch 快捷键补丁' not in html:
         script_html = f'\n{script_block}\n'
         idx2 = _find_tag_safe(html, '</body>')
         if idx2 >= 0:
@@ -364,8 +428,10 @@ def _inject_html_patch(index_path: Path, style_block: str, script_block: str) ->
     return True, "已注入补丁并启用自动启动"
 
 
-def inject_scratch_patch_if_needed(www_dir: Path, log_fn) -> Tuple[bool, str]:
-    """检测到 Scratch 时，就自动打补丁"""
+def inject_scratch_patch_if_needed(
+        www_dir: Path, log_fn, inject_f2_restart: bool = True
+) -> Tuple[bool, str]:
+    """检测到 Scratch 时注入控制栏补丁，并按需注入 F2 绿旗。"""
     is_scratch, reason = is_scratch_project(www_dir)
     if not is_scratch:
         return True, f"非 Scratch 项目，跳过注入补丁"
@@ -373,8 +439,262 @@ def inject_scratch_patch_if_needed(www_dir: Path, log_fn) -> Tuple[bool, str]:
     index_path = www_dir / 'index.html'
     if not index_path.exists():
         return False, "检测为 Scratch 项目但未找到 index.html"
-    ok, msg = _inject_html_patch(index_path, PATCH_STYLE, PATCH_SCRIPT)
+    ok, msg = _inject_html_patch(
+        index_path, PATCH_STYLE, PATCH_SCRIPT if inject_f2_restart else None
+    )
     return ok, msg
+
+
+def inject_exe_f4_patch_if_needed(www_dir: Path, log_fn) -> Tuple[bool, str]:
+    """仅为 EXE 的 Scratch 页面注入 F4 全屏功能。"""
+    is_scratch, reason = is_scratch_project(www_dir)
+    if not is_scratch:
+        return True, "非 Scratch 项目，跳过 EXE F4 全屏注入"
+    index_path = www_dir / 'index.html'
+    if not index_path.exists():
+        return False, "检测为 Scratch 项目但未找到 index.html"
+    try:
+        html = index_path.read_text(encoding='utf-8', errors='ignore')
+        if 'Scratch F4 全屏补丁' in html:
+            return True, "EXE F4 全屏补丁已存在，跳过注入"
+        idx = _find_tag_safe(html, '</body>')
+        block = f'\n{PATCH_F4_SCRIPT}\n'
+        html = html[:idx] + block + html[idx:] if idx >= 0 else html + block
+        index_path.write_text(html, encoding='utf-8')
+        log_fn(f"EXE Scratch F4 全屏注入 → {reason}", 'info')
+        return True, "已注入 EXE F4 全屏功能"
+    except Exception as e:
+        return False, f"EXE F4 全屏补丁失败: {e}"
+
+
+def inject_f2_restart_patch_if_needed(www_dir: Path, log_fn) -> Tuple[bool, str]:
+    """为 C2/C3 等非 Scratch 页面注入 F2 重新加载游戏功能。"""
+    is_scratch, _ = is_scratch_project(www_dir)
+    if is_scratch:
+        return True, "Scratch 已使用 F2 绿旗补丁，跳过页面重载补丁"
+    index_path = www_dir / 'index.html'
+    if not index_path.exists():
+        return False, "未找到 index.html，无法注入 F2 重启功能"
+    try:
+        html = index_path.read_text(encoding='utf-8', errors='ignore')
+        if 'F2 重启游戏补丁' in html:
+            return True, "F2 重启补丁已存在，跳过注入"
+        idx = _find_tag_safe(html, '</body>')
+        block = f'\n{PATCH_F2_SCRIPT}\n'
+        html = html[:idx] + block + html[idx:] if idx >= 0 else html + block
+        index_path.write_text(html, encoding='utf-8')
+        log_fn("F2 重启注入 → 使用页面重新加载，兼容 C2/C3", 'info')
+        return True, "已注入 F2 重启游戏功能（C2/C3）"
+    except Exception as e:
+        return False, f"F2 重启补丁失败: {e}"
+
+
+def is_construct3_project(www_dir: Path) -> Tuple[bool, str]:
+    """判断 www_dir 是否是 Construct 3 Web/HTML5 导出。"""
+    markers = [
+        www_dir / 'data.json',
+        www_dir / 'workermain.js',
+        www_dir / 'scripts' / 'c3runtime.js',
+        www_dir / 'scripts' / 'main.js',
+        www_dir / 'scripts' / 'supportcheck.js',
+    ]
+    hits = [p.relative_to(www_dir).as_posix() for p in markers if p.exists()]
+    if len(hits) >= 3:
+        return True, f"检测到 Construct 3 导出文件: {hits}"
+
+    index_path = www_dir / 'index.html'
+    if index_path.exists():
+        try:
+            html = index_path.read_text(encoding='utf-8', errors='ignore').lower()
+            if 'c3runtime' in html or 'construct 3' in html or 'workermain.js' in html:
+                return True, "index.html 命中 Construct 3 运行时特征"
+        except Exception as e:
+            return False, f"读取 index.html 失败: {e}"
+    return False, "未检测到 Construct 3 导出特征"
+
+
+def select_apk_template(www_dir: Path) -> Tuple[Path, str]:
+    """C3 使用 Cordova 壳；C2/Scratch 使用兼容旧壳。"""
+    is_c3, reason = is_construct3_project(www_dir)
+    if is_c3:
+        return APK_TEMPLATE, f"检测为 Construct 3 → 使用 Cordova 模板: {APK_TEMPLATE.name} ({reason})"
+    if APK_TEMPLATE_C2.exists():
+        return APK_TEMPLATE_C2, f"非 Construct 3 项目 → 使用 C2/Scratch 兼容模板: {APK_TEMPLATE_C2.name}"
+    return APK_TEMPLATE, (
+        f"未找到 C2/Scratch 兼容模板 {APK_TEMPLATE_C2.name}，"
+        f"回退使用 Cordova 模板: {APK_TEMPLATE.name}"
+    )
+
+
+def patch_construct3_export_if_needed(www_dir: Path, log_fn) -> Tuple[bool, str]:
+    """
+    Construct 3 移植到 Android 壳:
+      - index.html 注入 cordova.js (controls.js 在 APK 阶段统一注入)
+      - scripts/main.js 中 exportType 从 windows-webview2 改为 cordova
+      - 移除离线 Service Worker 注册
+    """
+    is_c3, reason = is_construct3_project(www_dir)
+    if not is_c3:
+        return True, f"非 Construct 3 项目，跳过 C3 兼容处理"
+
+    removed = []
+    for rel in ('sw.js', 'offline.json'):
+        p = www_dir / rel
+        if p.exists():
+            try:
+                p.unlink()
+                removed.append(rel)
+            except Exception as e:
+                return False, f"删除 Construct 3 离线文件 {rel} 失败: {e}"
+
+    index_path = www_dir / 'index.html'
+    changed = False
+    cordova_injected = False
+    if index_path.exists():
+        try:
+            html = index_path.read_text(encoding='utf-8', errors='ignore')
+            new_html = re.sub(
+                r'\s*<script\b[^>]*\bsrc=["\'](?:\.\/)?scripts\/(?:register-sw|offlineclient)\.js["\'][^>]*>\s*</script>',
+                '',
+                html,
+                flags=re.IGNORECASE,
+            )
+            if new_html != html:
+                index_path.write_text(new_html, encoding='utf-8')
+                changed = True
+            html = new_html
+
+            if (www_dir / 'cordova.js').exists() and 'src="cordova.js"' not in html and "src='cordova.js'" not in html:
+                cordova_tag = '<script src="cordova.js"></script>'
+                body_marker = re.search(r'<body[^>]*>', html, flags=re.IGNORECASE)
+                if body_marker:
+                    html = html[:body_marker.end()] + cordova_tag + html[body_marker.end():]
+                else:
+                    html = cordova_tag + html
+                index_path.write_text(html, encoding='utf-8')
+                changed = True
+                cordova_injected = True
+        except Exception as e:
+            return False, f"修改 Construct 3 index.html 失败: {e}"
+
+    # A Windows WebView2 export carries wrapper-specific startup settings.
+    # Android 壳使用真实 Cordova bridge，所以只改 exportType。
+    main_js = www_dir / 'scripts' / 'main.js'
+    runtime_changed = False
+    if main_js.exists():
+        try:
+            runtime = main_js.read_text(encoding='utf-8', errors='ignore')
+            patched_runtime = runtime
+            patched_runtime = re.sub(
+                r'(["\'])windows-webview2\1',
+                r'\1cordova\1',
+                patched_runtime,
+                flags=re.IGNORECASE,
+            )
+            if patched_runtime != runtime:
+                main_js.write_text(patched_runtime, encoding='utf-8')
+                runtime_changed = True
+        except Exception as e:
+            return False, f"修改 Construct 3 scripts/main.js 失败: {e}"
+
+    detail = []
+    if removed:
+        detail.append("删除 " + ", ".join(removed))
+    if changed:
+        detail.append("移除 offline/register-sw 脚本引用")
+    if cordova_injected:
+        detail.append("index.html 注入 cordova.js")
+    if runtime_changed:
+        detail.append('main.js exportType 改为 cordova')
+    if not detail:
+        detail.append("未发现需移除的离线缓存文件")
+    log_fn(f"检测为 Construct 3 项目 → {reason}", 'info')
+    return True, "Construct 3 兼容处理完成: " + "；".join(detail)
+
+
+def remove_cordova_web_assets_if_not_construct3(www_dir: Path, log_fn) -> Tuple[bool, str]:
+    """C2/Scratch 不需要模板附带的 Cordova 网页桥接与插件脚本。"""
+    is_c3, _ = is_construct3_project(www_dir)
+    if is_c3:
+        return True, "Construct 3 项目，保留 Cordova 网页资源"
+
+    removed = []
+    for rel in ('cordova.js', 'cordova_plugins.js'):
+        path = www_dir / rel
+        if path.exists():
+            try:
+                path.unlink()
+                removed.append(rel)
+            except Exception as e:
+                return False, f"移除 {rel} 失败: {e}"
+
+    plugins_dir = www_dir / 'plugins'
+    if plugins_dir.exists():
+        for child in list(plugins_dir.iterdir()):
+            if child.name.startswith('cordova-plugin-'):
+                try:
+                    if child.is_dir():
+                        shutil.rmtree(child)
+                    else:
+                        child.unlink()
+                    removed.append(f"plugins/{child.name}")
+                except Exception as e:
+                    return False, f"移除 Cordova 插件 {child.name} 失败: {e}"
+        try:
+            if not any(plugins_dir.iterdir()):
+                plugins_dir.rmdir()
+        except Exception:
+            pass
+
+    return True, (
+        "非 Construct 3 项目，已移除模板 Cordova 网页资源"
+        + (": " + ", ".join(removed) if removed else "")
+    )
+
+
+def patch_construct3_icon_references_if_needed(www_dir: Path, log_fn) -> Tuple[bool, str]:
+    """补齐 C3 导出中 index/manifest 引用的 icons/*.png 文件。"""
+    is_c3, reason = is_construct3_project(www_dir)
+    if not is_c3:
+        return True, "非 Construct 3 项目，跳过 C3 图标引用补齐"
+
+    text_files = []
+    for name in ('index.html', 'manifest.json', 'appmanifest.json'):
+        p = www_dir / name
+        if p.exists() and p.is_file():
+            text_files.append(p)
+
+    refs = set()
+    for p in text_files:
+        try:
+            text = p.read_text(encoding='utf-8', errors='ignore')
+        except Exception:
+            continue
+        for match in re.findall(r'icons/[^"\'<>\s)]+\.png', text, flags=re.IGNORECASE):
+            refs.add(match)
+
+    created = []
+    for rel in sorted(refs):
+        rel = rel.replace('\\', '/')
+        dst = www_dir / rel
+        if dst.exists():
+            continue
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        m = re.search(r'(\d{2,4})', Path(rel).name)
+        desired = int(m.group(1)) if m else 512
+        src = _pick_icon_for_apk(www_dir / 'icons', desired)
+        if not src:
+            return False, f"C3 图标引用 {rel} 缺失，且没有可用默认图标可补齐"
+        try:
+            shutil.copy2(src, dst)
+            created.append(rel)
+        except Exception as e:
+            return False, f"补齐 C3 图标引用 {rel} 失败: {e}"
+
+    if created:
+        log_fn(f"检测为 Construct 3 项目 → {reason}", 'info')
+        return True, "已补齐 C3 图标引用: " + ", ".join(created)
+    return True, "C3 图标引用完整，无需补齐"
 
 
 # =========================================================
@@ -393,16 +713,28 @@ def generate_icons(icons_dir: Path, user_icon: Optional[Path], app_name: str, lo
     target_512 = icons_dir / 'icon-512.png'
 
     if user_icon is None:
-        # 用户无自定义图标 → 直接使用模板中已有的默认图标 (无需 Pillow)
-        if target_512.exists():
-            return True, "使用模板默认图标 (www/icons/icon-*.png)", target_512
-        # 万一模板里也缺 (不应该发生)，给出明确错误
+        # 用户无自定义图标 → 使用模板默认图标。Construct 3 导出的
+        # icons/ 目录可能会覆盖模板 icons/，所以这里按尺寸补齐缺失项。
+        template_icons_dir = PACKAGER_TEMPLATE / 'www' / 'icons'
+        missing = [s for s in ICON_SIZES if not (icons_dir / f'icon-{s}.png').exists()]
+        restored = []
+        for sz in missing:
+            src = template_icons_dir / f'icon-{sz}.png'
+            dst = icons_dir / f'icon-{sz}.png'
+            if src.exists():
+                try:
+                    shutil.copy2(src, dst)
+                    restored.append(sz)
+                except Exception as e:
+                    return False, f"补齐默认 {sz}x{sz} 图标失败: {e}", None
         missing = [s for s in ICON_SIZES if not (icons_dir / f'icon-{s}.png').exists()]
         if missing:
             return (False,
                     f"模板 打包器\\www\\icons\\ 中缺少尺寸图标: {missing}，请补齐或提供自定义图标",
                     None)
-        return True, "使用模板默认图标", target_512
+        if restored:
+            return True, f"已从模板补齐默认图标尺寸: {restored}", target_512
+        return True, "使用模板默认图标 (www/icons/icon-*.png)", target_512
 
     # ---- 用户提供了自定义图标，需要用 Pillow 缩放覆盖 ----
     if not user_icon.exists():
@@ -598,7 +930,7 @@ def make_7z(source_dir: Path, output_7z: Path, log_fn) -> Tuple[bool, str]:
             with zipfile.ZipFile(output_zip, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=6) as zf:
                 for f in source_dir.rglob('*'):
                     if f.is_file():
-                        arcname = f'{base_name}/{f.relative_to(source_dir)}'
+                        arcname = f.relative_to(source_dir)
                         zf.write(f, arcname)
             msg = (f"py7zr 未安装，已使用 ZIP 格式代替: {output_zip.name}\n"
                    "安装后可获得 .7z 文件: pip install py7zr")
@@ -630,33 +962,46 @@ APK_ICON_TARGETS = {
     'res/mipmap-xhdpi-v4/icon.png': 128,
     'res/mipmap-xxhdpi-v4/icon.png': 256,
     'res/mipmap-xxxhdpi-v4/icon.png': 512,
+    # 当前 Cordova 模板实际使用的启动器与启动画面图标。
+    'res/drawable-nodpi-v4/ic_cdv_splashscreen.png': 32,
+    'res/mipmap-xhdpi-v4/ic_launcher.png': 128,
+    'res/mipmap-xxxhdpi-v4/ic_launcher.png': 256,
 }
+
+
+def patch_script_at_body_end(www_dir: Path, source_script: Path, script_name: str) -> Tuple[bool, str]:
+    """将一个本地脚本复制到 www 根目录，并在 body 末尾以 defer 引入。"""
+    index_path = www_dir / 'index.html'
+    if not index_path.exists():
+        return False, f"未找到 index.html，无法注入 {script_name} 引用"
+    if not source_script.exists():
+        return False, f"找不到 {script_name}: {source_script}"
+    try:
+        shutil.copy2(source_script, www_dir / script_name)
+        html = index_path.read_text(encoding='utf-8', errors='ignore')
+        if f'src="{script_name}"' in html or f"src='{script_name}'" in html:
+            return True, f"{script_name} 已存在并已引用，跳过 script patch"
+        script_tag = f'<script defer src="{script_name}"></script>'
+        lower = html.lower()
+        idx = lower.find('</body>')
+        if idx >= 0:
+            html = html[:idx] + script_tag + html[idx:]
+        else:
+            html = html + script_tag
+        index_path.write_text(html, encoding='utf-8')
+        return True, f"已复制 {script_name} 并注入到 body 末尾"
+    except Exception as e:
+        return False, f"{script_name} script patch 失败: {e}"
 
 
 def patch_controls_script(www_dir: Path, log_fn) -> Tuple[bool, str]:
     """确保 controls.js 放在 www 根目录，并在 index.html 中引用它。"""
-    index_path = www_dir / 'index.html'
-    if not index_path.exists():
-        return False, "未找到 index.html，无法注入 controls.js 引用"
-    if not CONTROLS_JS.exists():
-        return False, f"找不到 controls.js: {CONTROLS_JS}"
-    try:
-        shutil.copy2(CONTROLS_JS, www_dir / 'controls.js')
-        html = index_path.read_text(encoding='utf-8', errors='ignore')
-        if 'src="controls.js"' in html or "src='controls.js'" in html:
-            return True, "controls.js 已存在并已引用，跳过 script patch"
-        script_tag = '''<script defer src="controls.js"></script>'''
-        lower = html.lower()
-        idx = lower.find('</head>')
-        if idx >= 0:
-            html = html[:idx] + script_tag + html[idx:]
-        else:
-            idx = lower.find('</body>')
-            html = html[:idx] + script_tag + html[idx:] if idx >= 0 else html + script_tag
-        index_path.write_text(html, encoding='utf-8')
-        return True, "已复制 controls.js 并注入 <script defer src=\"controls.js\"></script>"
-    except Exception as e:
-        return False, f"controls.js script patch 失败: {e}"
+    return patch_script_at_body_end(www_dir, CONTROLS_JS, 'controls.js')
+
+
+def patch_touch_emulator_script(www_dir: Path, log_fn) -> Tuple[bool, str]:
+    """确保 touch-emulator.js 放在 www 根目录，并在 index.html 中引用它。"""
+    return patch_script_at_body_end(www_dir, TOUCH_EMULATOR_JS, 'touch-emulator.js')
 
 
 def _sanitize_android_package(app_id: str) -> str:
@@ -760,6 +1105,151 @@ def patch_axml_strings(axml: bytes, replacements: dict) -> bytes:
     return bytes(out)
 
 
+def patch_axml_string_attribute(
+        axml: bytes, element_name: str, attribute_name: str, value: str,
+        all_matches: bool = False
+) -> bytes:
+    """将二进制 Manifest 指定节点的属性改为直接字符串。"""
+    if len(axml) < 36:
+        raise ValueError(f'AndroidManifest.xml 太短，无法修改 {element_name}.{attribute_name}')
+
+    xml_type, xml_header_size, xml_size = struct.unpack_from('<HHI', axml, 0)
+    if xml_type != 0x0003:
+        raise ValueError('不是 Android binary XML 文件')
+    pool_off = xml_header_size
+    chunk_type, header_size, chunk_size = struct.unpack_from('<HHI', axml, pool_off)
+    if chunk_type != 0x0001:
+        raise ValueError('AndroidManifest.xml 未找到 string pool')
+
+    string_count, style_count, flags, strings_start, styles_start = struct.unpack_from(
+        '<IIIII', axml, pool_off + 8
+    )
+    utf8 = bool(flags & 0x00000100)
+    offsets_base = pool_off + header_size
+    strings_base = pool_off + strings_start
+    strings = []
+    for i in range(string_count):
+        pos = strings_base + struct.unpack_from('<I', axml, offsets_base + i * 4)[0]
+        if utf8:
+            _, pos = _axml_decode_length(axml, pos, True)
+            byte_len, pos = _axml_decode_length(axml, pos, True)
+            strings.append(axml[pos:pos + byte_len].decode('utf-8', errors='replace'))
+        else:
+            char_len, pos = _axml_decode_length(axml, pos, False)
+            strings.append(axml[pos:pos + char_len * 2].decode('utf-16le', errors='replace'))
+
+    try:
+        value_index = strings.index(value)
+    except ValueError:
+        value_index = len(strings)
+        strings.append(value)
+
+    new_offsets = bytearray()
+    new_data = bytearray()
+    for text in strings:
+        new_offsets += struct.pack('<I', len(new_data))
+        if utf8:
+            raw = text.encode('utf-8')
+            new_data += _axml_encode_length(len(text), True)
+            new_data += _axml_encode_length(len(raw), True)
+            new_data += raw + b'\x00'
+        else:
+            raw = text.encode('utf-16le')
+            new_data += _axml_encode_length(len(text), False)
+            new_data += raw + b'\x00\x00'
+    while len(new_data) % 4:
+        new_data += b'\x00'
+
+    old_strings_end = pool_off + (styles_start if styles_start else chunk_size)
+    old_offsets_end = offsets_base + (string_count + style_count) * 4
+    styles_data = axml[old_strings_end:pool_off + chunk_size] if styles_start else b''
+    before_offsets = bytearray(axml[pool_off:offsets_base])
+    new_strings_start = strings_start + (len(strings) - string_count) * 4
+    new_styles_start = new_strings_start + len(new_data) if styles_start else 0
+    new_chunk_size = new_strings_start + len(new_data) + len(styles_data)
+    struct.pack_into('<I', before_offsets, 4, new_chunk_size)
+    struct.pack_into('<I', before_offsets, 8, len(strings))
+    struct.pack_into('<I', before_offsets, 20, new_strings_start)
+    struct.pack_into('<I', before_offsets, 24, new_styles_start)
+    new_pool = (
+        bytes(before_offsets)
+        + bytes(new_offsets)
+        + axml[offsets_base + string_count * 4:old_offsets_end]
+        + bytes(new_data)
+        + styles_data
+    )
+    delta = len(new_pool) - chunk_size
+    out = bytearray(axml[:pool_off] + new_pool + axml[pool_off + chunk_size:])
+    struct.pack_into('<I', out, 4, xml_size + delta)
+
+    pos = pool_off + new_chunk_size
+    found_element = False
+    patched = False
+    while pos + 8 <= len(out):
+        node_type, node_header_size, node_size = struct.unpack_from('<HHI', out, pos)
+        if node_size < node_header_size or pos + node_size > len(out):
+            break
+        if node_type == 0x0102 and node_header_size >= 16 and node_size >= 36:
+            name_index = struct.unpack_from('<I', out, pos + 20)[0]
+            if name_index < len(strings) and strings[name_index] == element_name:
+                found_element = True
+                attr_start, attr_size, attr_count = struct.unpack_from('<HHH', out, pos + 24)
+                if attr_size < 20:
+                    raise ValueError(f'{element_name} 节点属性格式异常')
+                for i in range(attr_count):
+                    attr_pos = pos + 16 + attr_start + i * attr_size
+                    attr_name_index = struct.unpack_from('<I', out, attr_pos + 4)[0]
+                    if attr_name_index < len(strings) and strings[attr_name_index] == attribute_name:
+                        struct.pack_into('<I', out, attr_pos + 8, value_index)
+                        out[attr_pos + 15] = 0x03  # TYPE_STRING
+                        struct.pack_into('<I', out, attr_pos + 16, value_index)
+                        patched = True
+                        if not all_matches:
+                            return bytes(out)
+                # 同类型节点可能有多个，继续找带目标属性的那个。
+        pos += node_size
+    if patched:
+        return bytes(out)
+    if found_element:
+        raise ValueError(f'{element_name} 节点缺少 {attribute_name} 属性')
+    raise ValueError(f'未找到 {element_name} 节点')
+
+
+def patch_axml_application_label(axml: bytes, app_name: str) -> bytes:
+    return patch_axml_string_attribute(axml, 'application', 'label', app_name)
+
+
+def patch_axml_launcher_labels(axml: bytes, app_name: str, log_fn) -> bytes:
+    """更新 application 与启动 Activity 的名称，避免桌面仍显示模板名称。"""
+    axml = patch_axml_application_label(axml, app_name)
+    for element_name in ('activity', 'activity-alias'):
+        axml, patched = patch_axml_optional_string_attribute(
+            axml, element_name, 'label', app_name, all_matches=True
+        )
+        if patched:
+            log_fn(f"[APK] 已更新 {element_name}.label 为应用名称", 'debug')
+    return axml
+
+
+def patch_axml_optional_string_attribute(
+        axml: bytes, element_name: str, attribute_name: str, value: str,
+        all_matches: bool = False
+) -> Tuple[bytes, bool]:
+    """更新可选 Manifest 属性；旧模板缺少该节点时保留原样。"""
+    try:
+        return patch_axml_string_attribute(
+            axml, element_name, attribute_name, value, all_matches=all_matches
+        ), True
+    except ValueError as e:
+        message = str(e)
+        if message in (
+            f'未找到 {element_name} 节点',
+            f'{element_name} 节点缺少 {attribute_name} 属性',
+        ):
+            return axml, False
+        raise
+
+
 def _copy_zip_entry(src_zip: zipfile.ZipFile, dst_zip: zipfile.ZipFile, info: zipfile.ZipInfo, data: bytes):
     zi = zipfile.ZipInfo(info.filename, info.date_time)
     zi.comment = info.comment
@@ -786,11 +1276,6 @@ def repack_template_apk(template_apk: Path, out_apk: Path, prepared_www: Path, p
     app_id = _sanitize_android_package(params.get('app_id') or 'com.example.myapp')
     app_name = (params.get('app_name') or 'MyApp').strip() or 'MyApp'
     version = (params.get('app_version') or APK_VERSION_PLACEHOLDER).strip() or APK_VERSION_PLACEHOLDER
-    replacements = {
-        APK_PACKAGE_PLACEHOLDER: app_id,
-        APK_NAME_PLACEHOLDER: app_name,
-        APK_VERSION_PLACEHOLDER: version,
-    }
     added = 0
     try:
         with zipfile.ZipFile(template_apk, 'r') as zin, zipfile.ZipFile(out_apk, 'w') as zout:
@@ -805,7 +1290,21 @@ def repack_template_apk(template_apk: Path, out_apk: Path, prepared_www: Path, p
                     continue
                 data = zin.read(info)
                 if name == 'AndroidManifest.xml':
-                    data = patch_axml_strings(data, replacements)
+                    data = patch_axml_string_attribute(data, 'manifest', 'package', app_id)
+                    data = patch_axml_string_attribute(data, 'manifest', 'versionName', version)
+                    data, patched_permission = patch_axml_optional_string_attribute(
+                        data, 'permission', 'name',
+                        f'{app_id}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'
+                    )
+                    if not patched_permission:
+                        log_fn("[APK] 模板未包含动态接收器权限，跳过权限名称更新", 'debug')
+                    data, patched_provider = patch_axml_optional_string_attribute(
+                        data, 'provider', 'authorities',
+                        f'{app_id}.cdv.core.file.provider'
+                    )
+                    if not patched_provider:
+                        log_fn("[APK] 模板未包含 file provider，跳过 provider authority 更新", 'debug')
+                    data = patch_axml_launcher_labels(data, app_name, log_fn)
                 elif replace_icon and name in APK_ICON_TARGETS:
                     src_icon = _pick_icon_for_apk(prepared_www / 'icons', APK_ICON_TARGETS[name])
                     if src_icon:
@@ -880,30 +1379,42 @@ def sign_apk_with_pyapksigner(apk_path, work_dir, log_fn):
 
 
 def build_apk_from_template(work_root: Path, prepared_www: Path, params: dict,
-                            replace_icon: bool, log_fn,
-                            inject_controls: bool = True) -> Tuple[Path, bool, str]:
+                            replace_icon: bool, log_fn, template_apk: Path,
+                            inject_controls: bool = True,
+                            inject_touch_emulator: bool = False) -> Tuple[Path, bool, str]:
     app_name = (params.get('app_name') or 'MyApp').strip()
     safe = ''.join(c if c not in r'\/:*?"<>| ' else '_' for c in app_name) or 'App'
     unsigned_apk = work_root / f"{safe}_unsigned.apk"
     final_apk = work_root.parent / f"{safe}.apk"
 
-    # ---- 若需要注入 controls.js，则先拷贝一份 www 到临时目录 ----
+    # ---- APK 专属脚本注入时，先拷贝一份 www 到临时目录 ----
     src_www = prepared_www
     temp_www = None
-    if inject_controls:
-        import tempfile
+    if inject_controls or inject_touch_emulator:
         temp_www = Path(tempfile.mkdtemp(prefix='apk_www_'))
-        log_fn("[APK] 为 APK 单独拷贝 www 并注入 controls.js", 'info')
+        requested_scripts = []
+        if inject_controls:
+            requested_scripts.append('键盘')
+        if inject_touch_emulator:
+            requested_scripts.append('touch-emulator')
+        log_fn(f"[APK] 为 APK 单独拷贝 www 并注入 {'、'.join(requested_scripts)}", 'info')
         shutil.copytree(prepared_www, temp_www, dirs_exist_ok=True)
-        ok, msg = patch_controls_script(temp_www, log_fn)
-        log_fn("[APK] controls.js 注入: " + msg, 'success' if ok else 'error')
-        if not ok:
-            shutil.rmtree(temp_www, ignore_errors=True)
-            return final_apk, False, msg
+        if inject_controls:
+            ok, msg = patch_controls_script(temp_www, log_fn)
+            log_fn("[APK] controls.js 注入: " + msg, 'success' if ok else 'error')
+            if not ok:
+                shutil.rmtree(temp_www, ignore_errors=True)
+                return final_apk, False, msg
+        if inject_touch_emulator:
+            ok, msg = patch_touch_emulator_script(temp_www, log_fn)
+            log_fn("[APK] touch-emulator 注入: " + msg, 'success' if ok else 'error')
+            if not ok:
+                shutil.rmtree(temp_www, ignore_errors=True)
+                return final_apk, False, msg
         src_www = temp_www
 
     # 原有的打包逻辑（使用 src_www）
-    ok, msg = repack_template_apk(APK_TEMPLATE, unsigned_apk, src_www, params, replace_icon, log_fn)
+    ok, msg = repack_template_apk(template_apk, unsigned_apk, src_www, params, replace_icon, log_fn)
     log_fn("[APK] " + msg, 'success' if ok else 'error')
     if not ok:
         if temp_www:
@@ -1201,6 +1712,7 @@ class PackWorker(QThread):
             # ==========================================================
             prepared_root = work_root / '_prepared'
             prepared_root.mkdir(parents=True, exist_ok=True)
+            apk_template = None
             # 先复制模板 (含 game.exe, package.json, 默认 icons/ 等)
             shutil.copytree(PACKAGER_TEMPLATE, prepared_root / 'template')
             prepared_www = prepared_root / 'www'
@@ -1250,13 +1762,7 @@ class PackWorker(QThread):
                 self._log(f"Web 资源根目录定位: {cur}", 'debug')
                 for item in cur.iterdir():
                     dest = prepared_www / item.name
-                    if dest.exists():
-                        if dest.is_dir(): shutil.rmtree(dest, ignore_errors=True)
-                        else: dest.unlink(missing_ok=True)
-                    if item.is_dir():
-                        shutil.copytree(item, dest)
-                    else:
-                        shutil.copy2(item, dest)
+                    _copy_web_item_for_prepare(item, dest)
                 if tmp_extract:
                     shutil.rmtree(tmp_extract, ignore_errors=True)
             if self._stop: return self._abort()
@@ -1271,9 +1777,45 @@ class PackWorker(QThread):
             if self._stop: return self._abort()
 
 
-            self._set_progress(28, "[公共准备] Scratch 检测与注入控制栏隐藏/F2/F4快捷键 ...")
-            ok, msg = inject_scratch_patch_if_needed(prepared_www, self._log)
+            self._set_progress(28, "[公共准备] Scratch 检测与注入控制栏/F2 快捷键 ...")
+            inject_f2_restart = params.get('inject_f2_restart', True)
+            ok, msg = inject_scratch_patch_if_needed(
+                prepared_www, self._log, inject_f2_restart
+            )
             self._log(msg, 'success' if ok else 'warning')
+            if not ok:
+                self.finished_ok.emit(False, msg, {})
+                return
+            if inject_f2_restart:
+                ok, msg = inject_f2_restart_patch_if_needed(prepared_www, self._log)
+                self._log(msg, 'success' if ok else 'error')
+                if not ok:
+                    self.finished_ok.emit(False, msg, {})
+                    return
+            ok, msg = patch_construct3_export_if_needed(prepared_www, self._log)
+            self._log(msg, 'success' if ok else 'error')
+            if not ok:
+                self.finished_ok.emit(False, msg, {})
+                return
+            ok, msg = remove_cordova_web_assets_if_not_construct3(prepared_www, self._log)
+            self._log(msg, 'success' if ok else 'error')
+            if not ok:
+                self.finished_ok.emit(False, msg, {})
+                return
+            if 'apk' in formats_list:
+                apk_template, msg = select_apk_template(prepared_www)
+                self._log(msg, 'info')
+                ok, msg = seed_apk_template_www(prepared_www, apk_template)
+                self._log(msg, 'success' if ok else 'error')
+                if not ok:
+                    self.finished_ok.emit(False, msg, {})
+                    return
+                # 此时 Cordova 模板的 cordova.js 已进入 www，才能可靠写入 C3 的 index.html。
+                ok, msg = patch_construct3_export_if_needed(prepared_www, self._log)
+                self._log("[APK] " + msg, 'success' if ok else 'error')
+                if not ok:
+                    self.finished_ok.emit(False, msg, {})
+                    return
             if self._stop: return self._abort()
 
             # ---- 3) 图标处理 (默认图标/用户自定义缩放) ----
@@ -1289,6 +1831,11 @@ class PackWorker(QThread):
                 else:
                     has_custom_icon = True
             ok, msg, _png_512 = generate_icons(icons_dir, user_icon, app_name, self._log)
+            self._log(msg, 'success' if ok else 'error')
+            if not ok:
+                self.finished_ok.emit(False, msg, {})
+                return
+            ok, msg = patch_construct3_icon_references_if_needed(prepared_www, self._log)
             self._log(msg, 'success' if ok else 'error')
             if not ok:
                 self.finished_ok.emit(False, msg, {})
@@ -1312,6 +1859,12 @@ class PackWorker(QThread):
                 exe_www = exe_work / 'www'
                 if exe_www.exists(): shutil.rmtree(exe_www, ignore_errors=True)
                 shutil.copytree(prepared_www, exe_www)
+                if params.get('exe_inject_f4_fullscreen', True):
+                    ok, msg = inject_exe_f4_patch_if_needed(exe_www, self._log)
+                    self._log("[EXE] " + msg, 'success' if ok else 'error')
+                    if not ok:
+                        self.finished_ok.emit(False, msg, {})
+                        return
                 if self._stop: return self._abort()
 
                 self._set_progress(54, "[1/2 EXE] 正在更新 package.json ...")
@@ -1340,7 +1893,7 @@ class PackWorker(QThread):
                 if self._stop: return self._abort()
 
                 self._set_progress(86, "[1/2 EXE] 正在压缩为 EXE 工程 7z 包 ...")
-                exe_archive = output_dir / f"{safe_name}_EXE.7z"
+                exe_archive = output_dir / f"{safe_name}.7z"
                 ok, msg = make_7z(exe_work.parent if False else exe_work, exe_archive, self._log)
                 self._log("[EXE] " + msg, 'success' if ok else 'error')
                 if ok:
@@ -1367,7 +1920,16 @@ class PackWorker(QThread):
                     'keystore_pass': params.get('keystore_pass', 'android'),
                     'keystore_alias_pass': params.get('keystore_alias_pass', 'android'),
                 }
-                apk_path, ok, msg = build_apk_from_template(work_root, prepared_www, apk_params, has_custom_icon, self._log)
+                apk_path, ok, msg = build_apk_from_template(
+                    work_root,
+                    prepared_www,
+                    apk_params,
+                    has_custom_icon,
+                    self._log,
+                    apk_template,
+                    inject_controls=bool(params.get('apk_inject_keyboard', True)),
+                    inject_touch_emulator=bool(params.get('apk_inject_touch_emulator', False)),
+                )
                 self._log("[APK] " + msg, 'success' if ok else 'error')
                 if self._stop: return self._abort()
                 if ok:
@@ -1637,8 +2199,8 @@ class MainWindow(QMainWindow):
         self.edit_app_name = QLineEdit(self.cfg.get('app_name', 'MyApp'))
         self.edit_app_name.setMinimumHeight(26)
         self.edit_app_name.setMinimumWidth(160)
-        self.edit_app_name.setPlaceholderText("仅用于决定输出的压缩包名称，例如: MyApp")
-        f.addRow("输出压缩包名称:", self.edit_app_name)
+        self.edit_app_name.setPlaceholderText("用于输出文件名和 APK 安装名称，例如: MyApp")
+        f.addRow("应用名称:", self.edit_app_name)
 
         row_icon = QHBoxLayout()
         self.edit_icon = QLineEdit()
@@ -1668,6 +2230,9 @@ class MainWindow(QMainWindow):
         b_all.clicked.connect(self._toggle_all_formats)
         row_fmt.addWidget(b_all)
         f.addRow(row_fmt)
+        self.chk_inject_f2_restart = QCheckBox("注入 F2 重启游戏功能")
+        self.chk_inject_f2_restart.setChecked(self.cfg.get('inject_f2_restart', True))
+        f.addRow("", self.chk_inject_f2_restart)
         v.addWidget(g2)
 
         # ---------- EXE 专属 ----------
@@ -1678,6 +2243,9 @@ class MainWindow(QMainWindow):
         fe.addRow("", self.chk_exe_no_console)
         self.chk_exe_admin = QCheckBox("请求管理员权限 (requireAdministrator)")
         fe.addRow("", self.chk_exe_admin)
+        self.chk_exe_f4_fullscreen = QCheckBox("注入 F4 全屏功能")
+        self.chk_exe_f4_fullscreen.setChecked(True)
+        fe.addRow("", self.chk_exe_f4_fullscreen)
         v.addWidget(self.box_exe_cfg)
 
         # ---------- APK 专属 ----------
@@ -1693,6 +2261,14 @@ class MainWindow(QMainWindow):
         self.edit_ver.setMinimumHeight(26)
         self.edit_ver.setMinimumWidth(120)
         fa.addRow("应用版本号:", self.edit_ver)
+        self.chk_apk_inject_keyboard = QCheckBox("注入键盘")
+        self.chk_apk_inject_keyboard.setChecked(self.cfg.get('apk_inject_keyboard', True))
+        fa.addRow("", self.chk_apk_inject_keyboard)
+        self.chk_apk_inject_touch_emulator = QCheckBox("注入 touch-emulator")
+        self.chk_apk_inject_touch_emulator.setChecked(
+            self.cfg.get('apk_inject_touch_emulator', False)
+        )
+        fa.addRow("", self.chk_apk_inject_touch_emulator)
         v.addWidget(self.box_apk_cfg)
 
         # ---------- 输出设置 ----------
@@ -1811,6 +2387,9 @@ class MainWindow(QMainWindow):
             self.cfg['app_id'] = self.edit_appid.text().strip() or self.cfg.get('app_id', 'com.example.myapp')
             self.cfg['app_version'] = self.edit_ver.text().strip() or self.cfg.get('app_version', '1.0.0.0')
             self.cfg['output_dir'] = self.edit_outdir.text().strip() or self.cfg.get('output_dir', str(Path.home()))
+            self.cfg['apk_inject_keyboard'] = self.chk_apk_inject_keyboard.isChecked()
+            self.cfg['apk_inject_touch_emulator'] = self.chk_apk_inject_touch_emulator.isChecked()
+            self.cfg['inject_f2_restart'] = self.chk_inject_f2_restart.isChecked()
             save_gui_config(self.cfg)
         except Exception:
             pass
@@ -1876,8 +2455,8 @@ class MainWindow(QMainWindow):
             f"<b>打包流水线 (两种格式共享 ①~④ 公共准备阶段):</b>"
             f"<ol>"
             f"<li>创建 输出目录/AppName_build/ 工作区</li>"
-            f"<li>【公共准备】①拷贝模板+资源 到 www/ ②确保 index.html ③注入 controls.js ④<b>Scratch 自动补丁</b> (隐藏控制栏 + F4全屏切换 + F2绿旗) ⑤图标 (模板默认 / 用户自定义缩放)</li>"
-            f"<li>【EXE 分支】拷贝 prepared 模板 → 更新 package.json → Win32 API 注入图标到 exe → 重命名 <AppName>.exe → 7z 压缩输出 <b>AppName_EXE.7z</b></li>"
+            f"<li>【公共准备】①拷贝模板+资源 到 www/ ②确保 index.html ③按需注入 F2 重启补丁 ④<b>Scratch 自动补丁</b> (隐藏控制栏 + F2绿旗) ⑤图标 (模板默认 / 用户自定义缩放)</li>"
+            f"<li>【EXE 分支】拷贝 prepared 模板 → 更新 package.json → Win32 API 注入图标到 exe → 重命名 <AppName>.exe → 7z 压缩输出 <b>AppName.7z</b></li>"
             f"<li>【APK 分支】复制 template.APK → 清旧签名 → 写入 assets/www → patch manifest → 按需替换图标 → pyapksigner 签名 → 输出 <b>AppName.apk</b></li>"
             f"</ol>"
             f"<p><i>Qt绑定: {QT_VERSION_STR}  ·  Pillow(自定义图标缩放): {'✅' if HAS_PILLOW else '❌(仅模板默认图标可用)'}  ·  py7zr(压缩): {'✅.7z' if HAS_PY7ZR else '❌回退.zip'}</i></p>"
@@ -1927,6 +2506,10 @@ class MainWindow(QMainWindow):
             # EXE 参数
             'exe_no_console': self.chk_exe_no_console.isChecked(),
             'exe_admin': self.chk_exe_admin.isChecked(),
+            'exe_inject_f4_fullscreen': self.chk_exe_f4_fullscreen.isChecked(),
+            'inject_f2_restart': self.chk_inject_f2_restart.isChecked(),
+            'apk_inject_keyboard': self.chk_apk_inject_keyboard.isChecked(),
+            'apk_inject_touch_emulator': self.chk_apk_inject_touch_emulator.isChecked(),
             # APK 参数 (采用最稳妥的默认值，不再通过界面读取)
             'android_min_sdk': 23,
             'android_target_sdk': 34,

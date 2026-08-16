@@ -1,0 +1,13 @@
+{
+	"output_dir": "C:/Users/Weaver/Desktop",
+	"app_name": "Dreamland",
+	"app_version": "1.0.0.0",
+	"window_size": [
+		2560,
+		1494
+	],
+	"app_id": "com.Dreamland.MobileByznm",
+	"apk_inject_keyboard": true,
+	"apk_inject_touch_emulator": false,
+	"inject_f2_restart": true
+}
